@@ -1,8 +1,7 @@
 #include <Aurora/GEngine/Application.h>
 
-#include <Aurora/GEngine.h>
-#include <Aurora/GEngine/Vulkan.h>
-#include <Aurora/GEngine/Direct3D.h>
+#include <Aurora/GEngine/_Vulkan.h>
+#include <Aurora/GEngine/_Direct3D.h>
 
 #include <iostream>
 #include <assert.h>

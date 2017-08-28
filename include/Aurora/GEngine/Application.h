@@ -8,11 +8,13 @@
 #ifndef INCLUDE_H_AURORA_GENGINE_APPLICATION
 #define INCLUDE_H_AURORA_GENGINE_APPLICATION
 
+#include <Aurora/_GEngine.h>
+
 #include <Aurora/GEngine/API.h>
 #include <Aurora/Core/Application.h>
 #include <iostream>
 
-#include <Aurora/GEngine/Vulkan.h>
+#include <Aurora/GEngine/_Vulkan.h>
 
 namespace Aurora {
 	namespace GEngine {

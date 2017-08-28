@@ -13,11 +13,11 @@ endif()
 
 include_directories(${MODULE_GENGINE_CORE_DIR}/include)
 
-add_library (aurora-gengine-core SHARED ${MODULE_GENGINE_CORE_SOURCE_DIR}/Window.cpp
+add_library (aurorafw-gengine-core SHARED ${MODULE_GENGINE_CORE_SOURCE_DIR}/Window.cpp
                                         ${MODULE_GENGINE_CORE_SOURCE_DIR}/Application.cpp
                                         ${MODULE_GENGINE_CORE_SOURCE_DIR}/Input.cpp)
 
-target_link_libraries(aurora-gengine-core aurora-gengine-opengl
+target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl
 				      glfw)
 
-set_target_properties(aurora-gengine-core PROPERTIES OUTPUT_NAME aurora-gengine-core)
+set_target_properties(aurorafw-gengine-core PROPERTIES OUTPUT_NAME aurorafw-gengine-core)

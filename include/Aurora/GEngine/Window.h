@@ -21,6 +21,8 @@
 
 #include <Aurora/GEngine/Application.h>
 
+#include <Aurora/GEngine/OpenGL.h>
+#include <Aurora/GEngine/_GLEW.h>
 #include <Aurora/GEngine/_OpenGL.h>
 #include <Aurora/GEngine/_Vulkan.h>
 #include <Aurora/GEngine/_GLFW.h>
