@@ -16,39 +16,36 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/Application.h>
+
+#ifndef AURORAFW_GENGINE_APPLICATION_H
+#define AURORAFW_GENGINE_APPLICATION_H
+
+#include <AuroraFW/Global.h>
+#include <AuroraFW/_GEngine.h>
+
+#include <AuroraFW/GEngine/API.h>
+#include <AuroraFW/Core/Application.h>
+#include <iostream>
 
 #include <AuroraFW/GEngine/_Vulkan.h>
-#include <AuroraFW/GEngine/_Direct3D.h>
-
-#include <iostream>
-#include <assert.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		Application::Application(const char* name, GraphicsAPI gapi)
-			: name(name), gapi(gapi)
-		{
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
-				D3DCAPS9 caps;
-			#endif
-			switch (gapi) {
-				case GraphicsAPI::Vulkan:
-					vkappinfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-					vkappinfo.pNext = NULL;
-					vkappinfo.pApplicationName = name;
-					vkappinfo.pEngineName = "Aurora GEngine";
-					vkappinfo.engineVersion = AFW_GENGINE_VERSION;
-					vkappinfo.apiVersion = VK_API_VERSION_1_0;
-					break;
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				case GraphicsAPI::DirectX: break;
-			#endif
-				case GraphicsAPI::OpenGL: break;
-			}
-		}
-		Application::~Application() {
-		}
+		class AFW_PREFIX Application {
+        friend class Window;
+		public:
+			Application(const char* , GraphicsAPI = GraphicsAPI::OpenGL);
+            ~Application();
+        protected:
+            VkApplicationInfo vkappinfo;
+            VkInstanceCreateInfo vkinstanceinfo;
+            VkInstance vkinstance;
+
+        private:
+            const char* name;
+            GraphicsAPI gapi;
+		};
 	}
 }
+
+#endif // AURORAFW_GENGINE_APPLICATION_H

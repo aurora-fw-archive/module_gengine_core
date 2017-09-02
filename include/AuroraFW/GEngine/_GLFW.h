@@ -16,39 +16,12 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/Application.h>
+#include <AuroraFW/Global.h>
 
-#include <AuroraFW/GEngine/_Vulkan.h>
-#include <AuroraFW/GEngine/_Direct3D.h>
+#ifndef AURORAFW_GENGINE__GLFW_H
+#define AURORAFW_GENGINE__GLFW_H
 
-#include <iostream>
-#include <assert.h>
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
-namespace AuroraFW {
-	namespace GEngine {
-		Application::Application(const char* name, GraphicsAPI gapi)
-			: name(name), gapi(gapi)
-		{
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
-				D3DCAPS9 caps;
-			#endif
-			switch (gapi) {
-				case GraphicsAPI::Vulkan:
-					vkappinfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-					vkappinfo.pNext = NULL;
-					vkappinfo.pApplicationName = name;
-					vkappinfo.pEngineName = "Aurora GEngine";
-					vkappinfo.engineVersion = AFW_GENGINE_VERSION;
-					vkappinfo.apiVersion = VK_API_VERSION_1_0;
-					break;
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				case GraphicsAPI::DirectX: break;
-			#endif
-				case GraphicsAPI::OpenGL: break;
-			}
-		}
-		Application::~Application() {
-		}
-	}
-}
+#endif // AURORAFW_GENGINE__GLFW_H

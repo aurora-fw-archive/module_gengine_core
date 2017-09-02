@@ -16,39 +16,51 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
+#ifndef AURORAFW_GENGINE_WINDOW_H
+#define AURORAFW_GENGINE_WINDOW_H
+
+#include <AuroraFW/Global.h>
+
 #include <AuroraFW/GEngine/Application.h>
+#include <AuroraFW/GEngine/OpenGL.h>
 
+#include <AuroraFW/GEngine/_GLEW.h>
+#include <AuroraFW/GEngine/_OpenGL.h>
 #include <AuroraFW/GEngine/_Vulkan.h>
-#include <AuroraFW/GEngine/_Direct3D.h>
+#include <AuroraFW/GEngine/_GLFW.h>
 
-#include <iostream>
-#include <assert.h>
+//typedef struct GLFWwindow GLFWwindow;
+//typedef struct GLFWmonitor GLFWmonitor;
 
 namespace AuroraFW {
-	namespace GEngine {
-		Application::Application(const char* name, GraphicsAPI gapi)
-			: name(name), gapi(gapi)
-		{
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
-				D3DCAPS9 caps;
-			#endif
-			switch (gapi) {
-				case GraphicsAPI::Vulkan:
-					vkappinfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-					vkappinfo.pNext = NULL;
-					vkappinfo.pApplicationName = name;
-					vkappinfo.pEngineName = "Aurora GEngine";
-					vkappinfo.engineVersion = AFW_GENGINE_VERSION;
-					vkappinfo.apiVersion = VK_API_VERSION_1_0;
-					break;
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				case GraphicsAPI::DirectX: break;
-			#endif
-				case GraphicsAPI::OpenGL: break;
-			}
-		}
-		Application::~Application() {
-		}
-	}
+    namespace GEngine {
+        struct AFW_PREFIX WindowProperties {
+            WindowProperties(uint , uint , bool = false, bool = false);
+            uint width, height;
+		    bool fullscreen;
+            bool vsync;
+        };
+
+        class AFW_PREFIX Window
+        {
+        	public:
+        		Window(GEngine::Application , const char* , const WindowProperties& );
+                ~Window();
+                void Update();
+                void Clear() const;
+                bool isClosed() const;
+                inline uint getWidth() const { return width; }
+                inline uint getHeight() const { return height; }
+
+        	private:
+                //void Init();
+        		GLFWwindow *window;
+                const GLFWmonitor *monitor;
+                const char* name;
+                uint width, height;
+                const bool fullscreen, vsync;
+        };
+    }
 }
+
+#endif // AURORAFW_GENGINE_WINDOW_H
