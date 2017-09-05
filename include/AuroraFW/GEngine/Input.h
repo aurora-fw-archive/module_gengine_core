@@ -23,9 +23,11 @@
 
 #include <AuroraFW/GEngine/Window.h>
 
+#include <AuroraFW/GEngine/_GLFW.h>
+
 //Max Array Values
 #define AFW_GENGINE_INPUT_MAX_KEYS    1024
-#define AFW_GENGINE_INPUT_MAX_BUTTONS 32
+#define AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS 32
 
 ///Keycodes
 //Mouse
@@ -121,17 +123,26 @@
 
 namespace AuroraFW {
     namespace GEngine {
-        class Input {
-            Input(Window* );
-            ~Input();
+        class Window;
+
+        class AFW_PREFIX InputManager {
         public:
-            bool isKeyPressed(unsigned int keycode) const;
-            bool isButtonPressed(unsigned int button) const;
-            void getMousePosition(double& x, double& y) const;
+            InputManager(Window* );
+            ~InputManager();
+            ArBool_t isKeyPressed(ArUInt_t ) const;
+            ArBool_t isMouseButtonPressed(ArUInt_t ) const;
+            ArVoid_t getMousePosition(ArDouble_t& , ArDouble_t& ) const;
+            ArVoid_t getScrollPosition(ArDouble_t& , ArDouble_t& ) const;
         private:
-            bool keys[AFW_GENGINE_INPUT_MAX_KEYS];
-            bool buttons[AFW_GENGINE_INPUT_MAX_BUTTONS];
-            double mx, my;
+            static ArVoid_t keyCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t , ArInt_t );
+            static ArVoid_t mouseButtonCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t );
+            static ArVoid_t cursorPosCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
+            static ArVoid_t scrollCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
+
+            const Window* parent;
+            ArBool_t keys[AFW_GENGINE_INPUT_MAX_KEYS];
+            ArBool_t mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
+            ArDouble_t mx, my;
         };
     }
 }

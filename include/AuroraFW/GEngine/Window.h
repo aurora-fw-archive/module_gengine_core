@@ -23,6 +23,7 @@
 
 #include <AuroraFW/GEngine/Application.h>
 #include <AuroraFW/GEngine/OpenGL.h>
+#include <AuroraFW/GEngine/Input.h>
 
 #include <AuroraFW/GEngine/_GLEW.h>
 #include <AuroraFW/GEngine/_OpenGL.h>
@@ -41,8 +42,11 @@ namespace AuroraFW {
             bool vsync;
         };
 
+        class InputManager;
+
         class AFW_PREFIX Window
         {
+            friend InputManager;
         	public:
         		Window(GEngine::Application , const char* , const WindowProperties& );
                 ~Window();
@@ -52,9 +56,11 @@ namespace AuroraFW {
                 inline uint getWidth() const { return width; }
                 inline uint getHeight() const { return height; }
 
+            protected:
+                GLFWwindow *window;
+
         	private:
                 //void Init();
-        		GLFWwindow *window;
                 const GLFWmonitor *monitor;
                 const char* name;
                 uint width, height;
