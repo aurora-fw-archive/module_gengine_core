@@ -44,8 +44,10 @@ namespace AuroraFW {
         class AFW_PREFIX Window
         {
         	public:
-        		Window(GEngine::Application , const char* , const WindowProperties& );
+        		Window(const GEngine::Application& , const char* , const WindowProperties& );
                 ~Window();
+                Window(const Window&) = delete;
+                Window& operator=(const Window&) = delete;
                 void Update();
                 void Clear() const;
                 bool isClosed() const;

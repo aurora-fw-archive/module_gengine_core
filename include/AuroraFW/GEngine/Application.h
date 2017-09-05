@@ -36,10 +36,13 @@ namespace AuroraFW {
 		public:
 			Application(const char* , GraphicsAPI = GraphicsAPI::OpenGL);
             ~Application();
+            Application(const Application&) = delete;
+            Application& operator= (const Application&) = delete;
         protected:
-            VkApplicationInfo vkappinfo;
+            // TODO: Implement Vulkan backend
+            /*VkApplicationInfo vkappinfo;
             VkInstanceCreateInfo vkinstanceinfo;
-            VkInstance vkinstance;
+            VkInstance vkinstance;*/
 
         private:
             const char* name;

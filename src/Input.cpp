@@ -20,7 +20,12 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		Input::Input(Window* parent) {
+		// FIXME: parent argument is never used, see later
+		Input::Input(Window* parent __attribute__((unused)))
+			// FIXME: mx and my were initialized zero to supress compiler warnings,
+			// this may not be the intended behaviour. See later
+			:	mx(0), my(0)
+		{
 			for(int i = 0; i < AFW_GENGINE_INPUT_MAX_KEYS; i++) {
 				keys[i] = false;
 			}
