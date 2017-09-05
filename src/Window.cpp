@@ -19,15 +19,18 @@
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/Core/Debug.h>
 
+#include <cstring>
+
 namespace AuroraFW {
     namespace GEngine {
         WindowProperties::WindowProperties(uint width, uint height, bool fullscreen, bool vsync)
             : width(width), height(height), fullscreen(fullscreen), vsync(vsync)
         {}
 
-        Window::Window(GEngine::Application gapp, const char* name, const WindowProperties& wp)
-            : name(name), width(wp.width), height(wp.height), fullscreen(wp.fullscreen), vsync(wp.vsync),
-              monitor(glfwGetPrimaryMonitor())
+        Window::Window(const GEngine::Application& gapp, const char* name, const WindowProperties& wp)
+            : window(), monitor(glfwGetPrimaryMonitor()), name(name), width(wp.width), height(wp.height),
+              fullscreen(wp.fullscreen), vsync(wp.vsync)
+              
         {
 
             if (!glfwInit())
@@ -73,7 +76,7 @@ namespace AuroraFW {
             /* Make the window's context current */
             glfwMakeContextCurrent(window);
             if(gapp.gapi == GraphicsAPI::OpenGL) {
-                glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+                glfwSetWindowSizeCallback(window, [](GLFWwindow* window __attribute__((unused)), int width, int height) {
                     glViewport(0, 0, width, height);
                 });
             }
