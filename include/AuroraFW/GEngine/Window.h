@@ -36,7 +36,7 @@
 namespace AuroraFW {
     namespace GEngine {
         struct AFW_PREFIX WindowProperties {
-            WindowProperties(uint , uint , bool = false, bool = false);
+            WindowProperties(const uint& , const uint& , const bool& = false, const bool& = false);
             uint width, height;
 		    bool fullscreen;
             bool vsync;
@@ -55,18 +55,18 @@ namespace AuroraFW {
                 void Update();
                 void Clear() const;
                 bool isClosed() const;
-                inline uint getWidth() const { return width; }
-                inline uint getHeight() const { return height; }
+                inline uint getWidth() const { return _width; }
+                inline uint getHeight() const { return _height; }
 
             protected:
                 GLFWwindow *window;
 
         	private:
                 //void Init();
-                const GLFWmonitor *monitor;
-                const char* name;
-                uint width, height;
-                const bool fullscreen, vsync;
+                const GLFWmonitor *_monitor;
+                const char *_name;
+                uint _width, _height;
+                const bool _fullscreen, _vsync;
         };
     }
 }

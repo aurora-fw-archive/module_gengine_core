@@ -34,7 +34,7 @@ namespace AuroraFW {
 		class AFW_PREFIX Application {
         friend class Window;
 		public:
-			Application(const char* , GraphicsAPI = GraphicsAPI::OpenGL);
+			Application(const char* , const GraphicsAPI& = GraphicsAPI::OpenGL);
             ~Application();
             Application(const Application&) = delete;
             Application& operator= (const Application&) = delete;
@@ -45,8 +45,8 @@ namespace AuroraFW {
             VkInstance vkinstance;*/
 
         private:
-            const char* name;
-            GraphicsAPI gapi;
+            const char* _name;
+            GraphicsAPI _gapi;
 		};
 	}
 }

@@ -127,22 +127,22 @@ namespace AuroraFW {
 
         class AFW_PREFIX InputManager {
         public:
-            InputManager(Window* );
+            InputManager(const Window* );
             ~InputManager();
-            ArBool_t isKeyPressed(ArUInt_t ) const;
-            ArBool_t isMouseButtonPressed(ArUInt_t ) const;
+            ArBool_t isKeyPressed(const ArUInt_t& ) const;
+            ArBool_t isMouseButtonPressed(const ArUInt_t& ) const;
             ArVoid_t getMousePosition(ArDouble_t& , ArDouble_t& ) const;
-            ArVoid_t getScrollPosition(ArDouble_t& , ArDouble_t& ) const;
+            ArVoid_t getScrollPosition(const ArDouble_t& , const ArDouble_t& ) const;
         private:
-            static ArVoid_t keyCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t , ArInt_t );
-            static ArVoid_t mouseButtonCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t );
-            static ArVoid_t cursorPosCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
-            static ArVoid_t scrollCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
+            static ArVoid_t _keyCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t , ArInt_t );
+            static ArVoid_t _mouseButtonCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t );
+            static ArVoid_t _cursorPosCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
+            static ArVoid_t _scrollCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
 
-            const Window* parent;
-            ArBool_t keys[AFW_GENGINE_INPUT_MAX_KEYS];
-            ArBool_t mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
-            ArDouble_t mx, my;
+            const Window* _parent;
+            ArBool_t _keys[AFW_GENGINE_INPUT_MAX_KEYS];
+            ArBool_t _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
+            ArDouble_t _mx, _my;
         };
     }
 }

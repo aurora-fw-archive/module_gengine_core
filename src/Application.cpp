@@ -26,15 +26,16 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		Application::Application(const char* name, GraphicsAPI gapi)
+		Application::Application(const char* name, const GraphicsAPI& gapi)
 			: //vkappinfo(), vkinstanceinfo(), vkinstance(),
-			  name(name), gapi(gapi)
+			  _name(name), _gapi(gapi)
 		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 				LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
 				D3DCAPS9 caps;
 			#endif
-			switch (gapi) {
+			switch (_gapi)
+			{
 				case GraphicsAPI::Vulkan:
 					// TODO: Implement Vulkan backend
 					/*vkappinfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;

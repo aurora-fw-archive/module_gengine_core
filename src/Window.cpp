@@ -23,23 +23,23 @@
 
 namespace AuroraFW {
     namespace GEngine {
-        WindowProperties::WindowProperties(uint width, uint height, bool fullscreen, bool vsync)
+        WindowProperties::WindowProperties(const uint& width, const uint& height, const bool& fullscreen, const bool& vsync)
             : width(width), height(height), fullscreen(fullscreen), vsync(vsync)
         {}
 
-        Window::Window(const GEngine::Application& gapp, const char* name, const WindowProperties& wp)
-            : window(), monitor(glfwGetPrimaryMonitor()), name(name), width(wp.width), height(wp.height),
-              fullscreen(wp.fullscreen), vsync(wp.vsync)
+        Window::Window(const GEngine::Application& gapp, const char *name, const WindowProperties& wp)
+            : window(), _monitor(glfwGetPrimaryMonitor()), _name(name), _width(wp.width), _height(wp.height),
+              _fullscreen(wp.fullscreen), _vsync(wp.vsync)
               
         {
 
             if (!glfwInit())
                 exit(EXIT_FAILURE);
 
-            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-            if(fullscreen || vsync ||
-               width == 0 || height == 0)
+            if(_fullscreen || _vsync ||
+               _width == 0 || _height == 0)
             {
                 glfwWindowHint(GLFW_RED_BITS, mode->redBits);
                 glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -47,24 +47,29 @@ namespace AuroraFW {
                 glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
             }
 
-            if(width == 0 || height == 0) {
-                width = mode->width;
-                height = mode->height;
+            if(_width == 0 || _height == 0)
+            {
+                _width = mode->width;
+                _height = mode->height;
             }
 
-            if(fullscreen) {
-                if(vsync) {
-                    window = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
-                    glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, width, height, mode->refreshRate);
+            if(_fullscreen)
+            {
+                if(_vsync)
+                {
+                    window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+                    glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, _width, _height, mode->refreshRate);
                 }
-                else window = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
-            } else {
-                if(vsync) {
-                    window = glfwCreateWindow(width, height, name, NULL, NULL);
-                    glfwSetWindowMonitor(window, NULL, 0, 0, width, height, mode->refreshRate);
+                else window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+            } else
+            {
+                if(_vsync)
+                {
+                    window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
+                    glfwSetWindowMonitor(window, NULL, 0, 0, _width, _height, mode->refreshRate);
 
                 }
-                else window = glfwCreateWindow(width, height, name, NULL, NULL);
+                else window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
             }
 
             if (!window)
@@ -75,8 +80,10 @@ namespace AuroraFW {
 
             /* Make the window's context current */
             glfwMakeContextCurrent(window);
-            if(gapp.gapi == GraphicsAPI::OpenGL) {
-                glfwSetWindowSizeCallback(window, [](GLFWwindow* window __attribute__((unused)), int width, int height) {
+            if(gapp._gapi == GraphicsAPI::OpenGL)
+            {
+                glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
+                {
                     glViewport(0, 0, width, height);
                 });
             }
@@ -87,23 +94,27 @@ namespace AuroraFW {
             }
         }
 
-        void Window::Update() {
-            /* Swap front and back buffers */
+        void Window::Update()
+        {
+            // Swap front and back buffers 
             glfwSwapBuffers(window);
-            glfwGetFramebufferSize(window, (int*)&width, (int*) &height);
-            /* Poll for and process events */
+            glfwGetFramebufferSize(window, (int*)&_width, (int*)&_height);
+            // Poll for and process events 
             glfwPollEvents();
         }
 
-        void Window::Clear() const {
+        void Window::Clear() const
+        {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
 
-        bool Window::isClosed() const {
+        bool Window::isClosed() const
+        {
             return glfwWindowShouldClose(window) == 1;
         }
 
-        Window::~Window() {
+        Window::~Window()
+        {
             glfwDestroyWindow(window);
             glfwTerminate();
         }

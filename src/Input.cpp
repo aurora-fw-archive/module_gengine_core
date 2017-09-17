@@ -20,60 +20,65 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		InputManager::InputManager(Window* parent)
-			: parent(parent)
+		InputManager::InputManager(const Window *parent)
+			: _parent(parent)
 		{
-			for(int i = 0; i < AFW_GENGINE_INPUT_MAX_KEYS; i++) {
-				keys[i] = false;
+			for(int i = 0; i < AFW_GENGINE_INPUT_MAX_KEYS; i++)
+			{
+				_keys[i] = false;
 			}
 
-			for(int i = 0; i < AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS; i++) {
-				mouseButtons[i] = false;
+			for(int i = 0; i < AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS; i++)
+			{
+				_mouseButtons[i] = false;
 			}
 
-			glfwSetWindowUserPointer(parent->window, this);
-			glfwSetKeyCallback(parent->window, keyCallback);
-			glfwSetMouseButtonCallback(parent->window, mouseButtonCallback);
-			glfwSetCursorPosCallback(parent->window, cursorPosCallback);
+			glfwSetWindowUserPointer(_parent->window, this);
+			glfwSetKeyCallback(_parent->window, _keyCallback);
+			glfwSetMouseButtonCallback(_parent->window, _mouseButtonCallback);
+			glfwSetCursorPosCallback(_parent->window, _cursorPosCallback);
 		}
 
 		InputManager::~InputManager()
 		{}
 
-		bool InputManager::isKeyPressed(uint_t key) const {
+		bool InputManager::isKeyPressed(const uint_t& key) const
+		{
 			if(key >= AFW_GENGINE_INPUT_MAX_KEYS)
 				return false;
-			return keys[key];
+			return _keys[key];
 		}
 
-		bool InputManager::isMouseButtonPressed(uint_t btn) const {
+		bool InputManager::isMouseButtonPressed(const uint_t& btn) const
+		{
 			if(btn >= AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS)
 				return false;
-			return mouseButtons[btn];
+			return _mouseButtons[btn];
 		}
 
-		void InputManager::getMousePosition(double& x, double& y) const {
-			x = mx;
-			y = my;
-		}
-
-		void InputManager::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+		void InputManager::getMousePosition(double& x, double& y) const
 		{
-			InputManager* in = (InputManager*)glfwGetWindowUserPointer(window);
-			in->keys[key] = action != GLFW_RELEASE;
+			x = _mx;
+			y = _my;
 		}
 
-		void InputManager::mouseButtonCallback(GLFWwindow* window, int btn, int action, int mods)
+		void InputManager::_keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
-			InputManager* in = (InputManager*)glfwGetWindowUserPointer(window);
-			in->mouseButtons[btn] = action != GLFW_RELEASE;
+			InputManager *in = (InputManager*)glfwGetWindowUserPointer(window);
+			in->_keys[key] = action != GLFW_RELEASE;
 		}
 
-		void InputManager::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+		void InputManager::_mouseButtonCallback(GLFWwindow *window, int btn, int action, int mods)
 		{
-			InputManager* in = (InputManager*)glfwGetWindowUserPointer(window);
-			in->mx = xpos;
-			in->my = ypos;
+			InputManager *in = (InputManager*)glfwGetWindowUserPointer(window);
+			in->_mouseButtons[btn] = action != GLFW_RELEASE;
+		}
+
+		void InputManager::_cursorPosCallback(GLFWwindow *window, double xpos, double ypos)
+		{
+			InputManager *in = (InputManager*)glfwGetWindowUserPointer(window);
+			in->_mx = xpos;
+			in->_my = ypos;
 		}
 	}
 }
