@@ -26,48 +26,48 @@
 #include <sstream>
 
 namespace AuroraFW {
-    namespace GEngine {
-        enum class AssetType {
-            Audio,
-            Font,
-            GUI,
-            Material,
-            Model,
-            Terrain,
-            Texture,
-            Shader
-        };
+	namespace GEngine {
+		enum class AssetType {
+			Audio,
+			Font,
+			GUI,
+			Material,
+			Model,
+			Terrain,
+			Texture,
+			Shader
+		};
 
-        class AssetNotFoundException: public std::exception
-        {
-        private:
-            const char* path;
-        public:
-            AssetNotFoundException(const char* );
-            virtual const char* what() const throw();
-        };
+		class AssetNotFoundException: public std::exception
+		{
+		private:
+			const char* path;
+		public:
+			AssetNotFoundException(const char* );
+			virtual const char* what() const throw();
+		};
 
-        class AssetTypeInvalidException: public std::exception
-        {
-            virtual const char* what() const throw();
-        };
+		class AssetTypeInvalidException: public std::exception
+		{
+			virtual const char* what() const throw();
+		};
 
-        class AFW_PREFIX AssetManager {
-        private:
-            static AssetManager* instance;
-            AssetManager() {}
-        public:
-            static AssetManager& getInstance()
-            {
-                if(instance == nullptr)
-                    instance = new AssetManager();
-                
-                return *instance;
-            }
+		class AFW_PREFIX AssetManager {
+		private:
+			static AssetManager* instance;
+			AssetManager() {}
+		public:
+			static AssetManager& getInstance()
+			{
+				if(instance == nullptr)
+					instance = new AssetManager();
+				
+				return *instance;
+			}
 
-            static auto loadAsset(const char* path , const AssetType& type);
-        };
-    }
+			static auto loadAsset(const char* path , const AssetType& type);
+		};
+	}
 }
 
 #endif // AURORAFW_GENGINE_ASSETMANAGER_H
