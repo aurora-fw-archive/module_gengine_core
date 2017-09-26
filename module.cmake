@@ -33,6 +33,7 @@ add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_
                                         ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Application.cpp
                                         ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Input.cpp
 										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/AssetManager.cpp
+										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Color.cpp
 								)
 
 target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl

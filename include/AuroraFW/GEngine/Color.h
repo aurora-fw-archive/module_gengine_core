@@ -23,7 +23,9 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		enum CommonColor : ArUInt16_t {
+		#define rgb(r,g,b) ((r << 32) | (g << 16) | (b << 8))
+
+		enum class CommonColor : ArUInt32_t {
 			Black = 0x000000,
 			Red = 0xFF0000,
 			DarkRed = 0x800000,
@@ -54,26 +56,95 @@ namespace AuroraFW {
 			BurlyWood = 0xDEB887,
 			CadetBlue = 0x5F9EA0,
 			Chartreuse = 0x7FFF00
-		}
-		struct Color {
-			Color(byte , byte , byte , byte = 0);
-			Color(const Color &);
-			Color(ArUInt16_t );
-			ArByte_t red() const;
-			ArByte_t green() const;
-			ArByte_t blue() const;
-			ArByte_t alpha() const;
-			ArVoid_t setRed();
-			ArVoid_t setGreen();
-			ArVoid_t setBlue();
-			ArVoid_t setAlpha();
-			ArVoid_t setRGB();
-
-		private:
-			byte red, green, blue, alpha;
 		};
-		Color RGB(byte , byte , byte , byte = 0);
-		Color CMYK(int , int , int , int , int , int = 0);
+
+		/** A template struct that represents colors
+		 * This struct manipulate colors using a specific data type for color components.
+		 */
+		template<class T>
+		struct BaseColor {
+			BaseColor(ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
+			BaseColor(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
+			BaseColor(ArUInt32_t );
+			BaseColor(CommonColor );
+			explicit BaseColor(const BaseColor<T> &);
+			ArInt_t red() const;
+			ArFloat_t redF() const;
+			ArInt_t green() const;
+			ArFloat_t greenF() const;
+			ArInt_t blue() const;
+			ArFloat_t blueF() const;
+			ArInt_t alpha() const;
+			ArFloat_t alphaF() const;
+			ArVoid_t setRed(ArInt_t );
+			ArVoid_t setRed(ArFloat_t );
+			ArVoid_t setGreen(ArInt_t );
+			ArVoid_t setGreen(ArFloat_t );
+			ArVoid_t setBlue(ArInt_t );
+			ArVoid_t setBlue(ArFloat_t );
+			ArVoid_t setAlpha(ArInt_t );
+			ArVoid_t setAlpha(ArFloat_t );
+			ArVoid_t setRGB(ArUInt32_t );
+			ArVoid_t setRGB(ArInt_t[3] );
+			ArVoid_t setRGBA(ArInt_t[4] );
+
+			static BaseColor<T> CMYK(ArInt_t , ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
+			static BaseColor<T> CMYK(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
+			static BaseColor<T> HSL(ArInt_t , ArInt_t , ArInt_t , ArInt_t= 255);
+			static BaseColor<T> HSL(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
+			static BaseColor<T> HSV(ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
+			static BaseColor<T> HSV(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
+
+			T r, g, b, a;
+		};
+
+		/** A struct that represents colors
+		 * 24-bit colors and a 8-bit alpha channel using bytes as color components.
+		 */
+		typedef BaseColor<ArByte_t> Color;
+
+		/** A struct that represents high precision colors
+		 * 96-bit colors and a 32-bit alpha channel using precision floating point as color components.
+		 */
+		typedef BaseColor<ArFloat_t> ColorF;
+
+		//Inline definitions
+		template<> inline int BaseColor<byte>::red() const
+		{
+			return r;
+		}
+		template<> inline int BaseColor<byte>::green() const
+		{
+			return g;
+		}
+		template<> inline int BaseColor<byte>::blue() const
+		{
+			return b;
+		}
+		template<> inline int BaseColor<byte>::alpha() const
+		{
+			return a;
+		}
+
+		template<> inline float BaseColor<float>::redF() const
+		{
+			return r;
+		}
+
+		template<> inline float BaseColor<float>::greenF() const
+		{
+			return g;
+		}
+
+		template<> inline float BaseColor<float>::blueF() const
+		{
+			return b;
+		}
+
+		template<> inline float BaseColor<float>::alphaF() const
+		{
+			return a;
+		}
 	}
 }
 
