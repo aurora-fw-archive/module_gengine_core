@@ -1,6 +1,5 @@
 #include <AuroraFW/GEngine/Color.h>
 
-#include <AuroraFW/CLI/Output.h>
 #include <AuroraFW/Math/Algorithm.h>
 
 namespace AuroraFW {
