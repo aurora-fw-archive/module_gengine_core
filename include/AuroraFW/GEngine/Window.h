@@ -92,88 +92,89 @@ namespace AuroraFW {
 		class AFW_PREFIX Window
 		{
 			friend InputManager;
-			public:
+			
+		public:
 
-				/**
-				 * Constructs a Window.
-				 * @param gapp The Application connected to this window.
-				 * @param name The name of the window.
-				 * @param wp The WindowProperties desired.
-				 * @see WindowProperties
-				 * @see ~Window()
-				 * @since snapshot20170930
-				 */
-				Window(const GEngine::Application& , const char* , const WindowProperties& );
-				
-				/**
-				 * Destructs the Window object.
-				 * @see Window()
-				 * @since snapshot20170930
-				 */
-				~Window();
+			/**
+			 * Constructs a Window.
+			 * @param gapp The Application connected to this window.
+			 * @param name The name of the window.
+			 * @param wp The WindowProperties desired.
+			 * @see WindowProperties
+			 * @see ~Window()
+			 * @since snapshot20170930
+			 */
+			Window(const GEngine::Application& , const char* , const WindowProperties& );
+			
+			/**
+			 * Destructs the Window object.
+			 * @see Window()
+			 * @since snapshot20170930
+			 */
+			~Window();
 
-				/**
-				 * The copy constructor was deleted, since Window is not suitable to be copied.
-				 * @since snapshot20170930
-				 */
-				Window(const Window&) = delete;
+			/**
+			 * The copy constructor was deleted, since Window is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Window(const Window&) = delete;
 
-				/**
-				 * The copy assignment was deleted, since Window is not suitable to be copied.
-				 * @since snapshot20170930
-				 */
-				Window& operator=(const Window&) = delete;
+			/**
+			 * The copy assignment was deleted, since Window is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Window& operator=(const Window&) = delete;
 
-				/**
-				 * Updates/renders the window.
-				 * @see clear()
-				 * @since snapshot20170930
-				 */
-				void update();
+			/**
+			 * Updates/renders the window.
+			 * @see clear()
+			 * @since snapshot20170930
+			 */
+			void update();
 
-				/**
-				 * Clears the window.
-				 * @see update()
-				 * @since snapshot20170930
-				 */
-				void clear() const;
+			/**
+			 * Clears the window.
+			 * @see update()
+			 * @since snapshot20170930
+			 */
+			void clear() const;
 
-				/**
-				 * Returs whether the window is closed or not.
-				 * @return <code>true</code> if the window was closed. <code>false</code> otherwise.
-				 * @since snapshot20170930
-				 */
-				bool isClosed() const;
+			/**
+			 * Returs whether the window is closed or not.
+			 * @return <code>true</code> if the window was closed. <code>false</code> otherwise.
+			 * @since snapshot20170930
+			 */
+			bool isClosed() const;
 
-				/**
-				 * Returns the width of the window.
-				 * @return Width of the window.
-				 * @see getHeight()
-				 * @since snapshot20170930
-				 */
-				inline uint getWidth() const { return _width; }
+			/**
+			 * Returns the width of the window.
+			 * @return Width of the window.
+			 * @see getHeight()
+			 * @since snapshot20170930
+			 */
+			inline uint getWidth() const { return _width; }
 
-				/**
-				 * Returns the height of the window.
-				 * @return Height of the window.
-				 * @see getWidth()
-				 * @since snapshot20170930
-				 */
-				inline uint getHeight() const { return _height; }
+			/**
+			 * Returns the height of the window.
+			 * @return Height of the window.
+			 * @see getWidth()
+			 * @since snapshot20170930
+			 */
+			inline uint getHeight() const { return _height; }
 
-			protected:
-				/**
-				 * The <a href="http://www.glfw.org/docs/latest/group__window.html" target="_blank">GLFWwindow</a> used to render.
-				 * @since snapshot20170930
-				 */
-				GLFWwindow *window;
+		protected:
+			/**
+			 * The <a href="http://www.glfw.org/docs/latest/group__window.html" target="_blank">GLFWwindow</a> used to render.
+			 * @since snapshot20170930
+			 */
+			GLFWwindow *window;
 
-			private:
-				//void Init();
-				const GLFWmonitor *_monitor;
-				const char *_name;
-				uint _width, _height;
-				const bool _fullscreen, _vsync;
+		private:
+			//void Init();
+			const GLFWmonitor *_monitor;
+			const char *_name;
+			uint _width, _height;
+			const bool _fullscreen, _vsync;
 		};
 	}
 }
