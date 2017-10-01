@@ -145,6 +145,46 @@ namespace AuroraFW {
 		{
 			return a;
 		}
+
+		template<> inline void BaseColor<float>::setRed(float _r)
+		{
+			r = _r;
+		}
+
+		template<> inline void BaseColor<float>::setGreen(float _g)
+		{
+			g = _g;
+		}
+
+		template<> inline void BaseColor<float>::setBlue(float _b)
+		{
+			b = _b;
+		}
+		
+		template<> inline void BaseColor<float>::setAlpha(float _a)
+		{
+			a = _a;
+		}
+
+		template<> inline void BaseColor<byte>::setRed(int _r)
+		{
+			r = _r;
+		}
+
+		template<> inline void BaseColor<byte>::setGreen(int _g)
+		{
+			g = _g;
+		}
+
+		template<> inline void BaseColor<byte>::setBlue(int _b)
+		{
+			b = _b;
+		}
+		
+		template<> inline void BaseColor<byte>::setAlpha(int _a)
+		{
+			a = _a;
+		}
 	}
 }
 

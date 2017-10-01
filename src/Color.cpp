@@ -79,5 +79,45 @@ namespace AuroraFW {
 		{
 			return a/255.0f;
 		}
+
+		template<> void BaseColor<byte>::setRed(float _r)
+		{
+			r = _r*255;
+		}
+
+		template<> void BaseColor<byte>::setGreen(float _g)
+		{
+			g = _g*255;
+		}
+
+		template<> void BaseColor<byte>::setBlue(float _b)
+		{
+			b = _b*255;
+		}
+		
+		template<> void BaseColor<byte>::setAlpha(float _a)
+		{
+			a = _a*255;
+		}
+
+		template<> void BaseColor<float>::setRed(int _r)
+		{
+			r = _r/255.0f;
+		}
+
+		template<> void BaseColor<float>::setGreen(int _g)
+		{
+			g = _g/255.0f;
+		}
+
+		template<> void BaseColor<float>::setBlue(int _b)
+		{
+			b = _b/255.0f;
+		}
+		
+		template<> void BaseColor<float>::setAlpha(int _a)
+		{
+			a = _a/255.0f;
+		}
 	}
 }
