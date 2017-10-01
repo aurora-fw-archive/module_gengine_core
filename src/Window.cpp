@@ -94,7 +94,13 @@ namespace AuroraFW {
 			}
 		}
 
-		void Window::Update()
+		Window::~Window()
+		{
+			glfwDestroyWindow(window);
+			glfwTerminate();
+		}
+
+		void Window::update()
 		{
 			// Swap front and back buffers 
 			glfwSwapBuffers(window);
@@ -103,7 +109,7 @@ namespace AuroraFW {
 			glfwPollEvents();
 		}
 
-		void Window::Clear() const
+		void Window::clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
@@ -111,12 +117,6 @@ namespace AuroraFW {
 		bool Window::isClosed() const
 		{
 			return glfwWindowShouldClose(window) == 1;
-		}
-
-		Window::~Window()
-		{
-			glfwDestroyWindow(window);
-			glfwTerminate();
 		}
 	}
 }

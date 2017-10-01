@@ -33,42 +33,150 @@
 //typedef struct GLFWwindow GLFWwindow;
 //typedef struct GLFWmonitor GLFWmonitor;
 
+/** @file AuroraFW/GEngine/Window.h
+ * Window header. This contains the struct WindowProperties, and
+ * the class Window, used to display objects on the screen.
+ * @since snapshot20170917
+ */
+
 namespace AuroraFW {
-    namespace GEngine {
-        struct AFW_PREFIX WindowProperties {
-            WindowProperties(const uint& , const uint& , const bool& = false, const bool& = false);
-            uint width, height;
-		    bool fullscreen;
-            bool vsync;
-        };
+	namespace GEngine {
+		/**
+		 * A struct to define properties for the window.
+		 * A struct used to declare specific definitions while creating a
+		 * window, such as resolution.
+		 * @since snapshot20170930
+		 */
+		struct AFW_PREFIX WindowProperties {
+			/**
+			 * Constructs a WindowProperties object with the given info.
+			 * @param width The width of the window.
+			 * @param height The height of the window.
+			 * @param fullscreen If the window shall be in fullscreen or not.
+			 * @param vsync If V-sync should be enabled.
+			 * @since snapshot20170930
+			 */
+			WindowProperties(const uint& , const uint& , const bool& = false, const bool& = false);
+			
+			/**
+			 * The width specified for the window.
+			 * @see height
+			 * @since snapshot20170930
+			 */
+			uint width;
 
-        class InputManager;
+			/**
+			 * The height specified for the window.
+			 * @see width
+			 * @since snapshot20170930
+			 */
+			uint height;
 
-        class AFW_PREFIX Window
-        {
-            friend InputManager;
-        	public:
-        		Window(const GEngine::Application& , const char* , const WindowProperties& );
-                ~Window();
-                Window(const Window&) = delete;
-                Window& operator=(const Window&) = delete;
-                void Update();
-                void Clear() const;
-                bool isClosed() const;
-                inline uint getWidth() const { return _width; }
-                inline uint getHeight() const { return _height; }
+			/**
+			 * Tells if the window should be fullscreen or not.
+			 * @see vsync
+			 * @since snapshot20170930
+			 */
+			bool fullscreen;
+			
+			/**
+			 * Tells if v-sync should be enabled.
+			 * @see fullscreen
+			 * @since snapshot20170930
+			 */
+			bool vsync;
+		};
 
-            protected:
-                GLFWwindow *window;
+		class InputManager;
 
-        	private:
-                //void Init();
-                const GLFWmonitor *_monitor;
-                const char *_name;
-                uint _width, _height;
-                const bool _fullscreen, _vsync;
-        };
-    }
+		class AFW_PREFIX Window
+		{
+			friend InputManager;
+			
+		public:
+
+			/**
+			 * Constructs a Window.
+			 * @param gapp The Application connected to this window.
+			 * @param name The name of the window.
+			 * @param wp The WindowProperties desired.
+			 * @see WindowProperties
+			 * @see ~Window()
+			 * @since snapshot20170930
+			 */
+			Window(const GEngine::Application& , const char* , const WindowProperties& );
+			
+			/**
+			 * Destructs the Window object.
+			 * @see Window()
+			 * @since snapshot20170930
+			 */
+			~Window();
+
+			/**
+			 * The copy constructor was deleted, since Window is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Window(const Window&) = delete;
+
+			/**
+			 * The copy assignment was deleted, since Window is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Window& operator=(const Window&) = delete;
+
+			/**
+			 * Updates/renders the window.
+			 * @see clear()
+			 * @since snapshot20170930
+			 */
+			void update();
+
+			/**
+			 * Clears the window.
+			 * @see update()
+			 * @since snapshot20170930
+			 */
+			void clear() const;
+
+			/**
+			 * Returs whether the window is closed or not.
+			 * @return <code>true</code> if the window was closed. <code>false</code> otherwise.
+			 * @since snapshot20170930
+			 */
+			bool isClosed() const;
+
+			/**
+			 * Returns the width of the window.
+			 * @return Width of the window.
+			 * @see getHeight()
+			 * @since snapshot20170930
+			 */
+			inline uint getWidth() const { return _width; }
+
+			/**
+			 * Returns the height of the window.
+			 * @return Height of the window.
+			 * @see getWidth()
+			 * @since snapshot20170930
+			 */
+			inline uint getHeight() const { return _height; }
+
+		protected:
+			/**
+			 * The <a href="http://www.glfw.org/docs/latest/group__window.html" target="_blank">GLFWwindow</a> used to render.
+			 * @since snapshot20170930
+			 */
+			GLFWwindow *window;
+
+		private:
+			//void Init();
+			const GLFWmonitor *_monitor;
+			const char *_name;
+			uint _width, _height;
+			const bool _fullscreen, _vsync;
+		};
+	}
 }
 
 #endif // AURORAFW_GENGINE_WINDOW_H
