@@ -16,6 +16,12 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
+/** @file AuroraFW/GEngine/Application.h
+ * Application header. Contais the Application
+ * class, which is needed to build an application
+ * on AuroraFW.
+ * @since snapshot20170930
+ */
 
 #ifndef AURORAFW_GENGINE_APPLICATION_H
 #define AURORAFW_GENGINE_APPLICATION_H
@@ -31,22 +37,56 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_PREFIX Application {
-        friend class Window;
-		public:
-			Application(const char* , const GraphicsAPI& = GraphicsAPI::OpenGL);
-            ~Application();
-            Application(const Application&) = delete;
-            Application& operator= (const Application&) = delete;
-        protected:
-            // TODO: Implement Vulkan backend
-            /*VkApplicationInfo vkappinfo;
-            VkInstanceCreateInfo vkinstanceinfo;
-            VkInstance vkinstance;*/
 
-        private:
-            const char* _name;
-            GraphicsAPI _gapi;
+		/**
+		 * A class representing an AuroraFW graphical application.
+		 * A class that represents an AuroraFW graphical application. It's associated
+		 * with a Window. From here, developers are able to use AuroraFW's Graphics
+		 * Engine for their projects.
+		 * @since snapshot20170930
+		 */
+		class AFW_PREFIX Application {
+
+		friend class Window;
+
+		public:
+
+			/**
+			 * Constructs an Application object.
+			 * @param name The name of the window.
+			 * @param gapi The desired GraphicsAPI backend.
+			 * @see ~Application()
+			 * @since snapshot20170930
+			 */
+			Application(const char* , const GraphicsAPI& = GraphicsAPI::OpenGL);
+
+			/**
+			 * Destructs the object.
+			 * @see Application()
+			 * @since snapshot20170930
+			 */
+			~Application();
+
+			/**
+			 * The copy constructor was deleted, since Application is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Application(const Application&) = delete;
+
+			/**
+			 * The copy assignment was deleted, since Application is not suitable to be copied.
+			 * @since snapshot20170930
+			 */
+			Application& operator= (const Application&) = delete;
+		protected:
+			// TODO: Implement Vulkan backend
+			/*VkApplicationInfo vkappinfo;
+			VkInstanceCreateInfo vkinstanceinfo;
+			VkInstance vkinstance;*/
+
+		private:
+			const char* _name;
+			GraphicsAPI _gapi;
 		};
 	}
 }
