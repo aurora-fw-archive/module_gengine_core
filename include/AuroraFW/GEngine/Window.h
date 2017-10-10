@@ -47,7 +47,7 @@ namespace AuroraFW {
 		 * window, such as resolution.
 		 * @since snapshot20170930
 		 */
-		struct AFW_PREFIX WindowProperties {
+		struct AFW_EXPORT WindowProperties {
 			/**
 			 * Constructs a WindowProperties object with the given info.
 			 * @param width The width of the window.
@@ -89,7 +89,7 @@ namespace AuroraFW {
 
 		class InputManager;
 
-		class AFW_PREFIX Window
+		class AFW_EXPORT Window
 		{
 			friend InputManager;
 			

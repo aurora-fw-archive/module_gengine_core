@@ -23,7 +23,7 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_PREFIX TextureAsset {
+		class AFW_EXPORT TextureAsset {
 		public:
 			TextureAsset(const char* ) {}
 		};

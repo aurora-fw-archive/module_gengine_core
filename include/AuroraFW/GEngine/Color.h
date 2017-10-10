@@ -24,8 +24,8 @@
 namespace AuroraFW {
 	namespace GEngine {
 		/**
-		 * Converts 3 bytes into a hex color code (uint32)
-		 * @param r g b The 3 bytes each corresponding to red, green, and blue values
+		 * Converts 3 byte_ts into a hex color code (uint32)
+		 * @param r g b The 3 byte_ts each corresponding to red, green, and blue values
 		 * @since snapshot20170930
 		 */
 		#define rgb(r,g,b) ((r << 32) | (g << 16) | (b << 8))
@@ -34,7 +34,7 @@ namespace AuroraFW {
 		 * An enum that stores hex-coded colors to be used generally.
 		 * @since snapshot20170930
 		 */
-		enum class CommonColor : ArUInt32_t {
+		enum class CommonColor : afwuint32_t {
 			Black = 0x000000,			/**< <code>0x000000 = </code><span style="background-color:#000000;color:#000000;border:1px solid black">color</span> */
 			Red = 0xFF0000,				/**< <code>0xFF0000 = </code><span style="background-color:#FF0000;color:#FF0000;border:1px solid black">color</span> */
 			DarkRed = 0x800000,			/**< <code>0x800000 = </code><span style="background-color:#800000;color:#800000;border:1px solid black">color</span> */
@@ -73,70 +73,70 @@ namespace AuroraFW {
 		 * @since snapshot20170930
 		 */
 		template<class T>
-		struct BaseColor {
-			BaseColor(ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
-			BaseColor(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
-			BaseColor(ArUInt32_t );
+		struct AFW_EXPORT BaseColor {
+			BaseColor(afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			BaseColor(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			BaseColor(afwuint32_t );
 			BaseColor(CommonColor );
 			explicit BaseColor(const BaseColor<T> &);
-			ArInt_t red() const;
-			ArFloat_t redF() const;
-			ArInt_t green() const;
-			ArFloat_t greenF() const;
-			ArInt_t blue() const;
-			ArFloat_t blueF() const;
-			ArInt_t alpha() const;
-			ArFloat_t alphaF() const;
-			ArVoid_t setRed(ArInt_t );
-			ArVoid_t setRed(ArFloat_t );
-			ArVoid_t setGreen(ArInt_t );
-			ArVoid_t setGreen(ArFloat_t );
-			ArVoid_t setBlue(ArInt_t );
-			ArVoid_t setBlue(ArFloat_t );
-			ArVoid_t setAlpha(ArInt_t );
-			ArVoid_t setAlpha(ArFloat_t );
-			ArVoid_t setRGB(ArUInt32_t );
-			ArVoid_t setRGB(ArInt_t[3] );
-			ArVoid_t setRGBA(ArInt_t[4] );
+			afwuint_t red() const;
+			afwfloat_t redF() const;
+			afwuint_t green() const;
+			afwfloat_t greenF() const;
+			afwuint_t blue() const;
+			afwfloat_t blueF() const;
+			afwuint_t alpha() const;
+			afwfloat_t alphaF() const;
+			afwvoid_t setRed(afwuint_t );
+			afwvoid_t setRed(afwfloat_t );
+			afwvoid_t setGreen(afwuint_t );
+			afwvoid_t setGreen(afwfloat_t );
+			afwvoid_t setBlue(afwuint_t );
+			afwvoid_t setBlue(afwfloat_t );
+			afwvoid_t setAlpha(afwuint_t );
+			afwvoid_t setAlpha(afwfloat_t );
+			afwvoid_t setRGB(afwuint32_t );
+			afwvoid_t setRGB(afwuint_t[3] );
+			afwvoid_t setRGBA(afwuint_t[4] );
 
-			static BaseColor<T> CMYK(ArInt_t , ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
-			static BaseColor<T> CMYK(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
-			static BaseColor<T> HSL(ArInt_t , ArInt_t , ArInt_t , ArInt_t= 255);
-			static BaseColor<T> HSL(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
-			static BaseColor<T> HSV(ArInt_t , ArInt_t , ArInt_t , ArInt_t = 255);
-			static BaseColor<T> HSV(ArFloat_t , ArFloat_t , ArFloat_t , ArFloat_t = 1.0f);
+			static BaseColor<T> CMYK(afwuint_t , afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			static BaseColor<T> HSL(afwuint_t , afwuint_t , afwuint_t , afwuint_t= 255);
+			static BaseColor<T> HSL(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			static BaseColor<T> HSV(afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			static BaseColor<T> HSV(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 
 			T r, g, b, a;
 		};
 
 		/**
 		 * A struct that represents colors
-		 * 24-bit colors and a 8-bit alpha channel using bytes as color components.
+		 * 24-bit colors and a 8-bit alpha channel using byte_ts as color components.
 		 * @since snapshot20170930
 		 */
-		typedef BaseColor<ArByte_t> Color;
+		typedef BaseColor<afwbyte_t> Color;
 
 		/**
 		 * A struct that represents high precision colors
 		 * 96-bit colors and a 32-bit alpha channel using precision floating point as color components.
 		 * @since snapshot20170930
 		 */
-		typedef BaseColor<ArFloat_t> ColorF;
+		typedef BaseColor<afwfloat_t> ColorF;
 
 		//Inline definitions
-		template<> inline int BaseColor<byte>::red() const
+		template<> inline uint_t BaseColor<byte_t>::red() const
 		{
 			return r;
 		}
-		template<> inline int BaseColor<byte>::green() const
+		template<> inline uint_t BaseColor<byte_t>::green() const
 		{
 			return g;
 		}
-		template<> inline int BaseColor<byte>::blue() const
+		template<> inline uint_t BaseColor<byte_t>::blue() const
 		{
 			return b;
 		}
-		template<> inline int BaseColor<byte>::alpha() const
+		template<> inline uint_t BaseColor<byte_t>::alpha() const
 		{
 			return a;
 		}
@@ -181,22 +181,22 @@ namespace AuroraFW {
 			a = _a;
 		}
 
-		template<> inline void BaseColor<byte>::setRed(int _r)
+		template<> inline void BaseColor<byte_t>::setRed(uint_t _r)
 		{
 			r = _r;
 		}
 
-		template<> inline void BaseColor<byte>::setGreen(int _g)
+		template<> inline void BaseColor<byte_t>::setGreen(uint_t _g)
 		{
 			g = _g;
 		}
 
-		template<> inline void BaseColor<byte>::setBlue(int _b)
+		template<> inline void BaseColor<byte_t>::setBlue(uint_t _b)
 		{
 			b = _b;
 		}
 		
-		template<> inline void BaseColor<byte>::setAlpha(int _a)
+		template<> inline void BaseColor<byte_t>::setAlpha(uint_t _a)
 		{
 			a = _a;
 		}

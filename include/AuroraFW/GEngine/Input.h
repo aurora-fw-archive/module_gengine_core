@@ -140,7 +140,7 @@ namespace AuroraFW {
 		 * A class that listens to any input ocurred inside a Window object.
 		 * @since snapshot20170930
 		 */
-		class AFW_PREFIX InputManager {
+		class AFW_EXPORT InputManager {
 		public:
 
 			/**
@@ -165,7 +165,7 @@ namespace AuroraFW {
 			 * @see isMouseButtonPressed()
 			 * @since snapshot20170930
 			 */
-			ArBool_t isKeyPressed(const ArUInt_t& ) const;
+			afwbool_t isKeyPressed(const afwuint_t& ) const;
 
 			/**
 			 * Checks to see if the given mouse button is being pressed.
@@ -174,7 +174,7 @@ namespace AuroraFW {
 			 * @see isKeyPressed()
 			 * @since snapshot20170930
 			 */
-			ArBool_t isMouseButtonPressed(const ArUInt_t& ) const;
+			afwbool_t isMouseButtonPressed(const afwuint_t& ) const;
 
 			/**
 			 * Stores the mouse's current position in the two given variables.
@@ -182,25 +182,25 @@ namespace AuroraFW {
 			 * @see getScrollPosition()
 			 * @since snapshot20170930
 			 */
-			ArVoid_t getMousePosition(ArDouble_t& , ArDouble_t& ) const;
+			afwvoid_t getMousePosition(afwdouble_t& , afwdouble_t& ) const;
 
 			/**
 			 * Not implemented yet, presumably stores the mouse's scroll position in the two given variables.
 			 * @see getMousePosition()
 			 * @since snapshot20170930
 			 */
-			ArVoid_t getScrollPosition(const ArDouble_t& , const ArDouble_t& ) const;
+			afwvoid_t getScrollPosition(const afwdouble_t& , const afwdouble_t& ) const;
 
 		private:
-			static ArVoid_t _keyCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t , ArInt_t );
-			static ArVoid_t _mouseButtonCallback(GLFWwindow* , ArInt_t , ArInt_t , ArInt_t );
-			static ArVoid_t _cursorPosCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
-			static ArVoid_t _scrollCallback(GLFWwindow* , ArDouble_t , ArDouble_t );
+			static afwvoid_t _keyCallback(GLFWwindow* , afwint_t , afwint_t , afwint_t , afwint_t );
+			static afwvoid_t _mouseButtonCallback(GLFWwindow* , afwint_t , afwint_t , afwint_t );
+			static afwvoid_t _cursorPosCallback(GLFWwindow* , afwdouble_t , afwdouble_t );
+			static afwvoid_t _scrollCallback(GLFWwindow* , afwdouble_t , afwdouble_t );
 
 			const Window* _parent;
-			ArBool_t _keys[AFW_GENGINE_INPUT_MAX_KEYS];
-			ArBool_t _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
-			ArDouble_t _mx, _my;
+			afwbool_t _keys[AFW_GENGINE_INPUT_MAX_KEYS];
+			afwbool_t _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
+			afwdouble_t _mx, _my;
 		};
 	}
 }

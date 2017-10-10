@@ -45,7 +45,7 @@ namespace AuroraFW {
 		 * Engine for their projects.
 		 * @since snapshot20170930
 		 */
-		class AFW_PREFIX Application {
+		class AFW_EXPORT Application {
 
 		friend class Window;
 

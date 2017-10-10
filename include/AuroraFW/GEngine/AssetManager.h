@@ -117,8 +117,7 @@ namespace AuroraFW {
 		 * with static methods for the sole purpose of loading assets.
 		 * @since snapshot20170930
 		 */
-		class AFW_PREFIX AssetManager {
-		private:
+		class AFW_EXPORT AssetManager {
 			static AssetManager* instance;
 			AssetManager() {}
 		public:
