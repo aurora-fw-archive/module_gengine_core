@@ -18,7 +18,6 @@ message(STATUS "Loading gengine-core module...")
 
 find_package(glfw3 3.2 REQUIRED)
 find_package(CUDA)
-find_package(FreeImage REQUIRED)
 
 if (NOT CONFIGURED_ONCE)
 	set(AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR ${AURORAFW_MODULE_GENGINE_CORE_DIR}/src)
@@ -38,7 +37,6 @@ add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_
 										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Color.cpp
 								)
 
-target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl
-					  glfw freeimage)
+target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl glfw)
 
 set_target_properties(aurorafw-gengine-core PROPERTIES OUTPUT_NAME aurorafw-gengine-core)
