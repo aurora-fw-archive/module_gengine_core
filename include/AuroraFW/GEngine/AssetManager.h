@@ -80,7 +80,7 @@ namespace AuroraFW {
 		class AssetNotFoundException: public std::exception
 		{
 		private:
-			const char* path;
+			const char *_path;
 		public:
 			/**
 			 * The constructor of the exception.

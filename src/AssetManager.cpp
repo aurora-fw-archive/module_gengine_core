@@ -21,12 +21,12 @@
 namespace AuroraFW {
 	namespace GEngine {
 		AssetNotFoundException::AssetNotFoundException(const char* path)
-			: path(path) {}
+			: _path(path) {}
 
 		const char* AssetNotFoundException::what() const throw()
 		{
 			std::stringstream error;
-			error << "The file " << path << " couldn't be found/read!";
+			error << "The file " << _path << " couldn't be found/read!";
 			return error.str().c_str();
 		}
 
