@@ -4,7 +4,7 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		template<> BaseColor<float>::BaseColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+		template<> BaseColor<float>::BaseColor(int r, int g, int b, int a)
 			: r(r/255.0f),
 			  g(g/255.0f),
 			  b(b/255.0f),
@@ -39,7 +39,7 @@ namespace AuroraFW {
 			b = (byte_t)hex;
 		}
 		
-		template<> BaseColor<byte_t>::BaseColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+		template<> BaseColor<byte_t>::BaseColor(int r, int g, int b, int a)
 			: r(r), g(g), b(b), a(a)
 		{}
 

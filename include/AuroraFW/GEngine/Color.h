@@ -74,7 +74,7 @@ namespace AuroraFW {
 		 */
 		template<class T>
 		struct AFW_EXPORT BaseColor {
-			BaseColor(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
+			BaseColor(afwint_t , afwint_t , afwint_t , afwint_t = 255);
 			BaseColor(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 			BaseColor(afwuint32_t );
 			BaseColor(CommonColor );
