@@ -74,36 +74,36 @@ namespace AuroraFW {
 		 */
 		template<class T>
 		struct AFW_EXPORT BaseColor {
-			BaseColor(afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			BaseColor(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
 			BaseColor(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 			BaseColor(afwuint32_t );
 			BaseColor(CommonColor );
 			explicit BaseColor(const BaseColor<T> &);
-			afwuint_t red() const;
+			afwuint8_t red() const;
 			afwfloat_t redF() const;
-			afwuint_t green() const;
+			afwuint8_t green() const;
 			afwfloat_t greenF() const;
-			afwuint_t blue() const;
+			afwuint8_t blue() const;
 			afwfloat_t blueF() const;
-			afwuint_t alpha() const;
+			afwuint8_t alpha() const;
 			afwfloat_t alphaF() const;
-			afwvoid_t setRed(afwuint_t );
+			afwvoid_t setRed(afwuint8_t );
 			afwvoid_t setRed(afwfloat_t );
-			afwvoid_t setGreen(afwuint_t );
+			afwvoid_t setGreen(afwuint8_t );
 			afwvoid_t setGreen(afwfloat_t );
-			afwvoid_t setBlue(afwuint_t );
+			afwvoid_t setBlue(afwuint8_t );
 			afwvoid_t setBlue(afwfloat_t );
-			afwvoid_t setAlpha(afwuint_t );
+			afwvoid_t setAlpha(afwuint8_t );
 			afwvoid_t setAlpha(afwfloat_t );
 			afwvoid_t setRGB(afwuint32_t );
-			afwvoid_t setRGB(afwuint_t[3] );
-			afwvoid_t setRGBA(afwuint_t[4] );
+			afwvoid_t setRGB(afwuint8_t[3] );
+			afwvoid_t setRGBA(afwuint8_t[4] );
 
-			static BaseColor<T> CMYK(afwuint_t , afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			static BaseColor<T> CMYK(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
 			static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
-			static BaseColor<T> HSL(afwuint_t , afwuint_t , afwuint_t , afwuint_t= 255);
+			static BaseColor<T> HSL(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t= 255);
 			static BaseColor<T> HSL(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
-			static BaseColor<T> HSV(afwuint_t , afwuint_t , afwuint_t , afwuint_t = 255);
+			static BaseColor<T> HSV(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
 			static BaseColor<T> HSV(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 
 			T r, g, b, a;
@@ -124,19 +124,19 @@ namespace AuroraFW {
 		typedef BaseColor<afwfloat_t> ColorF;
 
 		//Inline definitions
-		template<> inline uint_t BaseColor<byte_t>::red() const
+		template<> inline uint8_t BaseColor<byte_t>::red() const
 		{
 			return r;
 		}
-		template<> inline uint_t BaseColor<byte_t>::green() const
+		template<> inline uint8_t BaseColor<byte_t>::green() const
 		{
 			return g;
 		}
-		template<> inline uint_t BaseColor<byte_t>::blue() const
+		template<> inline uint8_t BaseColor<byte_t>::blue() const
 		{
 			return b;
 		}
-		template<> inline uint_t BaseColor<byte_t>::alpha() const
+		template<> inline uint8_t BaseColor<byte_t>::alpha() const
 		{
 			return a;
 		}
@@ -181,22 +181,22 @@ namespace AuroraFW {
 			a = _a;
 		}
 
-		template<> inline void BaseColor<byte_t>::setRed(uint_t _r)
+		template<> inline void BaseColor<byte_t>::setRed(uint8_t _r)
 		{
 			r = _r;
 		}
 
-		template<> inline void BaseColor<byte_t>::setGreen(uint_t _g)
+		template<> inline void BaseColor<byte_t>::setGreen(uint8_t _g)
 		{
 			g = _g;
 		}
 
-		template<> inline void BaseColor<byte_t>::setBlue(uint_t _b)
+		template<> inline void BaseColor<byte_t>::setBlue(uint8_t _b)
 		{
 			b = _b;
 		}
 		
-		template<> inline void BaseColor<byte_t>::setAlpha(uint_t _a)
+		template<> inline void BaseColor<byte_t>::setAlpha(uint8_t _a)
 		{
 			a = _a;
 		}

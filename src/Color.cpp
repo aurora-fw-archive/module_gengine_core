@@ -4,11 +4,11 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		template<> BaseColor<float>::BaseColor(uint_t r, uint_t g, uint_t b, uint_t a)
-			: r(Math::clamp(r, static_cast<uint_t>(0), static_cast<uint_t>(255))/255.0f),
-			  g(Math::clamp(g, static_cast<uint_t>(0), static_cast<uint_t>(255))/255.0f),
-			  b(Math::clamp(b, static_cast<uint_t>(0), static_cast<uint_t>(255))/255.0f),
-			  a(Math::clamp(a, static_cast<uint_t>(0), static_cast<uint_t>(255))/255.0f)
+		template<> BaseColor<float>::BaseColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+			: r(r/255.0f),
+			  g(g/255.0f),
+			  b(b/255.0f),
+			  a(a/255.0f)
 		{}
 
 		template<> BaseColor<float>::BaseColor(uint32_t hex)
@@ -39,26 +39,26 @@ namespace AuroraFW {
 			b = (byte_t)hex;
 		}
 		
-		template<> BaseColor<byte_t>::BaseColor(uint_t r, uint_t g, uint_t b, uint_t a)
+		template<> BaseColor<byte_t>::BaseColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 			: r(r), g(g), b(b), a(a)
 		{}
 
-		template<> uint_t BaseColor<float>::red() const
+		template<> uint8_t BaseColor<float>::red() const
 		{
 			return r*255;
 		}
 
-		template<> uint_t BaseColor<float>::green() const
+		template<> uint8_t BaseColor<float>::green() const
 		{
 			return g*255;
 		}
 
-		template<> uint_t BaseColor<float>::blue() const
+		template<> uint8_t BaseColor<float>::blue() const
 		{
 			return b*255;
 		}
 
-		template<> uint_t BaseColor<float>::alpha() const
+		template<> uint8_t BaseColor<float>::alpha() const
 		{
 			return a*255;
 		}
@@ -103,22 +103,22 @@ namespace AuroraFW {
 			a = _a*255;
 		}
 
-		template<> void BaseColor<float>::setRed(uint_t _r)
+		template<> void BaseColor<float>::setRed(uint8_t _r)
 		{
 			r = _r/255.0f;
 		}
 
-		template<> void BaseColor<float>::setGreen(uint_t _g)
+		template<> void BaseColor<float>::setGreen(uint8_t _g)
 		{
 			g = _g/255.0f;
 		}
 
-		template<> void BaseColor<float>::setBlue(uint_t _b)
+		template<> void BaseColor<float>::setBlue(uint8_t _b)
 		{
 			b = _b/255.0f;
 		}
 		
-		template<> void BaseColor<float>::setAlpha(uint_t _a)
+		template<> void BaseColor<float>::setAlpha(uint8_t _a)
 		{
 			a = _a/255.0f;
 		}
