@@ -27,9 +27,9 @@ namespace AuroraFW {
 
 		template<> BaseColor<byte_t>::BaseColor(uint32_t hex)
 		{
-			r = (byte_t)(hex >> 16);
-			g = (byte_t)(hex >> 8);
-			b = (byte_t)hex;
+			r = hex >> 16;
+			g = hex >> 8;
+			b = hex;
 		}
 
 		template<> BaseColor<byte_t>::BaseColor(CommonColor hex)
