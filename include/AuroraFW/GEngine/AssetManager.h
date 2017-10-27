@@ -118,7 +118,8 @@ namespace AuroraFW {
 		 * @since snapshot20170930
 		 */
 		class AFW_EXPORT AssetManager {
-			static AssetManager* instance;
+		private:
+			static AssetManager *_instance;
 			AssetManager() {}
 		public:
 			/**
@@ -128,10 +129,10 @@ namespace AuroraFW {
 			 */
 			static AssetManager& getInstance()
 			{
-				if(instance == nullptr)
-					instance = new AssetManager();
+				if(_instance == nullptr)
+					_instance = new AssetManager();
 				
-				return *instance;
+				return *_instance;
 			}
 
 			/**
