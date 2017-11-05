@@ -142,7 +142,6 @@ namespace AuroraFW {
 		 */
 		class AFW_EXPORT InputManager {
 		public:
-
 			/**
 			 * Constructs an InputManager object associated with the given Window.
 			 * @param parent The window's pointer

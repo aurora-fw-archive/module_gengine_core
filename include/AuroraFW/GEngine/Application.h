@@ -46,11 +46,8 @@ namespace AuroraFW {
 		 * @since snapshot20170930
 		 */
 		class AFW_EXPORT Application {
-
-		friend class Window;
-
+			friend class Window;
 		public:
-
 			/**
 			 * Constructs an Application object.
 			 * @param name The name of the window.
@@ -83,7 +80,6 @@ namespace AuroraFW {
 			/*VkApplicationInfo vkappinfo;
 			VkInstanceCreateInfo vkinstanceinfo;
 			VkInstance vkinstance;*/
-
 		private:
 			const char* _name;
 			GraphicsAPI _gapi;

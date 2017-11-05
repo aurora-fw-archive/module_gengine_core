@@ -90,11 +90,11 @@ namespace AuroraFW {
 
 		void Window::update()
 		{
-			// Swap front and back buffers 
+			// Swap front and back buffers
 			glfwSwapBuffers(window);
 			glfwGetFramebufferSize(window, (int*)&_width, (int*)&_height);
 
-			// Poll for and process events 
+			// Poll for and process events
 			glfwPollEvents();
 		}
 
