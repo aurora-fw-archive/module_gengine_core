@@ -38,7 +38,7 @@ namespace AuroraFW {
 			g = (byte_t)((uint32_t)hex >> 8);
 			b = (byte_t)hex;
 		}
-		
+
 		template<> BaseColor<byte_t>::BaseColor(int r, int g, int b, int a)
 			: r(r), g(g), b(b), a(a)
 		{}
@@ -97,7 +97,7 @@ namespace AuroraFW {
 		{
 			b = _b*255;
 		}
-		
+
 		template<> void BaseColor<byte_t>::setAlpha(float _a)
 		{
 			a = _a*255;
@@ -117,7 +117,7 @@ namespace AuroraFW {
 		{
 			b = _b/255.0f;
 		}
-		
+
 		template<> void BaseColor<float>::setAlpha(uint8_t _a)
 		{
 			a = _a/255.0f;

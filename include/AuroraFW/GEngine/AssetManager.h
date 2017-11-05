@@ -77,8 +77,7 @@ namespace AuroraFW {
 		 * An exception to indicate an asset was not found.
 		 * @since snapshot20170930
 		 */
-		class AssetNotFoundException: public std::exception
-		{
+		class AssetNotFoundException: public std::exception {
 		private:
 			const char *_path;
 		public:
@@ -100,15 +99,13 @@ namespace AuroraFW {
 		 * An exception to indicate an invalid asset type (from the enum AssetType)
 		 * @since snapshot20170930
 		 */
-		class AssetTypeInvalidException: public std::exception
-		{
+		class AssetTypeInvalidException: public std::exception {
 		public:
 			/**
 			 * The exception's message:
 			 * <em>"The given AssetType is invalid!"</em>
 			 * @since snapshot20170930
 			 */
-			
 			virtual const char* what() const throw();
 		};
 
@@ -131,7 +128,6 @@ namespace AuroraFW {
 			{
 				if(_instance == nullptr)
 					_instance = new AssetManager();
-				
 				return *_instance;
 			}
 
