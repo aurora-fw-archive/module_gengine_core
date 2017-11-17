@@ -177,7 +177,7 @@ namespace AuroraFW {
 		{
 			b = _b;
 		}
-		
+
 		template<> inline void BaseColor<float>::setAlpha(float _a)
 		{
 			a = _a;
@@ -197,8 +197,8 @@ namespace AuroraFW {
 		{
 			b = _b;
 		}
-		
-		template<> inline void BaseColor<byte_t>::setAlpha(int _a)
+
+		template<> inline void BaseColor<byte_t>::setAlpha(uint8_t _a)
 		{
 			a = _a;
 		}

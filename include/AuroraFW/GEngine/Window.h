@@ -57,7 +57,7 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			WindowProperties(const uint& , const uint& , const bool& = false, const bool& = false);
-			
+
 			/**
 			 * The width specified for the window.
 			 * @see height
@@ -78,7 +78,7 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			bool fullscreen;
-			
+
 			/**
 			 * Tells if v-sync should be enabled.
 			 * @see fullscreen
@@ -89,12 +89,9 @@ namespace AuroraFW {
 
 		class InputManager;
 
-		class AFW_EXPORT Window
-		{
+		class AFW_EXPORT Window {
 			friend InputManager;
-			
 		public:
-
 			/**
 			 * Constructs a Window.
 			 * @param gapp The Application connected to this window.
@@ -105,7 +102,7 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			Window(const GEngine::Application& , const char* , const WindowProperties& );
-			
+
 			/**
 			 * Destructs the Window object.
 			 * @see Window()
