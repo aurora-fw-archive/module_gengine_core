@@ -21,6 +21,8 @@
 
 #include <AuroraFW/Global.h>
 
+#include <AuroraFW/Math/Algorithm.h>
+
 namespace AuroraFW {
 	namespace GEngine {
 		/**
@@ -79,31 +81,31 @@ namespace AuroraFW {
 			BaseColor(afwuint32_t );
 			BaseColor(CommonColor );
 			explicit BaseColor(const BaseColor<T> &);
-			afwuint8_t red() const;
+			int red() const;
 			afwfloat_t redF() const;
-			afwuint8_t green() const;
+			int green() const;
 			afwfloat_t greenF() const;
-			afwuint8_t blue() const;
+			int blue() const;
 			afwfloat_t blueF() const;
-			afwuint8_t alpha() const;
+			int alpha() const;
 			afwfloat_t alphaF() const;
-			afwvoid_t setRed(afwuint8_t );
+			afwvoid_t setRed(int );
 			afwvoid_t setRed(afwfloat_t );
-			afwvoid_t setGreen(afwuint8_t );
+			afwvoid_t setGreen(int );
 			afwvoid_t setGreen(afwfloat_t );
-			afwvoid_t setBlue(afwuint8_t );
+			afwvoid_t setBlue(int );
 			afwvoid_t setBlue(afwfloat_t );
-			afwvoid_t setAlpha(afwuint8_t );
+			afwvoid_t setAlpha(int );
 			afwvoid_t setAlpha(afwfloat_t );
 			afwvoid_t setRGB(afwuint32_t );
-			afwvoid_t setRGB(afwuint8_t[3] );
-			afwvoid_t setRGBA(afwuint8_t[4] );
+			afwvoid_t setRGB(int[3] );
+			afwvoid_t setRGBA(int[4] );
 
-			static BaseColor<T> CMYK(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
+			static BaseColor<T> CMYK(int , int , int , int , int = 255);
 			static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
-			static BaseColor<T> HSL(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t= 255);
+			static BaseColor<T> HSL(int , int , int , int= 255);
 			static BaseColor<T> HSL(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
-			static BaseColor<T> HSV(afwuint8_t , afwuint8_t , afwuint8_t , afwuint8_t = 255);
+			static BaseColor<T> HSV(int , int , int , int = 255);
 			static BaseColor<T> HSV(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 
 			T r, g, b, a;
@@ -124,19 +126,19 @@ namespace AuroraFW {
 		typedef BaseColor<afwfloat_t> ColorF;
 
 		//Inline definitions
-		template<> inline uint8_t BaseColor<byte_t>::red() const
+		template<> inline int BaseColor<byte_t>::red() const
 		{
 			return r;
 		}
-		template<> inline uint8_t BaseColor<byte_t>::green() const
+		template<> inline int BaseColor<byte_t>::green() const
 		{
 			return g;
 		}
-		template<> inline uint8_t BaseColor<byte_t>::blue() const
+		template<> inline int BaseColor<byte_t>::blue() const
 		{
 			return b;
 		}
-		template<> inline uint8_t BaseColor<byte_t>::alpha() const
+		template<> inline int BaseColor<byte_t>::alpha() const
 		{
 			return a;
 		}
@@ -181,24 +183,59 @@ namespace AuroraFW {
 			a = _a;
 		}
 
-		template<> inline void BaseColor<byte_t>::setRed(uint8_t _r)
+		template<> inline void BaseColor<byte_t>::setRed(int _r)
 		{
 			r = _r;
 		}
 
-		template<> inline void BaseColor<byte_t>::setGreen(uint8_t _g)
+		template<> inline void BaseColor<byte_t>::setGreen(int _g)
 		{
 			g = _g;
 		}
 
-		template<> inline void BaseColor<byte_t>::setBlue(uint8_t _b)
+		template<> inline void BaseColor<byte_t>::setBlue(int _b)
 		{
 			b = _b;
 		}
 		
-		template<> inline void BaseColor<byte_t>::setAlpha(uint8_t _a)
+		template<> inline void BaseColor<byte_t>::setAlpha(int _a)
 		{
 			a = _a;
+		}
+
+		template<> BaseColor<float>::BaseColor(int r, int g, int b, int a)
+		: r(Math::clamp(r, 0, 255)/255.0f),
+		  g(Math::clamp(g, 0, 255)/255.0f),
+		  b(Math::clamp(b, 0, 255)/255.0f),
+		  a(Math::clamp(a, 0, 255)/255.0f)
+		{}
+
+		template<> BaseColor<float>::BaseColor(uint32_t hex)
+		{
+			r = (hex >> 16)/255.0f;
+			g = (hex >> 8)/255.0f;
+			b = hex/255.0f;
+		}
+
+		template<> BaseColor<float>::BaseColor(CommonColor hex)
+		{
+			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16)/255.0f;
+			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8)/255.0f;
+			b = static_cast<byte_t>(hex)/255.0f;
+		}
+
+		template<> BaseColor<byte_t>::BaseColor(uint32_t hex)
+		{
+			r = static_cast<byte_t>(hex) >> 16;
+			g = static_cast<byte_t>(hex) >> 8;
+			b = static_cast<byte_t>(hex);
+		}
+
+		template<> BaseColor<byte_t>::BaseColor(CommonColor hex)
+		{
+			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16);
+			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8);
+			b = static_cast<byte_t>(hex);
 		}
 	}
 }
