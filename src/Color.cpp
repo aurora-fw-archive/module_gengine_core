@@ -3,38 +3,38 @@
 namespace AuroraFW {
 	namespace GEngine {
 		template<> BaseColor<float>::BaseColor(int r, int g, int b, int a)
-			: r(r/255.0f),
-			  g(g/255.0f),
-			  b(b/255.0f),
-			  a(a/255.0f)
+		: r(Math::clamp(r, 0, 255)/255.0f),
+		  g(Math::clamp(g, 0, 255)/255.0f),
+		  b(Math::clamp(b, 0, 255)/255.0f),
+		  a(Math::clamp(a, 0, 255)/255.0f)
 		{}
 
 		template<> BaseColor<float>::BaseColor(uint32_t hex)
 		{
-			r = (byte_t)(hex >> 16)/255.0f;
-			g = (byte_t)(hex >> 8)/255.0f;
-			b = (byte_t)hex/255.0f;
+			r = (hex >> 16)/255.0f;
+			g = (hex >> 8)/255.0f;
+			b = hex/255.0f;
 		}
 
 		template<> BaseColor<float>::BaseColor(CommonColor hex)
 		{
-			r = (byte_t)((uint32_t)hex >> 16)/255.0f;
-			g = (byte_t)((uint32_t)hex >> 8)/255.0f;
-			b = (byte_t)hex/255.0f;
+			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16)/255.0f;
+			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8)/255.0f;
+			b = static_cast<byte_t>(hex)/255.0f;
 		}
 
 		template<> BaseColor<byte_t>::BaseColor(uint32_t hex)
 		{
-			r = hex >> 16;
-			g = hex >> 8;
-			b = hex;
+			r = static_cast<byte_t>(hex) >> 16;
+			g = static_cast<byte_t>(hex) >> 8;
+			b = static_cast<byte_t>(hex);
 		}
 
 		template<> BaseColor<byte_t>::BaseColor(CommonColor hex)
 		{
-			r = (byte_t)((uint32_t)hex >> 16);
-			g = (byte_t)((uint32_t)hex >> 8);
-			b = (byte_t)hex;
+			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16);
+			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8);
+			b = static_cast<byte_t>(hex);
 		}
 
 		template<> BaseColor<byte_t>::BaseColor(int r, int g, int b, int a)
@@ -115,15 +115,13 @@ namespace AuroraFW {
 		{
 			b = _b/255.0f;
 		}
-<<<<<<< HEAD
-		
-		template<> void BaseColor<float>::setAlpha(int _a)
-=======
 
-		template<> void BaseColor<float>::setAlpha(uint8_t _a)
->>>>>>> 8aca1da0e061eeab9a5e1e929dcab92b054a34ba
+		template<> void BaseColor<float>::setAlpha(int _a)
 		{
 			a = _a/255.0f;
 		}
+
+		template struct BaseColor<float>;
+		template struct BaseColor<byte_t>;
 	}
 }

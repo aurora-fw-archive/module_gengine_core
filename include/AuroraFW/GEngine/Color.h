@@ -198,44 +198,9 @@ namespace AuroraFW {
 			b = _b;
 		}
 
-		template<> inline void BaseColor<byte_t>::setAlpha(uint8_t _a)
+		template<> inline void BaseColor<byte_t>::setAlpha(int _a)
 		{
 			a = _a;
-		}
-
-		template<> BaseColor<float>::BaseColor(int r, int g, int b, int a)
-		: r(Math::clamp(r, 0, 255)/255.0f),
-		  g(Math::clamp(g, 0, 255)/255.0f),
-		  b(Math::clamp(b, 0, 255)/255.0f),
-		  a(Math::clamp(a, 0, 255)/255.0f)
-		{}
-
-		template<> BaseColor<float>::BaseColor(uint32_t hex)
-		{
-			r = (hex >> 16)/255.0f;
-			g = (hex >> 8)/255.0f;
-			b = hex/255.0f;
-		}
-
-		template<> BaseColor<float>::BaseColor(CommonColor hex)
-		{
-			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16)/255.0f;
-			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8)/255.0f;
-			b = static_cast<byte_t>(hex)/255.0f;
-		}
-
-		template<> BaseColor<byte_t>::BaseColor(uint32_t hex)
-		{
-			r = static_cast<byte_t>(hex) >> 16;
-			g = static_cast<byte_t>(hex) >> 8;
-			b = static_cast<byte_t>(hex);
-		}
-
-		template<> BaseColor<byte_t>::BaseColor(CommonColor hex)
-		{
-			r = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 16);
-			g = static_cast<byte_t>(static_cast<uint32_t>(hex) >> 8);
-			b = static_cast<byte_t>(hex);
 		}
 	}
 }
