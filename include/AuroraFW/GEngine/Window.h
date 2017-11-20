@@ -56,7 +56,7 @@ namespace AuroraFW {
 			 * @param vsync If V-sync should be enabled.
 			 * @since snapshot20170930
 			 */
-			WindowProperties(const uint& , const uint& , const bool& = false, const bool& = false);
+			WindowProperties(const uint& , const uint& , const bool& = false);
 
 			/**
 			 * The width specified for the window.
@@ -84,7 +84,21 @@ namespace AuroraFW {
 			 * @see fullscreen
 			 * @since snapshot20170930
 			 */
-			bool vsync;
+			bool vsync = true;
+
+			bool resizable = false;
+			bool visible = true;
+			bool decorated = true;
+			bool focused = true;
+			bool autoIconify = true;
+			bool floating = false;
+			int refreshRate = -1;
+			int auxBuffers = 0;
+			int samples = 0;
+			bool stereo = false;
+			bool sRGB = false;
+			bool doubleBuffer = true;
+			//TODO: http://www.glfw.org/docs/latest/window_guide.html#window_hints
 		};
 
 		class InputManager;

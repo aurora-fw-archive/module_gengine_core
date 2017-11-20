@@ -23,8 +23,8 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		WindowProperties::WindowProperties(const uint& width, const uint& height, const bool& fullscreen, const bool& vsync)
-			: width(width), height(height), fullscreen(fullscreen), vsync(vsync)
+		WindowProperties::WindowProperties(const uint& width, const uint& height, const bool& fullscreen)
+			: width(width), height(height), fullscreen(fullscreen)
 		{}
 
 		Window::Window(const GEngine::Application& gapp, const char *name, const WindowProperties& wp)
@@ -73,7 +73,7 @@ namespace AuroraFW {
 			if(gapp._gapi == GraphicsAPI::OpenGL) {
 				glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
 				{
-					glViewport(0, 0, width, height);
+					//glViewport(0, 0, width, height);
 				});
 			}
 
