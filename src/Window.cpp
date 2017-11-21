@@ -36,6 +36,15 @@ namespace AuroraFW {
 
 			const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
+			if(gapp._gapi == GraphicsAPI::OpenGL) {
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+				#ifdef AFW__DEBUG
+					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+				#endif
+			}
+
 			if(_fullscreen || _vsync ||
 				_width == 0 || _height == 0) {
 				glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -73,7 +82,7 @@ namespace AuroraFW {
 			if(gapp._gapi == GraphicsAPI::OpenGL) {
 				glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
 				{
-					//glViewport(0, 0, width, height);
+					glViewport(0, 0, width, height);
 				});
 			}
 
