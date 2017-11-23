@@ -61,9 +61,9 @@ namespace AuroraFW {
 			Azure = 0xF0FFFF,			/**< <code>0xF0FFFF = </code><span style="background-color:#F0FFFF;color:#F0FFFF;border:1px solid black">color</span> */
 			Beige = 0xF5F5DC,			/**< <code>0xF5F5DC = </code><span style="background-color:#F5F5DC;color:#F5F5DC;border:1px solid black">color</span> */
 			Bisque = 0xFFE4C4,			/**< <code>0xFFE4C4 = </code><span style="background-color:#FFE4C4;color:#FFE4C4;border:1px solid black">color</span> */
-			BlanchedAlmond = 0xFFEBCD,	/**< <code>0xFFEBCD = </code><span style="background-color:#FFEBCD;color:#FFEBCD;border:1px solid black">color</span> */
+			BlanchedAlmond = 0xFFEBCD,  /**< <code>0xFFEBCD = </code><span style="background-color:#FFEBCD;color:#FFEBCD;border:1px solid black">color</span> */
 			BlueViolet =0x8A2BE2,		/**< <code>0x8A2BE2 = </code><span style="background-color:#8A2BE2;color:#8A2BE2;border:1px solid black">color</span> */
-			Brown = 0xA52A2A,			/**< <code>0xA52A2A = </code><span style="background-color:#A52A2A;color:#A52A2A;border:1px solid black">color</span> */
+			Brown = 0x964B00,			/**< <code>0x964B00 = </code><span style="background-color:#964B00;color:#964B00;border:1px solid black">color</span> */
 			BurlyWood = 0xDEB887,		/**< <code>0xDEB887 = </code><span style="background-color:#DEB887;color:#DEB887;border:1px solid black">color</span> */
 			CadetBlue = 0x5F9EA0,		/**< <code>0x5F9EA0 = </code><span style="background-color:#5F9EA0;color:#5F9EA0;border:1px solid black">color</span> */
 			Chartreuse = 0x7FFF00		/**< <code>0x7FFF00 = </code><span style="background-color:#7FFF00;color:#7FFF00;border:1px solid black">color</span> */
