@@ -65,13 +65,17 @@ namespace AuroraFW {
 					window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
 					glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, _width, _height, mode->refreshRate);
 				}
-				else window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+				else {
+					window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+				}
 			} else {
 				if(_vsync) {
 					window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
 					glfwSetWindowMonitor(window, NULL, 0, 0, _width, _height, mode->refreshRate);
 				}
-				else window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
+				else {
+					window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
+				}
 			}
 
 			if (!window) {
