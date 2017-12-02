@@ -22,11 +22,9 @@
 #include <AuroraFW/Global.h>
 
 #include <AuroraFW/GEngine/Application.h>
-#include <AuroraFW/GEngine/OpenGL.h>
+#include <AuroraFW/GEngine/GL/OpenGL.h>
 #include <AuroraFW/GEngine/Input.h>
 
-#include <AuroraFW/GEngine/_GLEW.h>
-#include <AuroraFW/GEngine/_OpenGL.h>
 #include <AuroraFW/GEngine/_Vulkan.h>
 #include <AuroraFW/GEngine/_GLFW.h>
 

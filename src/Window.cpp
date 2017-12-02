@@ -19,7 +19,7 @@
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/Core/Debug.h>
 
-#include <cstring>
+#include <AuroraFW/GEngine/GL/Global.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -87,7 +87,7 @@ namespace AuroraFW {
 			if(gapp._gapi == GraphicsAPI::OpenGL) {
 				glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
 				{
-					glViewport(0, 0, width, height);
+					GLCall(glViewport(0, 0, width, height));
 				});
 			}
 
