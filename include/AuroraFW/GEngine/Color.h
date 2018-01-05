@@ -80,7 +80,7 @@ namespace AuroraFW {
 			BaseColor(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 			BaseColor(afwuint32_t );
 			BaseColor(CommonColor );
-			explicit BaseColor(const BaseColor<T> &);
+			BaseColor(const BaseColor<T> &);
 			int red() const;
 			afwfloat_t redF() const;
 			int green() const;
@@ -101,8 +101,8 @@ namespace AuroraFW {
 			afwvoid_t setRGB(int[3] );
 			afwvoid_t setRGBA(int[4] );
 
-			static BaseColor<T> CMYK(int , int , int , int , int = 255);
-			static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			//static BaseColor<T> CMYK(int , int , int , int , int = 255);
+			//static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 			static BaseColor<T> HSL(int , int , int , int= 255);
 			static BaseColor<T> HSL(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
 			static BaseColor<T> HSV(int , int , int , int = 255);

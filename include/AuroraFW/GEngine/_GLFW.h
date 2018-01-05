@@ -21,7 +21,9 @@
 #ifndef AURORAFW_GENGINE__GLFW_H
 #define AURORAFW_GENGINE__GLFW_H
 
-#define GLFW_INCLUDE_VULKAN
+#ifdef AFW__VULKAN_FOUND
+    #define GLFW_INCLUDE_VULKAN
+#endif
 #include <GLFW/glfw3.h>
 
 #endif // AURORAFW_GENGINE__GLFW_H

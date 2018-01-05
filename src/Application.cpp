@@ -31,8 +31,8 @@ namespace AuroraFW {
 			  _name(name), _gapi(gapi)
 		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
-				D3DCAPS9 caps;
+				//LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
+				//D3DCAPS9 caps;
 			#endif
 			switch (_gapi)
 			{
@@ -47,7 +47,7 @@ namespace AuroraFW {
 					break;
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 				// TODO: Implement Direct3D backend
-				case GraphicsAPI::DirectX: break;
+				case GraphicsAPI::Direct3D: break;
 			#endif
 				case GraphicsAPI::OpenGL: break;
 			}

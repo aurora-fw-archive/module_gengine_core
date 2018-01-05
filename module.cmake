@@ -16,7 +16,12 @@
 
 message(STATUS "Loading gengine-core module...")
 
-find_package(glfw3 3.2 REQUIRED)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+	find_package(glfw3)
+else()
+	find_package(glfw3 3.2 REQUIRED)
+endif()
+
 find_package(CUDA)
 
 if (NOT CONFIGURED_ONCE)
