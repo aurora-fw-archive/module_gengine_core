@@ -41,12 +41,19 @@ namespace AuroraFW {
 
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-				
+
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
-				//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+				glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 				#ifdef AFW__DEBUG
 					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 				#endif
+
+				GLCall(glEnable(GL_CULL_FACE));
+				GLCall(glCullFace(GL_BACK));
+
+				GLCall(glEnable(GL_DEPTH_TEST));
+				GLCall(glEnable(GL_MULTISAMPLE));
+				GLCall(glEnable(GL_SAMPLE_SHADING));
 			}
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
