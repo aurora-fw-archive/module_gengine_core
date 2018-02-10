@@ -17,7 +17,7 @@
 ****************************************************************************/
 
 #include <AuroraFW/GEngine/Window.h>
-#include <AuroraFW/Core/Debug.h>
+#include <AuroraFW/Core/DebugManager.h>
 
 #include <AuroraFW/GEngine/GL/Global.h>
 
