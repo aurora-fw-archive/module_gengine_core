@@ -28,6 +28,7 @@ namespace AuroraFW {
 			switch(API::Context::getRenderAPI())
 			{
 				case API::OpenGL: return AFW_NEW GLRenderer(); break;
+				default: return AFW_NULLPTR; break;
 			}
 		}
 	}
