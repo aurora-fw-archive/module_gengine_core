@@ -18,14 +18,20 @@
 
 #include <AuroraFW/GEngine/API/Context.h>
 
+#include <AuroraFW/IO/Allocator.h>
+#include <AuroraFW/GEngine/GL/Context.h>
+
 namespace AuroraFW {
 	namespace GEngine {
 		namespace API {
-			void Context::create(WindowProperties wp)
+			RenderAPI Context::_rapi = RenderAPI::OpenGL;
+			Context *Context::_instance = AFW_NULLPTR;
+
+			void Context::create()
 			{
 				switch(getRenderAPI())
 				{
-					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(wp); break;
+					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(); break;
 				}
 			}
 		}

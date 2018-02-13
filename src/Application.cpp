@@ -26,11 +26,11 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		Application::Application(const char* name, const RenderAPI& api)
+		Application::Application(const char* name, const API::RenderAPI& api)
 			: //vkappinfo(), vkinstanceinfo(), vkinstance(),
 			  _name(name)
 		{
-			API::setRenderAPI(api);
+			API::Context::setRenderAPI(api);
 			#if 0
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 				//LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );

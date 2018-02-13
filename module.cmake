@@ -34,14 +34,11 @@ endif()
 
 include_directories(${AURORAFW_MODULE_GENGINE_CORE_DIR}/include ${FreeImage_INCLUDE_DIR})
 
-add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Window.cpp
-										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Application.cpp
-										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Input.cpp
-										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/AssetManager.cpp
-										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/AssetType.cpp
-										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Color.cpp)
+file(GLOB_RECURSE AURORAFW_MODULE_GENGINE_CORE_SOURCE ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/*.*)
+
+add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE})
 aurora_add_library_target(aurorafw-gengine-core SHARED)
 
-target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl glfw)
+target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl aurorafw-io glfw)
 
 set_target_properties(aurorafw-gengine-core PROPERTIES OUTPUT_NAME aurorafw-gengine-core)

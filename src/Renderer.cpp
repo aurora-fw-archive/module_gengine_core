@@ -17,15 +17,18 @@
 ****************************************************************************/
 
 #include <AuroraFW/GEngine/Renderer.h>
+#include <AuroraFW/IO/Allocator.h>
+#include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/GL/Renderer.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		Renderer::Renderer()
-		{}
-
-		Renderer::~Renderer()
+		Renderer* Renderer::Load()
 		{
-			delete _instance;
+			switch(API::Context::getRenderAPI())
+			{
+				case API::OpenGL: return AFW_NEW GLRenderer(); break;
+			}
 		}
 	}
 }

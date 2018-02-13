@@ -16,10 +16,11 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
+#include <AuroraFW/GEngine/GL/Global.h>
+
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/Core/DebugManager.h>
-
-#include <AuroraFW/GEngine/GL/Global.h>
+#include <AuroraFW/GEngine/API/Context.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -38,7 +39,7 @@ namespace AuroraFW {
 
 			glfwDefaultWindowHints();
 
-			API::Context::create(wp);
+			API::Context::create();
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -75,10 +76,6 @@ namespace AuroraFW {
 
 			/* Make the window's context current */
 			glfwMakeContextCurrent(window);
-			glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
-			{
-				GLCall(glViewport(0, 0, width, height));
-			});
 
 			glewExperimental=GL_TRUE;
 
@@ -102,11 +99,6 @@ namespace AuroraFW {
 
 			// Poll for and process events
 			glfwPollEvents();
-		}
-
-		void Window::clear() const
-		{
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
 		bool Window::isClosed() const

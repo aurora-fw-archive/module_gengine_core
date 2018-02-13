@@ -47,7 +47,7 @@ namespace AuroraFW {
 				static Context* _instance;
 				static RenderAPI _rapi;
 			public:
-				static void create(WindowProperties );
+				static void create();
 				static RenderAPI getRenderAPI() { return _rapi; }
 				static void setRenderAPI(RenderAPI api) { _rapi = api; }
 			};

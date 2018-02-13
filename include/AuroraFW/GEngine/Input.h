@@ -27,8 +27,14 @@
 #define AURORAFW_GENGINE_INPUT_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
 
 #include <AuroraFW/GEngine/_GLFW.h>
+#include <AuroraFW/GEngine/Window.h>
 
 //Max Array Values
 
@@ -51,7 +57,8 @@
 
 #define AFW_GENGINE_KEY_ESC		/**< The Esc (Escape) key.*/
 // FIXME: Which Shift key? The left, right or both?
-#define AFW_GENGINE_KEY_SHIFT	/**< The Shift key.*/
+#define AFW_GENGINE_KEY_LEFT_SHIFT 340 /**< The Left Shift key.*/
+#define AFW_GENGINE_KEY_RIGHT_SHIFT 344 /**< The Right Shift key.*/
 #define AFW_GENGINE_KEY_TAB		/**< The Tab (Tabulation) key.*/
 // FIXME: Which Ctrl key? The left, right or both?
 #define AFW_GENGINE_KEY_CTRL	/**< The Ctrl (Control) key.*/

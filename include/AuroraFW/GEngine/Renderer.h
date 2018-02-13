@@ -38,16 +38,12 @@ namespace AuroraFW {
 		class AFW_API Renderer
 		{
 		public:
-			Renderer();
-			~Renderer();
+			static Renderer* Load();
 
 			virtual void clear(uint ) = 0;
 			virtual void setViewport(uint , uint , uint , uint ) = 0;
 			virtual void setDepthTesting(bool ) = 0;
 			virtual void setBlend(bool ) = 0;
-
-		private:
-			Renderer* _instance;
 		};
 	}
 }

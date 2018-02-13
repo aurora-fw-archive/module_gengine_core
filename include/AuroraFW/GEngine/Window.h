@@ -20,10 +20,12 @@
 #define AURORAFW_GENGINE_WINDOW_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
 
-#include <AuroraFW/GEngine/GL/OpenGL.h>
+#include <AuroraFW/Internal/Config.h>
 
-#include <AuroraFW/GEngine/_Vulkan.h>
 #include <AuroraFW/GEngine/_GLFW.h>
 
 //typedef struct GLFWwindow GLFWwindow;
@@ -138,13 +140,6 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			void update();
-
-			/**
-			 * Clears the window.
-			 * @see update()
-			 * @since snapshot20170930
-			 */
-			void clear() const;
 
 			/**
 			 * Returs whether the window is closed or not.
