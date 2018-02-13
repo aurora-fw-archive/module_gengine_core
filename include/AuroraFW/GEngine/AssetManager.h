@@ -26,6 +26,11 @@
 #define AURORAFW_GENGINE_ASSETMANAGER_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
 
 #include <exception>
 #include <fstream>
@@ -114,7 +119,7 @@ namespace AuroraFW {
 		 * with static methods for the sole purpose of loading assets.
 		 * @since snapshot20170930
 		 */
-		class AFW_EXPORT AssetManager {
+		class AFW_API AssetManager {
 		private:
 			static AssetManager *_instance;
 			AssetManager() {}

@@ -21,9 +21,7 @@
 
 #include <AuroraFW/Global.h>
 
-#include <AuroraFW/GEngine/Application.h>
 #include <AuroraFW/GEngine/GL/OpenGL.h>
-#include <AuroraFW/GEngine/Input.h>
 
 #include <AuroraFW/GEngine/_Vulkan.h>
 #include <AuroraFW/GEngine/_GLFW.h>
@@ -45,7 +43,7 @@ namespace AuroraFW {
 		 * window, such as resolution.
 		 * @since snapshot20170930
 		 */
-		struct AFW_EXPORT WindowProperties {
+		struct AFW_API WindowProperties {
 			/**
 			 * Constructs a WindowProperties object with the given info.
 			 * @param width The width of the window.
@@ -101,7 +99,7 @@ namespace AuroraFW {
 
 		class InputManager;
 
-		class AFW_EXPORT Window {
+		class AFW_API Window {
 			friend InputManager;
 		public:
 			/**
@@ -113,7 +111,7 @@ namespace AuroraFW {
 			 * @see ~Window()
 			 * @since snapshot20170930
 			 */
-			Window(const GEngine::Application& , const char* , const WindowProperties& );
+			Window(const char* , const WindowProperties& );
 
 			/**
 			 * Destructs the Window object.

@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_ASSETTYPE_H
-#define AURORAFW_GENGINE_ASSETTYPE_H
+#ifndef AURORAFW_GENGINE_RENDERER_H
+#define AURORAFW_GENGINE_RENDERER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -28,11 +28,28 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_API TextureAsset {
+		enum AFW_API RendererBufferType {
+			RENDERER_BUFFER_NONE = 0,
+			RENDERER_BUFFER_COLOR = AFW_BIT(0),
+			RENDERER_BUFFER_DEPTH = AFW_BIT(1),
+			RENDERER_BUFFER_STENCIL = AFW_BIT(2)
+		};
+
+		class AFW_API Renderer
+		{
 		public:
-			TextureAsset(const char* ) {}
+			Renderer();
+			~Renderer();
+
+			virtual void clear(uint ) = 0;
+			virtual void setViewport(uint , uint , uint , uint ) = 0;
+			virtual void setDepthTesting(bool ) = 0;
+			virtual void setBlend(bool ) = 0;
+
+		private:
+			Renderer* _instance;
 		};
 	}
 }
 
-#endif	// AURORAFW_GENGINE_ASSETTYPE_H
+#endif // AURORAFW_GENGINE_RENDERER_H

@@ -16,23 +16,18 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_ASSETTYPE_H
-#define AURORAFW_GENGINE_ASSETTYPE_H
-
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
-
-#include <AuroraFW/Internal/Config.h>
+#include <AuroraFW/GEngine/API/Context.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_API TextureAsset {
-		public:
-			TextureAsset(const char* ) {}
-		};
+		namespace API {
+			void Context::create(WindowProperties wp)
+			{
+				switch(getRenderAPI())
+				{
+					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(wp); break;
+				}
+			}
+		}
 	}
 }
-
-#endif	// AURORAFW_GENGINE_ASSETTYPE_H

@@ -26,10 +26,12 @@
 
 namespace AuroraFW {
 	namespace GEngine {
-		Application::Application(const char* name, const GraphicsAPI& gapi)
+		Application::Application(const char* name, const RenderAPI& api)
 			: //vkappinfo(), vkinstanceinfo(), vkinstance(),
-			  _name(name), _gapi(gapi)
+			  _name(name)
 		{
+			API::setRenderAPI(api);
+			#if 0
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 				//LPDIRECT3D9 d3d = Direct3DCreate9( D3D_SDK_VERSION );
 				//D3DCAPS9 caps;
@@ -51,6 +53,7 @@ namespace AuroraFW {
 			#endif
 				case GraphicsAPI::OpenGL: break;
 			}
+			#endif
 		}
 		Application::~Application() {}
 	}

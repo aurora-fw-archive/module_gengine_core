@@ -40,7 +40,7 @@ add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_
 										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/AssetManager.cpp
 										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/AssetType.cpp
 										${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/Color.cpp)
-aurora_add_library_target(aurorafw-gengine-core)
+aurora_add_library_target(aurorafw-gengine-core SHARED)
 
 target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl glfw)
 

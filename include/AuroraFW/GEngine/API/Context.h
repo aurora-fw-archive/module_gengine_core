@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_ASSETTYPE_H
-#define AURORAFW_GENGINE_ASSETTYPE_H
+#ifndef AURORAFW_GENGINE_API_CONTEXT_H
+#define AURORAFW_GENGINE_API_CONTEXT_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -25,14 +25,34 @@
 #endif
 
 #include <AuroraFW/Internal/Config.h>
+#include <AuroraFW/GEngine/Window.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_API TextureAsset {
-		public:
-			TextureAsset(const char* ) {}
-		};
+		namespace API {
+			enum AFW_API RenderAPI
+			{
+				OpenGL,
+				#ifdef AFW_TARGET_PLATFORM_WINDOWS
+					Direct3D,
+				#endif
+				#ifdef AFW__VULKAN_FOUND
+					Vulkan
+				#endif
+			};
+
+			class AFW_API Context
+			{
+			protected:
+				static Context* _instance;
+				static RenderAPI _rapi;
+			public:
+				static void create(WindowProperties );
+				static RenderAPI getRenderAPI() { return _rapi; }
+				static void setRenderAPI(RenderAPI api) { _rapi = api; }
+			};
+		}
 	}
 }
 
-#endif	// AURORAFW_GENGINE_ASSETTYPE_H
+#endif // AURORAFW_GENGINE_CONTEXT_H

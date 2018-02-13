@@ -27,7 +27,7 @@ namespace AuroraFW {
 			: width(width), height(height), fullscreen(fullscreen)
 		{}
 
-		Window::Window(const GEngine::Application& gapp, const char *name, const WindowProperties& wp)
+		Window::Window(const char *name, const WindowProperties& wp)
 			: _monitor(glfwGetPrimaryMonitor()), _name(name), _width(wp.width), _height(wp.height),
 				_fullscreen(wp.fullscreen), _vsync(wp.vsync)
 		{
@@ -36,25 +36,9 @@ namespace AuroraFW {
 
 			const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-			if(gapp._gapi == GraphicsAPI::OpenGL) {
-				glfwDefaultWindowHints();
+			glfwDefaultWindowHints();
 
-				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
-				glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-				#ifdef AFW__DEBUG
-					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-				#endif
-
-				//GLCall(glEnable(GL_CULL_FACE));
-				//GLCall(glCullFace(GL_BACK));
-
-				//GLCall(glEnable(GL_DEPTH_TEST));
-				//GLCall(glEnable(GL_MULTISAMPLE));
-				//GLCall(glEnable(GL_SAMPLE_SHADING));
-			}
+			API::Context::create(wp);
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -91,12 +75,10 @@ namespace AuroraFW {
 
 			/* Make the window's context current */
 			glfwMakeContextCurrent(window);
-			if(gapp._gapi == GraphicsAPI::OpenGL) {
-				glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
-				{
-					GLCall(glViewport(0, 0, width, height));
-				});
-			}
+			glfwSetWindowSizeCallback(window, [](GLFWwindow *window __attribute__((unused)), int width, int height)
+			{
+				GLCall(glViewport(0, 0, width, height));
+			});
 
 			glewExperimental=GL_TRUE;
 

@@ -29,7 +29,7 @@
 #include <AuroraFW/Global.h>
 #include <AuroraFW/_GEngine.h>
 
-#include <AuroraFW/GEngine/API.h>
+#include <AuroraFW/GEngine/API/Context.h>
 #include <AuroraFW/Core/Application.h>
 #include <iostream>
 
@@ -45,7 +45,7 @@ namespace AuroraFW {
 		 * Engine for their projects.
 		 * @since snapshot20170930
 		 */
-		class AFW_EXPORT Application {
+		class AFW_API Application {
 			friend class Window;
 		public:
 			/**
@@ -55,7 +55,7 @@ namespace AuroraFW {
 			 * @see ~Application()
 			 * @since snapshot20170930
 			 */
-			Application(const char* , const GraphicsAPI& = GraphicsAPI::OpenGL);
+			Application(const char* , const API::RenderAPI& = API::OpenGL);
 
 			/**
 			 * Destructs the object.
@@ -82,7 +82,6 @@ namespace AuroraFW {
 			VkInstance vkinstance;*/
 		private:
 			const char* _name;
-			GraphicsAPI _gapi;
 		};
 	}
 }

@@ -20,6 +20,11 @@
 #define AURORAFW_GENGINE_COLOR_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
 
 #include <AuroraFW/Math/Algorithm.h>
 
@@ -36,7 +41,7 @@ namespace AuroraFW {
 		 * An enum that stores hex-coded colors to be used generally.
 		 * @since snapshot20170930
 		 */
-		enum class CommonColor : afwuint32_t {
+		enum class CommonColor : uint32_t {
 			Black = 0x000000,			/**< <code>0x000000 = </code><span style="background-color:#000000;color:#000000;border:1px solid black">color</span> */
 			Red = 0xFF0000,				/**< <code>0xFF0000 = </code><span style="background-color:#FF0000;color:#FF0000;border:1px solid black">color</span> */
 			DarkRed = 0x800000,			/**< <code>0x800000 = </code><span style="background-color:#800000;color:#800000;border:1px solid black">color</span> */
@@ -75,38 +80,38 @@ namespace AuroraFW {
 		 * @since snapshot20170930
 		 */
 		template<class T>
-		struct AFW_EXPORT BaseColor {
-			BaseColor(afwint_t , afwint_t , afwint_t , afwint_t = 255);
-			BaseColor(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
-			BaseColor(afwuint32_t );
+		struct AFW_API BaseColor {
+			BaseColor(int , int , int , int = 255);
+			BaseColor(float , float , float , float = 1.0f);
+			BaseColor(uint32_t );
 			BaseColor(CommonColor );
 			BaseColor(const BaseColor<T> &);
 			int red() const;
-			afwfloat_t redF() const;
+			float redF() const;
 			int green() const;
-			afwfloat_t greenF() const;
+			float greenF() const;
 			int blue() const;
-			afwfloat_t blueF() const;
+			float blueF() const;
 			int alpha() const;
-			afwfloat_t alphaF() const;
-			afwvoid_t setRed(int );
-			afwvoid_t setRed(afwfloat_t );
-			afwvoid_t setGreen(int );
-			afwvoid_t setGreen(afwfloat_t );
-			afwvoid_t setBlue(int );
-			afwvoid_t setBlue(afwfloat_t );
-			afwvoid_t setAlpha(int );
-			afwvoid_t setAlpha(afwfloat_t );
-			afwvoid_t setRGB(afwuint32_t );
-			afwvoid_t setRGB(int[3] );
-			afwvoid_t setRGBA(int[4] );
+			float alphaF() const;
+			void setRed(int );
+			void setRed(float );
+			void setGreen(int );
+			void setGreen(float );
+			void setBlue(int );
+			void setBlue(float );
+			void setAlpha(int );
+			void setAlpha(float );
+			void setRGB(uint32_t );
+			void setRGB(int[3] );
+			void setRGBA(int[4] );
 
 			//static BaseColor<T> CMYK(int , int , int , int , int = 255);
-			//static BaseColor<T> CMYK(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			//static BaseColor<T> CMYK(float , float , float , float = 1.0f);
 			static BaseColor<T> HSL(int , int , int , int= 255);
-			static BaseColor<T> HSL(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			static BaseColor<T> HSL(float , float , float , float = 1.0f);
 			static BaseColor<T> HSV(int , int , int , int = 255);
-			static BaseColor<T> HSV(afwfloat_t , afwfloat_t , afwfloat_t , afwfloat_t = 1.0f);
+			static BaseColor<T> HSV(float , float , float , float = 1.0f);
 
 			T r, g, b, a;
 		};
@@ -116,14 +121,14 @@ namespace AuroraFW {
 		 * 24-bit colors and a 8-bit alpha channel using byte_ts as color components.
 		 * @since snapshot20170930
 		 */
-		typedef BaseColor<afwbyte_t> Color;
+		typedef BaseColor<byte_t> Color;
 
 		/**
 		 * A struct that represents high precision colors
 		 * 96-bit colors and a 32-bit alpha channel using precision floating point as color components.
 		 * @since snapshot20170930
 		 */
-		typedef BaseColor<afwfloat_t> ColorF;
+		typedef BaseColor<float> ColorF;
 
 		//Inline definitions
 		template<> inline int BaseColor<byte_t>::red() const

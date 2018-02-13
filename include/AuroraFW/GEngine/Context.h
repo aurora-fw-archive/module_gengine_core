@@ -16,22 +16,30 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_H
-#define AURORAFW_GENGINE_API_H
+#ifndef AURORAFW_GENGINE_CONTEXT_H
+#define AURORAFW_GENGINE_CONTEXT_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
+#include <AuroraFW/GEngine/API.h>
+#include <AuroraFW/GEngine/Window.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		enum class GraphicsAPI
+		class AFW_API Context
 		{
-			OpenGL,
-			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-				Direct3D,
-			#endif
-			Vulkan
+		protected:
+			static Context* _instance;
+			static RenderAPI _rapi;
+		public:
+			static void create(WindowProperties);
+			static RenderAPI 
 		};
 	}
 }
 
-#endif // AURORAFW_GENGINE_API_H
+#endif // AURORAFW_GENGINE_CONTEXT_H
