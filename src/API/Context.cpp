@@ -27,11 +27,11 @@ namespace AuroraFW {
 			RenderAPI Context::_rapi = RenderAPI::OpenGL;
 			Context *Context::_instance = AFW_NULLPTR;
 
-			void Context::create()
+			void Context::create(WindowProperties wp)
 			{
 				switch(getRenderAPI())
 				{
-					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(); break;
+					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(wp); break;
 				}
 			}
 		}

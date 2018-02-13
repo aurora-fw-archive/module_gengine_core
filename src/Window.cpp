@@ -39,7 +39,9 @@ namespace AuroraFW {
 
 			glfwDefaultWindowHints();
 
-			API::Context::create();
+			glfwWindowHint(GLFW_SAMPLES, wp.samples);
+			glfwWindowHint(GLFW_DOUBLEBUFFER, wp.doubleBuffer);
+			API::Context::create(wp);
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
