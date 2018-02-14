@@ -41,6 +41,18 @@ namespace AuroraFW {
 
 			glfwWindowHint(GLFW_SAMPLES, wp.samples);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, wp.doubleBuffer);
+			glfwWindowHint(GLFW_SRGB_CAPABLE, wp.sRGB);
+			glfwWindowHint(GLFW_STEREO, wp.stereo);
+			glfwWindowHint(GLFW_RESIZABLE, wp.resizable);
+			glfwWindowHint(GLFW_VISIBLE, wp.visible);
+			glfwWindowHint(GLFW_DECORATED, wp.decorated);
+			glfwWindowHint(GLFW_FOCUSED, wp.focused);
+			glfwWindowHint(GLFW_AUTO_ICONIFY, wp.autoIconify);
+			glfwWindowHint(GLFW_REFRESH_RATE, wp.refreshRate);
+			glfwWindowHint(GLFW_AUX_BUFFERS, wp.auxBuffers);
+			glfwWindowHint(GLFW_FLOATING, wp.floating);
+			glfwWindowHint(GLFW_MAXIMIZED, wp.maximized);
+
 			API::Context::create(wp);
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);

@@ -90,6 +90,7 @@ namespace AuroraFW {
 			bool focused = true;
 			bool autoIconify = true;
 			bool floating = false;
+			bool maximized = false;
 			int refreshRate = -1;
 			int auxBuffers = 0;
 			int samples = 0;
@@ -100,9 +101,11 @@ namespace AuroraFW {
 		};
 
 		class InputManager;
+		class ImGuiLoader;
 
 		class AFW_API Window {
 			friend InputManager;
+			friend ImGuiLoader;
 		public:
 			/**
 			 * Constructs a Window.

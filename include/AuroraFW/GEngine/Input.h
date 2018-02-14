@@ -36,6 +36,9 @@
 #include <AuroraFW/GEngine/_GLFW.h>
 #include <AuroraFW/GEngine/Window.h>
 
+#include <list>
+#include <functional>
+
 //Max Array Values
 
 #define AFW_GENGINE_INPUT_MAX_KEYS 1024
@@ -213,6 +216,8 @@ namespace AuroraFW {
 			bool _keys[AFW_GENGINE_INPUT_MAX_KEYS];
 			bool _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS];
 			double _mx, _my;
+			std::list <std::function<void(GLFWwindow*, int, int, int, int)>> _keyCallbacks;
+			std::list <std::function<void(GLFWwindow *, int, int, int)>> _mouseButtonCallbacks;
 		};
 	}
 }
