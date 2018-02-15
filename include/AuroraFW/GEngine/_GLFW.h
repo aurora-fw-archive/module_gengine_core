@@ -24,8 +24,15 @@
 #include <AuroraFW/GEngine/GL/OpenGL.h>
 
 #ifdef AFW__VULKAN_FOUND
-    #define GLFW_INCLUDE_VULKAN
+	#define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
+
+#ifdef AFW_TARGET_PLATFORM_WINDOWS
+	//#undef APIENTRY
+	#define GLFW_EXPOSE_NATIVE_WIN32
+	#define GLFW_EXPOSE_NATIVE_WGL
+	#include <GLFW/glfw3native.h>
+#endif
 
 #endif // AURORAFW_GENGINE__GLFW_H

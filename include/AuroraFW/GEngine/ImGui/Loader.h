@@ -50,6 +50,7 @@ namespace AuroraFW {
 			static const char* _getClipboardText(void *);
 
 			GLFWwindow* _window = AFW_NULLPTR;
+			InputManager* _input = AFW_NULLPTR;
 			bool _mousePressed[3] = {false, false, false};
 		};
 	}

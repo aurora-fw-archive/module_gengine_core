@@ -19,6 +19,7 @@
 #include <AuroraFW/GEngine/ImGui/Loader.h>
 #include <AuroraFW/IO/Allocator.h>
 #include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/CoreLib/Callback.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -55,11 +56,11 @@ namespace AuroraFW {
 			io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 			io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-			io.RenderDrawListsFn = ret->_renderDrawLists;
+			io.RenderDrawListsFn = AFW_CALLBACK(void (*)(ImDrawData*), ImGuiLoader)(std::bind(&ImGuiLoader::_renderDrawLists, ret, std::placeholders::_1));
 			io.SetClipboardTextFn = _setClipboardText;
 			io.GetClipboardTextFn = _getClipboardText;
 			io.ClipboardUserData = ret->_window;
-			#ifdef _WIN32
+			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 				io.ImeWindowHandle = glfwGetWin32Window(ret->_window);
 			#endif
 
@@ -104,6 +105,16 @@ namespace AuroraFW {
 			ImGuiIO& io = ImGui::GetIO();
 			if (c > 0 && c < 0x10000)
 				io.AddInputCharacter((unsigned short)c);
+		}
+
+		void ImGuiLoader::_setClipboardText(void* udata, const char* txt)
+		{
+			glfwSetClipboardString((GLFWwindow*)udata, txt);
+		}
+
+		const char* ImGuiLoader::_getClipboardText(void* udata)
+		{
+			return glfwGetClipboardString((GLFWwindow*)udata);
 		}
 	}
 }
