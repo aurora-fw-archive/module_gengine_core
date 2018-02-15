@@ -17,6 +17,7 @@
 ****************************************************************************/
 
 #include <AuroraFW/GEngine/Input.h>
+#include <algorithm>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -62,16 +63,24 @@ namespace AuroraFW {
 			y = _my;
 		}
 
-		void InputManager::_keyCallback(GLFWwindow *window, int key, int /*scancode*/, int action, int /*mods*/)
+		void InputManager::_keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 			in->_keys[key] = action != GLFW_RELEASE;
+
+			std::for_each(in->_keyCallbacks.begin(), in->_keyCallbacks.end(), [window, key, scancode, action, mods](void (*func)(GLFWwindow *, int, int, int, int)) {
+				func(window, key, scancode, action, mods);
+			});
 		}
 
-		void InputManager::_mouseButtonCallback(GLFWwindow *window, int btn, int action, int /*mods*/)
+		void InputManager::_mouseButtonCallback(GLFWwindow *window, int btn, int action, int mods)
 		{
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 			in->_mouseButtons[btn] = action != GLFW_RELEASE;
+
+			std::for_each(in->_mouseButtonCallbacks.begin(), in->_mouseButtonCallbacks.end(), [window, btn, action, mods](void (*func)(GLFWwindow *, int, int, int)) {
+				func(window, btn, action, mods);
+			});
 		}
 
 		void InputManager::_cursorPosCallback(GLFWwindow *window, double xpos, double ypos)
@@ -79,6 +88,40 @@ namespace AuroraFW {
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 			in->_mx = xpos;
 			in->_my = ypos;
+
+			std::for_each(in->_cursorPosCallbacks.begin(), in->_cursorPosCallbacks.end(), [window, xpos, ypos](void (*func)(GLFWwindow *, double, double)) {
+				func(window, xpos, ypos);
+			});
+		}
+
+		void InputManager::addKeyCallback(void (*func)(GLFWwindow*,int,int,int,int))
+		{
+			_keyCallbacks.push_back(func);
+		}
+
+		void InputManager::removeKeyCallback(void (*func)(GLFWwindow*,int,int,int,int))
+		{
+			_keyCallbacks.erase(std::find(_keyCallbacks.begin(),_keyCallbacks.end(), func));
+		}
+
+		void InputManager::addMouseButtonCallback(void (*func)(GLFWwindow*,int,int,int))
+		{
+			_mouseButtonCallbacks.push_back(func);
+		}
+
+		void InputManager::removeMouseButtonCallback(void (*func)(GLFWwindow*,int,int,int))
+		{
+			_mouseButtonCallbacks.erase(std::find(_mouseButtonCallbacks.begin(),_mouseButtonCallbacks.end(), func));
+		}
+
+		void InputManager::addCursorPosCallback(void (*func)(GLFWwindow*,double,double))
+		{
+			_cursorPosCallbacks.push_back(func);
+		}
+
+		void InputManager::removeCursorPosCallback(void (*func)(GLFWwindow*,double,double))
+		{
+			_cursorPosCallbacks.erase(std::find(_cursorPosCallbacks.begin(),_cursorPosCallbacks.end(), func));
 		}
 	}
 }

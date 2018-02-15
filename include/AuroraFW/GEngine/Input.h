@@ -208,6 +208,13 @@ namespace AuroraFW {
 			 */
 			void getScrollPosition(const double& , const double& ) const;
 
+			void addKeyCallback(void (*)(GLFWwindow*,int,int,int,int));
+			void removeKeyCallback(void (*)(GLFWwindow*,int,int,int,int));
+			void addMouseButtonCallback(void (*)(GLFWwindow *, int, int, int));
+			void removeMouseButtonCallback(void (*)(GLFWwindow *, int, int, int));
+			void addCursorPosCallback(void (*)(GLFWwindow *, double, double));
+			void removeCursorPosCallback(void (*)(GLFWwindow *, double, double));
+
 		private:
 			static void _keyCallback(GLFWwindow* , int , int , int , int );
 			static void _mouseButtonCallback(GLFWwindow* , int , int , int );
@@ -218,14 +225,14 @@ namespace AuroraFW {
 			bool _keys[AFW_GENGINE_INPUT_MAX_KEYS + AFW_GENGINE_INPUT_KEY_OFFSET];
 			bool _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS + AFW_GENGINE_INPUT_MOUSE_BUTTONS_OFFSET];
 			double _mx, _my;
-			std::list <std::function<void(GLFWwindow*, int, int, int, int)>> _keyCallbacks;
-			std::list <std::function<void(GLFWwindow*, int, int, int)>> _mouseButtonCallbacks;
-			std::list <std::function<void(GLFWwindow*, double, double)>> _cursorPosCallbacks;
-			std::list <std::function<void(GLFWwindow*, int)>> _cursorEnterCallbacks;
-			std::list <std::function<void(GLFWwindow*, uint)>> _charCallbacks;
-			std::list <std::function<void(GLFWwindow*, uint, int)>> _charModsCallbacks;
-			std::list <std::function<void(GLFWwindow*, int, const char**)>> _dropCallbacks;
-			std::list <std::function<void(GLFWwindow*, int, int)>> _joystickCallbacks;
+			std::list <void (*)(GLFWwindow*,int,int,int,int)> _keyCallbacks;
+			std::list <void (*)(GLFWwindow*,int,int,int)> _mouseButtonCallbacks;
+			std::list <void (*)(GLFWwindow*,double,double)> _cursorPosCallbacks;
+			std::list <void (*)(GLFWwindow*, int)> _cursorEnterCallbacks;
+			std::list <void (*)(GLFWwindow*, uint)> _charCallbacks;
+			std::list <void (*)(GLFWwindow*, uint, int)> _charModsCallbacks;
+			std::list <void (*)(GLFWwindow*, int, const char**)> _dropCallbacks;
+			std::list <void (*)(GLFWwindow*, int, int)> _joystickCallbacks;
 		};
 	}
 }
