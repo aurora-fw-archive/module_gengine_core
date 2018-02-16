@@ -33,8 +33,6 @@
 #include <AuroraFW/Core/Application.h>
 #include <iostream>
 
-#include <AuroraFW/GEngine/_Vulkan.h>
-
 namespace AuroraFW {
 	namespace GEngine {
 
@@ -55,7 +53,7 @@ namespace AuroraFW {
 			 * @see ~Application()
 			 * @since snapshot20170930
 			 */
-			Application(const char* , const API::RenderAPI& = API::OpenGL);
+			Application(const API::RenderAPI& = API::OpenGL);
 
 			/**
 			 * Destructs the object.
@@ -75,13 +73,6 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			Application& operator= (const Application&) = delete;
-		protected:
-			// TODO: Implement Vulkan backend
-			/*VkApplicationInfo vkappinfo;
-			VkInstanceCreateInfo vkinstanceinfo;
-			VkInstance vkinstance;*/
-		private:
-			const char* _name;
 		};
 	}
 }
