@@ -18,7 +18,7 @@
 
 #include <AuroraFW/GEngine/API/Context.h>
 
-#include <AuroraFW/IO/Allocator.h>
+#include <AuroraFW/CoreLib/Allocator.h>
 #include <AuroraFW/GEngine/GL/Context.h>
 
 namespace AuroraFW {
