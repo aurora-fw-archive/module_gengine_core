@@ -46,6 +46,9 @@
 #define AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS 7
 #define AFW_GENGINE_INPUT_MOUSE_BUTTONS_OFFSET 0
 
+#define AFW_GENGINE_INPUT_PRESS 1
+#define AFW_GENGINE_INPUT_RELEASE 0
+
 ///Keycodes
 //Mouse
 #define AFW_GENGINE_MOUSE_BUTTON_1 0
@@ -214,20 +217,27 @@ namespace AuroraFW {
 			void removeMouseButtonCallback(void (*)(GLFWwindow *, int, int, int));
 			void addCursorPosCallback(void (*)(GLFWwindow *, double, double));
 			void removeCursorPosCallback(void (*)(GLFWwindow *, double, double));
+			void addScrollCallback(void (*)(GLFWwindow*,double,double));
+			void removeScrollCallback(void (*)(GLFWwindow*,double,double));
+			void addCharCallback(void (*)(GLFWwindow*,uint));
+			void removeCharCallback(void (*)(GLFWwindow*,uint));
 
 		private:
 			static void _keyCallback(GLFWwindow* , int , int , int , int );
 			static void _mouseButtonCallback(GLFWwindow* , int , int , int );
 			static void _cursorPosCallback(GLFWwindow* , double , double );
 			static void _scrollCallback(GLFWwindow* , double , double );
+			static void _charCallback(GLFWwindow* , uint );
 
 			const Window* _parent;
 			bool _keys[AFW_GENGINE_INPUT_MAX_KEYS + AFW_GENGINE_INPUT_KEY_OFFSET];
 			bool _mouseButtons[AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS + AFW_GENGINE_INPUT_MOUSE_BUTTONS_OFFSET];
 			double _mx, _my;
-			std::list <void (*)(GLFWwindow*,int,int,int,int)> _keyCallbacks;
+			double _sx, _sy;
+			std::list<void (*)(GLFWwindow *, int, int, int, int)> _keyCallbacks;
 			std::list <void (*)(GLFWwindow*,int,int,int)> _mouseButtonCallbacks;
 			std::list <void (*)(GLFWwindow*,double,double)> _cursorPosCallbacks;
+			std::list <void (*)(GLFWwindow*,double,double)> _scrollCallbacks;
 			std::list <void (*)(GLFWwindow*, int)> _cursorEnterCallbacks;
 			std::list <void (*)(GLFWwindow*, uint)> _charCallbacks;
 			std::list <void (*)(GLFWwindow*, uint, int)> _charModsCallbacks;

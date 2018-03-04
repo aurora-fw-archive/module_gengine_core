@@ -138,11 +138,18 @@ namespace AuroraFW {
 			Window& operator=(const Window&) = delete;
 
 			/**
-			 * Updates/renders the window.
+			 * Update the window events.
 			 * @see clear()
 			 * @since snapshot20170930
 			 */
 			void update();
+
+			/**
+			 * Swap buffers and present window stuff
+			 * @see clear()
+			 * @since snapshot20180303
+			 */
+			void present();
 
 			/**
 			 * Returs whether the window is closed or not.

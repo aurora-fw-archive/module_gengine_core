@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_IMGUI_LOADER_H
-#define AURORAFW_GENGINE_IMGUI_LOADER_H
+#ifndef AURORAFW_GENGINE_API_INDEXBUFFER_H
+#define AURORAFW_GENGINE_API_INDEXBUFFER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,39 +26,20 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-#include <AuroraFW/GEngine/Window.h>
-#include <AuroraFW/GEngine/ImGui/ImGui.h>
-
 namespace AuroraFW {
 	namespace GEngine {
-		class AFW_API ImGuiLoader {
-		public:
-			static ImGuiLoader* Load(Window* , InputManager* );
-			void Unload();
+		namespace API {
+			class AFW_API IndexBuffer {
+			public:
+				static IndexBuffer* Load(uint* , uint );
 
-			void newFrame();
-			virtual bool createDeviceObjects() = 0;
-			virtual void invalidateDeviceObjects() = 0;
-			virtual void renderDrawLists(ImDrawData *) = 0;
+				virtual void bind() const = 0;
+				virtual void unbind() const = 0;
 
-		private:
-			virtual void _Unload();
-			void _mouseButtonCallback(GLFWwindow* , int , int , int );
-			static void _scrollCallback(GLFWwindow* , double , double );
-			static void _keyCallback(GLFWwindow* , int , int , int , int );
-			static void _charCallback(GLFWwindow* , uint );
-
-			virtual void _internalNewFrame() = 0;
-			static void _setClipboardText(void* , const char* );
-			static const char* _getClipboardText(void *);
-
-			GLFWwindow* _window = AFW_NULLPTR;
-			InputManager* _input = AFW_NULLPTR;
-			double _time = 0.0f;
-			bool _mousePressed[3] = {false, false, false};
-			GLFWcursor *_mouseCursors[ImGuiMouseCursor_Count_] = {0};
-		};
+				virtual uint getCount() const = 0;
+			};
+		}
 	}
 }
 
-#endif // AURORAFW_GENGINE_IMGUI_LOADER_H
+#endif // AURORAFW_GENGINE_API_INDEXBUFFER_H

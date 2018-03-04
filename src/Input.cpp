@@ -94,6 +94,26 @@ namespace AuroraFW {
 			});
 		}
 
+		void InputManager::_scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
+		{
+			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+			in->_sx += xoffset;
+			in->_sy += yoffset;
+
+			std::for_each(in->_scrollCallbacks.begin(), in->_scrollCallbacks.end(), [window, xoffset, yoffset](void (*func)(GLFWwindow *, double, double)) {
+				func(window, xoffset, yoffset);
+			});
+		}
+
+		void InputManager::_charCallback(GLFWwindow *window, uint codepoint)
+		{
+			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+
+			std::for_each(in->_charCallbacks.begin(), in->_charCallbacks.end(), [window, codepoint](void (*func)(GLFWwindow *, uint)) {
+				func(window, codepoint);
+			});
+		}
+
 		void InputManager::addKeyCallback(void (*func)(GLFWwindow*,int,int,int,int))
 		{
 			_keyCallbacks.push_back(func);
@@ -122,6 +142,26 @@ namespace AuroraFW {
 		void InputManager::removeCursorPosCallback(void (*func)(GLFWwindow*,double,double))
 		{
 			_cursorPosCallbacks.erase(std::find(_cursorPosCallbacks.begin(),_cursorPosCallbacks.end(), func));
+		}
+
+		void InputManager::addScrollCallback(void (*func)(GLFWwindow*,double,double))
+		{
+			_scrollCallbacks.push_back(func);
+		}
+
+		void InputManager::removeScrollCallback(void (*func)(GLFWwindow*,double,double))
+		{
+			_scrollCallbacks.erase(std::find(_scrollCallbacks.begin(),_scrollCallbacks.end(), func));
+		}
+
+		void InputManager::addCharCallback(void (*func)(GLFWwindow*,uint))
+		{
+			_charCallbacks.push_back(func);
+		}
+
+		void InputManager::removeCharCallback(void (*func)(GLFWwindow*,uint))
+		{
+			_charCallbacks.erase(std::find(_charCallbacks.begin(),_charCallbacks.end(), func));
 		}
 	}
 }

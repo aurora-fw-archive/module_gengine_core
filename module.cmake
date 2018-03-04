@@ -34,11 +34,18 @@ endif()
 
 include_directories(${AURORAFW_MODULE_GENGINE_CORE_DIR}/include ${FreeImage_INCLUDE_DIR})
 
-file(GLOB_RECURSE AURORAFW_MODULE_GENGINE_CORE_SOURCE ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/*.*)
+file(GLOB_RECURSE AURORAFW_MODULE_GENGINE_CORE_SOURCE ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE AURORAFW_MODULE_GENGINE_CORE_SOURCE_DLANG ${AURORAFW_MODULE_GENGINE_CORE_SOURCE_DIR}/*.d)
 
 add_library (aurorafw-gengine-core SHARED ${AURORAFW_MODULE_GENGINE_CORE_SOURCE})
 aurora_add_library_target(aurorafw-gengine-core SHARED)
 
-target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl aurorafw-io glfw)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	target_link_libraries(aurorafw-gengine-core /usr/lib/libglfw.${AURORA_LIBRARY_EXT})
+else()
+	target_link_libraries(aurorafw-gengine-core glfw)
+endif()
+
+target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl aurorafw-io)
 
 set_target_properties(aurorafw-gengine-core PROPERTIES OUTPUT_NAME aurorafw-gengine-core)

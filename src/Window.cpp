@@ -106,13 +106,16 @@ namespace AuroraFW {
 
 		void Window::update()
 		{
+			// Poll for and process events
+			glfwPollEvents();
+			glfwGetFramebufferSize(window, (int*)&_width, (int*)&_height);
+		}
+
+		void Window::present()
+		{
 			if(!_vsync) glfwSwapInterval(0);
 			// Swap front and back buffers
 			glfwSwapBuffers(window);
-			glfwGetFramebufferSize(window, (int*)&_width, (int*)&_height);
-
-			// Poll for and process events
-			glfwPollEvents();
 		}
 
 		bool Window::isClosed() const
