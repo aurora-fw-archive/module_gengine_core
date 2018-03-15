@@ -28,6 +28,7 @@
 
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/Renderer.h>
 #include <AuroraFW/Core/InputListener.h>
 #include <AuroraFW/IO/Timer.h>
 
@@ -46,6 +47,7 @@ namespace AuroraFW {
 			void addInputListener(InputListener* );
 			void removeInputListener(InputListener* );
 
+			inline Renderer* getRenderer() { return _renderer; }
 			inline float getFramerate() { return 1000.0f / _tpf; }
 			inline float getTPF() { return _tpf; }
 
@@ -53,6 +55,7 @@ namespace AuroraFW {
 			virtual void _internalRender();
 
 			Window* _window;
+			Renderer* _renderer;
 			std::set<InputListener*> _listeners;
 			float _tpf;
 			IO::Timer _frametimer = IO::Timer();

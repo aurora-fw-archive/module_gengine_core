@@ -34,6 +34,7 @@ namespace AuroraFW {
 			{
 				_frametimer.reset();
 				_window->update();
+				_renderer->clear(GEngine::RENDERER_BUFFER_COLOR | GEngine::RENDERER_BUFFER_DEPTH);
 
 				_internalRender();
 				onRender();
@@ -58,7 +59,7 @@ namespace AuroraFW {
 
 		void GraphicsContext::removeInputListener(InputListener* in)
 		{
-			
+
 		}
 	}
 }
