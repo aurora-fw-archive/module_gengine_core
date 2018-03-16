@@ -89,7 +89,7 @@ namespace AuroraFW {
 			/* Make the window's context current */
 			glfwMakeContextCurrent(window);
 
-			API::Context::init();
+			API::Context::init(window);
 		}
 
 		Window::~Window()

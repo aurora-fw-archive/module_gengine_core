@@ -37,9 +37,9 @@ namespace AuroraFW {
 				}
 			}
 
-			void Context::init()
+			void Context::init(GLFWwindow* window)
 			{
-				_instance->_init();
+				_instance->_init(window);
 			}
 
 			void Context::destroy()

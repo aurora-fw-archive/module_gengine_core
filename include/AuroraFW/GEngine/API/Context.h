@@ -47,15 +47,15 @@ namespace AuroraFW {
 			public:
 				static void create(WindowProperties , std::string&);
 
-				static void init();
+				static void init(GLFWwindow* );
 				static void destroy();
 
 				static RenderAPI getRenderAPI() { return _rapi; }
 				static void setRenderAPI(RenderAPI api) { _rapi = api; }
 
 			protected:
-				virtual void _init() {}
-				virtual void _destroy() {}
+				virtual void _init(GLFWwindow* ) = 0;
+				virtual void _destroy() = 0;
 			};
 		}
 	}
