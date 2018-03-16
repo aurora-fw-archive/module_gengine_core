@@ -16,8 +16,6 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/GL/Global.h>
-
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/Core/DebugManager.h>
 #include <AuroraFW/GEngine/API/Context.h>
@@ -28,12 +26,12 @@ namespace AuroraFW {
 			: width(width), height(height), fullscreen(fullscreen)
 		{}
 
-		Window::Window(const char *name, const WindowProperties& wp)
+		Window::Window(std::string name, const WindowProperties& wp)
 			: _monitor(glfwGetPrimaryMonitor()), _name(name), _width(wp.width), _height(wp.height),
 				_fullscreen(wp.fullscreen), _vsync(wp.vsync)
 		{
 			if (!glfwInit())
-				exit(EXIT_FAILURE);
+				throw std::runtime_error("failed to initialize GLFW!");
 
 			const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
@@ -53,7 +51,7 @@ namespace AuroraFW {
 			glfwWindowHint(GLFW_FLOATING, wp.floating);
 			glfwWindowHint(GLFW_MAXIMIZED, wp.maximized);
 
-			API::Context::create(wp);
+			API::Context::create(wp, _name);
 
 			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -67,39 +65,36 @@ namespace AuroraFW {
 
 			if(_fullscreen) {
 				if(_vsync) {
-					window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+					window = glfwCreateWindow(_width, _height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
 					glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, _width, _height, mode->refreshRate);
 				}
 				else {
-					window = glfwCreateWindow(_width, _height, _name, glfwGetPrimaryMonitor(), NULL);
+					window = glfwCreateWindow(_width, _height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
 				}
 			} else {
 				if(_vsync) {
-					window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
+					window = glfwCreateWindow(_width, _height, _name.c_str(), NULL, NULL);
 					glfwSetWindowMonitor(window, NULL, 0, 0, _width, _height, mode->refreshRate);
 				}
 				else {
-					window = glfwCreateWindow(_width, _height, _name, NULL, NULL);
+					window = glfwCreateWindow(_width, _height, _name.c_str(), NULL, NULL);
 				}
 			}
 
 			if (!window) {
 				glfwTerminate();
-				exit(EXIT_FAILURE);
+				throw std::runtime_error("failed to create window!");
 			}
 
 			/* Make the window's context current */
 			glfwMakeContextCurrent(window);
 
-			glewExperimental=GL_TRUE;
-
-			if(glewInit() != GLEW_OK) {
-				exit(EXIT_FAILURE);
-			}
+			API::Context::init();
 		}
 
 		Window::~Window()
 		{
+			API::Context::destroy();
 			glfwDestroyWindow(window);
 			glfwTerminate();
 		}

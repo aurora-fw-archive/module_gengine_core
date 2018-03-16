@@ -18,10 +18,15 @@
 
 #include <AuroraFW/GEngine/GraphicsContext.h>
 
+#include <AuroraFW/CoreLib/Allocator.h>
+
 namespace AuroraFW {
 	namespace GEngine {
 		GraphicsContext::GraphicsContext(std::string name, const API::RenderAPI& api, WindowProperties wp)
-		{}
+		{
+			API::Context::setRenderAPI(api);
+			_window = AFW_NEW Window(name, wp);
+		}
 
 		GraphicsContext::~GraphicsContext()
 		{

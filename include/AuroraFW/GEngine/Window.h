@@ -28,6 +28,8 @@
 
 #include <AuroraFW/GEngine/_GLFW.h>
 
+#include <AuroraFW/STDL/STL/String.h>
+
 //typedef struct GLFWwindow GLFWwindow;
 //typedef struct GLFWmonitor GLFWmonitor;
 
@@ -116,7 +118,7 @@ namespace AuroraFW {
 			 * @see ~Window()
 			 * @since snapshot20170930
 			 */
-			Window(const char* , const WindowProperties& );
+			Window(std::string , const WindowProperties& );
 
 			/**
 			 * Destructs the Window object.
@@ -184,7 +186,7 @@ namespace AuroraFW {
 		private:
 			//void Init();
 			const GLFWmonitor *_monitor;
-			const char *_name;
+			std::string _name;
 			uint _width, _height;
 			const bool _fullscreen, _vsync;
 		};

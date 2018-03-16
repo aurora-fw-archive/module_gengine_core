@@ -36,9 +36,7 @@ namespace AuroraFW {
 				#ifdef AFW_TARGET_PLATFORM_WINDOWS
 					Direct3D,
 				#endif
-				#ifdef AFW__VULKAN_FOUND
 					Vulkan
-				#endif
 			};
 
 			class AFW_API Context
@@ -47,9 +45,17 @@ namespace AuroraFW {
 				static Context* _instance;
 				static RenderAPI _rapi;
 			public:
-				static void create(WindowProperties );
+				static void create(WindowProperties , std::string&);
+
+				static void init();
+				static void destroy();
+
 				static RenderAPI getRenderAPI() { return _rapi; }
 				static void setRenderAPI(RenderAPI api) { _rapi = api; }
+
+			protected:
+				virtual void _init() {}
+				virtual void _destroy() {}
 			};
 		}
 	}

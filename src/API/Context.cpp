@@ -20,6 +20,7 @@
 
 #include <AuroraFW/CoreLib/Allocator.h>
 #include <AuroraFW/GEngine/GL/Context.h>
+#include <AuroraFW/GEngine/Vulkan/Context.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -27,12 +28,23 @@ namespace AuroraFW {
 			RenderAPI Context::_rapi = RenderAPI::OpenGL;
 			Context *Context::_instance = AFW_NULLPTR;
 
-			void Context::create(WindowProperties wp)
+			void Context::create(WindowProperties wp, std::string& name)
 			{
 				switch(getRenderAPI())
 				{
 					case RenderAPI::OpenGL: _instance = AFW_NEW GLContext(wp); break;
+					case RenderAPI::Vulkan: _instance = AFW_NEW VKContext(name); break;
 				}
+			}
+
+			void Context::init()
+			{
+				_instance->_init();
+			}
+
+			void Context::destroy()
+			{
+				_instance->_destroy();
 			}
 		}
 	}
