@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_CONTEXT_H
-#define AURORAFW_GENGINE_API_CONTEXT_H
+#ifndef AURORAFW_GENGINE_RENDERER_H
+#define AURORAFW_GENGINE_RENDERER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -25,36 +25,27 @@
 #endif
 
 #include <AuroraFW/Internal/Config.h>
-#include <AuroraFW/GEngine/Window.h>
-
-#include <AuroraFW/GEngine/API/RenderAPI.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		namespace API {
-			class AFW_API Context
-			{
-			public:
-				static void create(WindowProperties , std::string&);
+		enum AFW_API RendererBufferType {
+			RENDERER_BUFFER_NONE = 0,
+			RENDERER_BUFFER_COLOR = AFW_BIT(0),
+			RENDERER_BUFFER_DEPTH = AFW_BIT(1),
+			RENDERER_BUFFER_STENCIL = AFW_BIT(2)
+		};
 
-				static void init(GLFWwindow* );
-				static void destroy();
+		class AFW_API Renderer
+		{
+		public:
+			static Renderer* Load();
 
-				static RenderAPI getRenderAPI() { return _rapi; }
-				static uint getAPIVersion() { return _version; }
-				static void setRenderAPI(RenderAPI api) { _rapi = api; }
-
-			protected:
-				virtual void _init(GLFWwindow* ) = 0;
-				virtual void _destroy() = 0;
-
-			protected:
-				static Context* _instance;
-				static RenderAPI _rapi;
-				static uint _version;
-			};
-		}
+			virtual void clear(uint = RENDERER_BUFFER_COLOR | RENDERER_BUFFER_DEPTH) = 0;
+			virtual void setViewport(uint , uint , uint , uint ) = 0;
+			virtual void setDepthTesting(bool ) = 0;
+			virtual void setBlend(bool ) = 0;
+		};
 	}
 }
 
-#endif // AURORAFW_GENGINE_CONTEXT_H
+#endif // AURORAFW_GENGINE_RENDERER_H

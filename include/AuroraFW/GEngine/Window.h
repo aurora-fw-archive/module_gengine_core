@@ -30,6 +30,8 @@
 
 #include <AuroraFW/STDL/STL/String.h>
 
+#include <stdexcept>
+
 //typedef struct GLFWwindow GLFWwindow;
 //typedef struct GLFWmonitor GLFWmonitor;
 
@@ -47,37 +49,30 @@ namespace AuroraFW {
 		 * window, such as resolution.
 		 * @since snapshot20170930
 		 */
-		struct AFW_API WindowProperties {
-			/**
-			 * Constructs a WindowProperties object with the given info.
-			 * @param width The width of the window.
-			 * @param height The height of the window.
-			 * @param fullscreen If the window shall be in fullscreen or not.
-			 * @param vsync If V-sync should be enabled.
-			 * @since snapshot20170930
-			 */
-			WindowProperties(const uint& , const uint& , const bool& = false);
+		class Window;
+		class GLContext;
 
+		struct AFW_API WindowProperties {
 			/**
 			 * The width specified for the window.
 			 * @see height
 			 * @since snapshot20170930
 			 */
-			uint width;
+			uint width = 800;
 
 			/**
 			 * The height specified for the window.
 			 * @see width
 			 * @since snapshot20170930
 			 */
-			uint height;
+			uint height = 600;
 
 			/**
 			 * Tells if the window should be fullscreen or not.
 			 * @see vsync
 			 * @since snapshot20170930
 			 */
-			bool fullscreen;
+			bool fullscreen = false;
 
 			/**
 			 * Tells if v-sync should be enabled.
@@ -100,6 +95,9 @@ namespace AuroraFW {
 			bool sRGB = false;
 			bool doubleBuffer = true;
 			//TODO: http://www.glfw.org/docs/latest/window_guide.html#window_hints
+
+			bool swapBuffers = true;
+			bool windowSettingsDialog = true;
 		};
 
 		class InputManager;
@@ -118,7 +116,7 @@ namespace AuroraFW {
 			 * @see ~Window()
 			 * @since snapshot20170930
 			 */
-			Window(std::string , const WindowProperties& );
+			Window(std::string , const WindowProperties = {});
 
 			/**
 			 * Destructs the Window object.
@@ -166,7 +164,7 @@ namespace AuroraFW {
 			 * @see getHeight()
 			 * @since snapshot20170930
 			 */
-			inline uint getWidth() const { return _width; }
+			inline uint getWidth() const { return wp.width; }
 
 			/**
 			 * Returns the height of the window.
@@ -174,7 +172,20 @@ namespace AuroraFW {
 			 * @see getWidth()
 			 * @since snapshot20170930
 			 */
-			inline uint getHeight() const { return _height; }
+			inline uint getHeight() const { return wp.height; }
+
+			inline WindowProperties properties() { return wp; }
+
+			inline bool getFloating() const { return wp.floating; }
+			inline void setFloating(bool val) { _isCreated ? throw std::runtime_error("Can't change window properties after creation!") : wp.floating = val; }
+
+			inline bool getResizable() const { return wp.resizable; }
+			inline void setResizable(bool val) { _isCreated ? throw std::runtime_error("Can't change window properties after creation!") : wp.resizable = val; }
+
+			inline bool getDoubleBuffer() const { return wp.doubleBuffer; }
+			inline void setDoubleBuffer(bool val) { _isCreated ? throw std::runtime_error("Can't change window properties after creation!") : wp.doubleBuffer = val;}
+
+			inline bool setSamples(int s) { _isCreated ? throw std::runtime_error("Can't change window properties after creation!") : wp.samples = s; }
 
 		protected:
 			/**
@@ -182,13 +193,14 @@ namespace AuroraFW {
 			 * @since snapshot20170930
 			 */
 			GLFWwindow *window;
+			WindowProperties wp;
 
 		private:
-			//void Init();
-			const GLFWmonitor *_monitor;
-			std::string _name;
-			uint _width, _height;
-			const bool _fullscreen, _vsync;
+		  void _openWindowSettingsDialog();
+		  //void Init();
+		  const GLFWmonitor *_monitor;
+		  std::string _name;
+		  bool _isCreated = false;
 		};
 	}
 }

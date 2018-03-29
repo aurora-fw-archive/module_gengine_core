@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_CONTEXT_H
-#define AURORAFW_GENGINE_API_CONTEXT_H
+#ifndef AURORAFW_GENGINE_API_RENDERAPI_H
+#define AURORAFW_GENGINE_API_RENDERAPI_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -25,36 +25,31 @@
 #endif
 
 #include <AuroraFW/Internal/Config.h>
-#include <AuroraFW/GEngine/Window.h>
 
-#include <AuroraFW/GEngine/API/RenderAPI.h>
+#if defined(AFW_TARGET_PLATFORM_WINDOWS) || defined(AFW__RENDERAPI_DIRECT3D)
+	#define AFW_RENDERAPI_DIRECT3D
+#endif
 
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API Context
-			{
-			public:
-				static void create(WindowProperties , std::string&);
+namespace AuroraFW::GEngine::API {
+	enum AFW_API RenderAPI
+	{
+		OpenGL,
+#ifdef AFW_RENDERAPI_DIRECT3D
+		Direct3D,
+#endif
+		Vulkan
+	};
 
-				static void init(GLFWwindow* );
-				static void destroy();
-
-				static RenderAPI getRenderAPI() { return _rapi; }
-				static uint getAPIVersion() { return _version; }
-				static void setRenderAPI(RenderAPI api) { _rapi = api; }
-
-			protected:
-				virtual void _init(GLFWwindow* ) = 0;
-				virtual void _destroy() = 0;
-
-			protected:
-				static Context* _instance;
-				static RenderAPI _rapi;
-				static uint _version;
-			};
-		}
-	}
+	enum AFW_API RenderAPIVersion : uint {
+		Unknown = 0,
+		GL_2_0,
+		GL_2_1,
+		GL_3_0,
+		GL_3_1,
+		GL_3_2,
+		GL_3_3,
+		GL_3_3_CORE
+	};
 }
 
-#endif // AURORAFW_GENGINE_CONTEXT_H
+#endif // AURORAFW_GENGINE_API_RENDERAPI_H

@@ -17,7 +17,9 @@
 ****************************************************************************/
 
 #include <AuroraFW/GEngine/Input.h>
+#include <AuroraFW/CoreLib/Callback.h>
 #include <algorithm>
+#include <assert.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -38,23 +40,25 @@ namespace AuroraFW {
 			glfwSetKeyCallback(_parent->window, _keyCallback);
 			glfwSetMouseButtonCallback(_parent->window, _mouseButtonCallback);
 			glfwSetCursorPosCallback(_parent->window, _cursorPosCallback);
+			glfwSetScrollCallback(_parent->window, _scrollCallback);
+			glfwSetCharCallback(_parent->window, _charCallback);
 		}
 
 		InputManager::~InputManager()
 		{}
 
-		bool InputManager::isKeyPressed(const uint_t& key) const
+		bool InputManager::isKeyPressed(const InputKey& key) const
 		{
-			if(key >= (AFW_GENGINE_INPUT_MAX_KEYS + AFW_GENGINE_INPUT_KEY_OFFSET))
+			if(static_cast<int>(key) >= (AFW_GENGINE_INPUT_MAX_KEYS + AFW_GENGINE_INPUT_KEY_OFFSET))
 				return false;
-			return _keys[key];
+			return _keys[static_cast<int>(key)];
 		}
 
-		bool InputManager::isMouseButtonPressed(const uint_t& btn) const
+		bool InputManager::isMouseButtonPressed(const InputButton& btn) const
 		{
-			if(btn >= (AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS + AFW_GENGINE_INPUT_MOUSE_BUTTONS_OFFSET))
+			if(static_cast<int>(btn) >= (AFW_GENGINE_INPUT_MAX_MOUSE_BUTTONS + AFW_GENGINE_INPUT_MOUSE_BUTTONS_OFFSET))
 				return false;
-			return _mouseButtons[btn];
+			return _mouseButtons[static_cast<int>(btn)];
 		}
 
 		void InputManager::getMousePosition(double& x, double& y) const
@@ -68,8 +72,8 @@ namespace AuroraFW {
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 			in->_keys[key] = action != GLFW_RELEASE;
 
-			std::for_each(in->_keyCallbacks.begin(), in->_keyCallbacks.end(), [window, key, scancode, action, mods](void (*func)(GLFWwindow *, int, int, int, int)) {
-				func(window, key, scancode, action, mods);
+			std::for_each(in->_keyCallbacks.begin(), in->_keyCallbacks.end(), [key, scancode, action, mods](std::function<void(InputKey, int, InputAction, InputMod)> func) {
+				func(static_cast<InputKey>(key), scancode, static_cast<InputAction>(action), static_cast<InputMod>(mods));
 			});
 		}
 
@@ -78,8 +82,8 @@ namespace AuroraFW {
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 			in->_mouseButtons[btn] = action != GLFW_RELEASE;
 
-			std::for_each(in->_mouseButtonCallbacks.begin(), in->_mouseButtonCallbacks.end(), [window, btn, action, mods](void (*func)(GLFWwindow *, int, int, int)) {
-				func(window, btn, action, mods);
+			std::for_each(in->_mouseButtonCallbacks.begin(), in->_mouseButtonCallbacks.end(), [btn, action, mods](std::function<void(InputButton, InputAction, InputMod)> func) {
+				func(static_cast<InputButton>(btn), static_cast<InputAction>(action), static_cast<InputMod>(mods));
 			});
 		}
 
@@ -89,8 +93,8 @@ namespace AuroraFW {
 			in->_mx = xpos;
 			in->_my = ypos;
 
-			std::for_each(in->_cursorPosCallbacks.begin(), in->_cursorPosCallbacks.end(), [window, xpos, ypos](void (*func)(GLFWwindow *, double, double)) {
-				func(window, xpos, ypos);
+			std::for_each(in->_cursorPosCallbacks.begin(), in->_cursorPosCallbacks.end(), [xpos, ypos](std::function<void(double, double)> func) {
+				func(xpos, ypos);
 			});
 		}
 
@@ -100,8 +104,8 @@ namespace AuroraFW {
 			in->_sx += xoffset;
 			in->_sy += yoffset;
 
-			std::for_each(in->_scrollCallbacks.begin(), in->_scrollCallbacks.end(), [window, xoffset, yoffset](void (*func)(GLFWwindow *, double, double)) {
-				func(window, xoffset, yoffset);
+			std::for_each(in->_scrollCallbacks.begin(), in->_scrollCallbacks.end(), [xoffset, yoffset](std::function<void( double, double)> func) {
+				func(xoffset, yoffset);
 			});
 		}
 
@@ -109,59 +113,74 @@ namespace AuroraFW {
 		{
 			InputManager *in = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
 
-			std::for_each(in->_charCallbacks.begin(), in->_charCallbacks.end(), [window, codepoint](void (*func)(GLFWwindow *, uint)) {
-				func(window, codepoint);
+			std::for_each(in->_charCallbacks.begin(), in->_charCallbacks.end(), [codepoint](std::function<void(uint)> func) {
+				func(codepoint);
 			});
 		}
 
-		void InputManager::addKeyCallback(void (*func)(GLFWwindow*,int,int,int,int))
+		void InputManager::addKeyCallback(std::function<void(InputKey, int, InputAction, InputMod)> func)
 		{
 			_keyCallbacks.push_back(func);
 		}
 
-		void InputManager::removeKeyCallback(void (*func)(GLFWwindow*,int,int,int,int))
+		void InputManager::removeKeyCallback(std::function<void(InputKey, int, InputAction, InputMod)> func)
 		{
-			_keyCallbacks.erase(std::find(_keyCallbacks.begin(),_keyCallbacks.end(), func));
+			_keyCallbacks.erase(std::find_if(_keyCallbacks.begin(),_keyCallbacks.end(),
+				[func](std::function<void(InputKey, int, InputAction, InputMod)> _f){
+					return getCallbackPtr(_f) == getCallbackPtr(func);
+				}));
 		}
 
-		void InputManager::addMouseButtonCallback(void (*func)(GLFWwindow*,int,int,int))
+		void InputManager::addMouseButtonCallback(std::function<void(InputButton, InputAction, InputMod)> func)
 		{
 			_mouseButtonCallbacks.push_back(func);
 		}
 
-		void InputManager::removeMouseButtonCallback(void (*func)(GLFWwindow*,int,int,int))
+		void InputManager::removeMouseButtonCallback(std::function<void(InputButton, InputAction, InputMod)> func)
 		{
-			_mouseButtonCallbacks.erase(std::find(_mouseButtonCallbacks.begin(),_mouseButtonCallbacks.end(), func));
+			_mouseButtonCallbacks.erase(std::find_if(_mouseButtonCallbacks.begin(),_mouseButtonCallbacks.end(),
+				[func](std::function<void(InputButton, InputAction, InputMod)> _f){
+					return getCallbackPtr(_f) == getCallbackPtr(func);
+				}));
 		}
 
-		void InputManager::addCursorPosCallback(void (*func)(GLFWwindow*,double,double))
+		void InputManager::addCursorPosCallback(std::function<void(double,double)> func)
 		{
 			_cursorPosCallbacks.push_back(func);
 		}
 
-		void InputManager::removeCursorPosCallback(void (*func)(GLFWwindow*,double,double))
+		void InputManager::removeCursorPosCallback(std::function<void(double,double)> func)
 		{
-			_cursorPosCallbacks.erase(std::find(_cursorPosCallbacks.begin(),_cursorPosCallbacks.end(), func));
+			_cursorPosCallbacks.erase(std::find_if(_cursorPosCallbacks.begin(),_cursorPosCallbacks.end(),
+				[func](std::function<void(double,double)> _f){
+					return getCallbackPtr(_f) == getCallbackPtr(func);
+				}));
 		}
 
-		void InputManager::addScrollCallback(void (*func)(GLFWwindow*,double,double))
+		void InputManager::addScrollCallback(std::function<void(double,double)> func)
 		{
 			_scrollCallbacks.push_back(func);
 		}
 
-		void InputManager::removeScrollCallback(void (*func)(GLFWwindow*,double,double))
+		void InputManager::removeScrollCallback(std::function<void(double,double)> func)
 		{
-			_scrollCallbacks.erase(std::find(_scrollCallbacks.begin(),_scrollCallbacks.end(), func));
+			_scrollCallbacks.erase(std::find_if(_scrollCallbacks.begin(),_scrollCallbacks.end(),
+				[func](std::function<void(double,double)> _f){
+					return getCallbackPtr(_f) == getCallbackPtr(func);
+				}));
 		}
 
-		void InputManager::addCharCallback(void (*func)(GLFWwindow*,uint))
+		void InputManager::addCharCallback(std::function<void(uint)> func)
 		{
 			_charCallbacks.push_back(func);
 		}
 
-		void InputManager::removeCharCallback(void (*func)(GLFWwindow*,uint))
+		void InputManager::removeCharCallback(std::function<void(uint)> func)
 		{
-			_charCallbacks.erase(std::find(_charCallbacks.begin(),_charCallbacks.end(), func));
+			_charCallbacks.erase(std::find_if(_charCallbacks.begin(),_charCallbacks.end(),
+				[func](std::function<void(uint)> _f){
+					return getCallbackPtr(_f) == getCallbackPtr(func);
+				}));
 		}
 	}
 }

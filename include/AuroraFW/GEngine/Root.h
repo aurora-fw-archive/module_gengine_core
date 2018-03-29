@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_CONTEXT_H
-#define AURORAFW_GENGINE_API_CONTEXT_H
+#ifndef AURORAFW_GENGINE_ROOT_H
+#define AURORAFW_GENGINE_ROOT_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -25,36 +25,25 @@
 #endif
 
 #include <AuroraFW/Internal/Config.h>
-#include <AuroraFW/GEngine/Window.h>
 
-#include <AuroraFW/GEngine/API/RenderAPI.h>
+#include <AuroraFW/GEngine/API/Renderer.h>
+#include <AuroraFW/GEngine/RTShaderManager.h>
+#include <AuroraFW/GEngine/Input.h>
+#include <vector>
+#include <memory>
 
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API Context
-			{
-			public:
-				static void create(WindowProperties , std::string&);
+namespace AuroraFW::GEngine {
+	struct AFW_API Root {
+	public:
+		inline Renderer* getRenderer(uint pos = 0) { return _renderers[pos].get(); }
+		inline void addRenderer(Renderer* ptr) { _renderers.push_back(std::unique_ptr<Renderer>(ptr)); }
 
-				static void init(GLFWwindow* );
-				static void destroy();
+		std::unique_ptr<RTShaderManager> shaderManager;
+		std::unique_ptr<InputManager> inputHandler;
 
-				static RenderAPI getRenderAPI() { return _rapi; }
-				static uint getAPIVersion() { return _version; }
-				static void setRenderAPI(RenderAPI api) { _rapi = api; }
-
-			protected:
-				virtual void _init(GLFWwindow* ) = 0;
-				virtual void _destroy() = 0;
-
-			protected:
-				static Context* _instance;
-				static RenderAPI _rapi;
-				static uint _version;
-			};
-		}
-	}
+	private:
+		std::vector<std::unique_ptr<Renderer>> _renderers;
+	};
 }
 
-#endif // AURORAFW_GENGINE_CONTEXT_H
+#endif //AURORAFW_GENGINE_ROOT_H

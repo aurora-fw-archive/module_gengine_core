@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_CONTEXT_H
-#define AURORAFW_GENGINE_API_CONTEXT_H
+#ifndef AURORAFW_GENGINE_FRUSTUM_H
+#define AURORAFW_GENGINE_FRUSTUM_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -25,36 +25,39 @@
 #endif
 
 #include <AuroraFW/Internal/Config.h>
-#include <AuroraFW/GEngine/Window.h>
-
-#include <AuroraFW/GEngine/API/RenderAPI.h>
 
 namespace AuroraFW {
 	namespace GEngine {
-		namespace API {
-			class AFW_API Context
-			{
-			public:
-				static void create(WindowProperties , std::string&);
+		enum OrientationMode {
+			0Degree,
+			90Degree,
+			180Degree,
+			270Degree,
+			Portrait = 0Degree,
+			LandscapeRight = 90Degree,
+			LandscapeLeft = 270Degree
+		};
 
-				static void init(GLFWwindow* );
-				static void destroy();
-
-				static RenderAPI getRenderAPI() { return _rapi; }
-				static uint getAPIVersion() { return _version; }
-				static void setRenderAPI(RenderAPI api) { _rapi = api; }
-
-			protected:
-				virtual void _init(GLFWwindow* ) = 0;
-				virtual void _destroy() = 0;
-
-			protected:
-				static Context* _instance;
-				static RenderAPI _rapi;
-				static uint _version;
-			};
+		enum ProjectionType {
+			Orthographic,
+			Perspective
 		}
+
+		class AFW_API Frustum {
+		public:
+			static enum FrustumPlane {
+				Near,
+				Far,
+				Left,
+				Right,
+				Top,
+				Bottom
+			};
+		
+		protected:
+			
+		};
 	}
 }
 
-#endif // AURORAFW_GENGINE_CONTEXT_H
+#endif // AURORAFW_GENGINE_FRUSTUM_H

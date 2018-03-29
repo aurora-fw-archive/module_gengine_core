@@ -21,7 +21,6 @@
 #include <AuroraFW/CoreLib/Callback.h>
 #include <AuroraFW/CoreLib/Allocator.h>
 
-#include <AuroraFW/GEngine/Input.h>
 #include <AuroraFW/GEngine/GL/ImGui/Loader.h>
 
 namespace AuroraFW {
@@ -75,7 +74,7 @@ namespace AuroraFW {
 			ret->_mouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
 			ret->_mouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
 
-			input->addMouseButtonCallback(AFW_CALLBACK(void (*)(GLFWwindow*,int,int,int), ImGuiLoader)(std::bind(&ImGuiLoader::_mouseButtonCallback, ret, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)));
+			input->addMouseButtonCallback(std::bind(&ImGuiLoader::_mouseButtonCallback, ret, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 			input->addScrollCallback(_scrollCallback);
 			input->addKeyCallback(_keyCallback);
 			input->addCharCallback(_charCallback);
@@ -97,26 +96,26 @@ namespace AuroraFW {
 		void ImGuiLoader::_Unload()
 		{}
 
-		void ImGuiLoader::_mouseButtonCallback(GLFWwindow* , int button, int action, int )
+		void ImGuiLoader::_mouseButtonCallback(InputButton button, InputAction action, InputMod )
 		{
-			if (action == GLFW_PRESS && button >= 0 && button < 3)
-				_mousePressed[button] = true;
+			if (action == InputAction::Pressed && button >= InputButton::B1 && button < InputButton::B4)
+				_mousePressed[static_cast<int>(button)] = true;
 		}
 
-		void ImGuiLoader::_scrollCallback(GLFWwindow* , double x, double y)
+		void ImGuiLoader::_scrollCallback(double x, double y)
 		{
 			ImGuiIO &io = ImGui::GetIO();
 			io.MouseWheelH += (float)x;
 			io.MouseWheel += (float)y;
 		}
 
-		void ImGuiLoader::_keyCallback(GLFWwindow* , int key, int, int action, int mods)
+		void ImGuiLoader::_keyCallback(InputKey key, int, InputAction action, InputMod mods)
 		{
 			ImGuiIO& io = ImGui::GetIO();
-			if (action == GLFW_PRESS)
-				io.KeysDown[key] = true;
-			if (action == GLFW_RELEASE)
-				io.KeysDown[key] = false;
+			if (action == InputAction::Pressed)
+				io.KeysDown[static_cast<int>(key)] = true;
+			if (action == InputAction::Released)
+				io.KeysDown[static_cast<int>(key)] = false;
 
 			(void)mods; // Modifiers are not reliable across systems
 			io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
@@ -125,7 +124,7 @@ namespace AuroraFW {
 			io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 		}
 
-		void ImGuiLoader::_charCallback(GLFWwindow* , uint c)
+		void ImGuiLoader::_charCallback(uint c)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			if (c > 0 && c < 0x10000)

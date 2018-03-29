@@ -29,6 +29,8 @@
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/GEngine/ImGui/ImGui.h>
 
+#include <AuroraFW/GEngine/Input.h>
+
 namespace AuroraFW {
 	namespace GEngine {
 		class AFW_API ImGuiLoader {
@@ -43,10 +45,10 @@ namespace AuroraFW {
 
 		private:
 			virtual void _Unload();
-			void _mouseButtonCallback(GLFWwindow* , int , int , int );
-			static void _scrollCallback(GLFWwindow* , double , double );
-			static void _keyCallback(GLFWwindow* , int , int , int , int );
-			static void _charCallback(GLFWwindow* , uint );
+			void _mouseButtonCallback( InputButton , InputAction , InputMod );
+			static void _scrollCallback( double , double );
+			static void _keyCallback( InputKey , int , InputAction , InputMod );
+			static void _charCallback( uint );
 
 			virtual void _internalNewFrame() = 0;
 			static void _setClipboardText(void* , const char* );

@@ -28,9 +28,11 @@
 
 #include <AuroraFW/GEngine/Window.h>
 #include <AuroraFW/GEngine/API/Context.h>
-#include <AuroraFW/GEngine/Renderer.h>
+#include <AuroraFW/GEngine/API/Renderer.h>
 #include <AuroraFW/Core/InputListener.h>
 #include <AuroraFW/IO/Timer.h>
+#include <AuroraFW/GEngine/ImGui/Loader.h>
+#include <AuroraFW/GEngine/Root.h>
 
 #include <set>
 
@@ -38,24 +40,26 @@ namespace AuroraFW {
 	namespace GEngine {
 		class AFW_API GraphicsContext {
 		public:
-			GraphicsContext(std::string , const API::RenderAPI& = API::OpenGL, WindowProperties = WindowProperties(800, 600, false));
+			GraphicsContext(std::string , const API::RenderAPI& = API::OpenGL, WindowProperties = {});
+			GraphicsContext(std::string , const char* );
 			virtual ~GraphicsContext();
 
 			void renderLoop();
 
 			virtual void onRender();
 			void addInputListener(InputListener* );
-			void removeInputListener(InputListener* );
 
-			inline Renderer* getRenderer() { return _renderer; }
 			inline float getFramerate() { return 1000.0f / _tpf; }
 			inline float getTPF() { return _tpf; }
+
+		protected:
+			Root* root;
 
 		private:
 			virtual void _internalRender();
 
 			Window* _window;
-			Renderer* _renderer;
+			ImGuiLoader* _guiLoader;
 			std::set<InputListener*> _listeners;
 			float _tpf;
 			IO::Timer _frametimer = IO::Timer();

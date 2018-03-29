@@ -16,10 +16,11 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/Renderer.h>
+#include <AuroraFW/GEngine/API/Renderer.h>
 #include <AuroraFW/CoreLib/Allocator.h>
 #include <AuroraFW/GEngine/API/Context.h>
 #include <AuroraFW/GEngine/GL/Renderer.h>
+#include <AuroraFW/GEngine/Vulkan/Renderer.h>
 
 namespace AuroraFW {
 	namespace GEngine {
@@ -28,6 +29,7 @@ namespace AuroraFW {
 			switch(API::Context::getRenderAPI())
 			{
 				case API::OpenGL: return AFW_NEW GLRenderer(); break;
+				case API::Vulkan: return AFW_NEW VKRenderer(); break;
 				default: return AFW_NULLPTR; break;
 			}
 		}

@@ -20,16 +20,22 @@
 #include <AuroraFW/Core/DebugManager.h>
 #include <AuroraFW/GEngine/API/Context.h>
 
+#include <AuroraFW/GUI/Application.h>
+#include <AuroraFW/GUI/Window.h>
+#include <AuroraFW/GUI/Button.h>
+#include <AuroraFW/GUI/Label.h>
+
+#include <AuroraFW/CoreLib/Callback.h>
+#include <AuroraFW/CoreLib/Allocator.h>
+
 namespace AuroraFW {
 	namespace GEngine {
-		WindowProperties::WindowProperties(const uint& width, const uint& height, const bool& fullscreen)
-			: width(width), height(height), fullscreen(fullscreen)
-		{}
-
-		Window::Window(std::string name, const WindowProperties& wp)
-			: _monitor(glfwGetPrimaryMonitor()), _name(name), _width(wp.width), _height(wp.height),
-				_fullscreen(wp.fullscreen), _vsync(wp.vsync)
+		Window::Window(std::string name, const WindowProperties wp)
+			: _monitor(glfwGetPrimaryMonitor()), _name(name), wp(wp)
 		{
+			if(wp.windowSettingsDialog)
+				_openWindowSettingsDialog();
+
 			if (!glfwInit())
 				throw std::runtime_error("failed to initialize GLFW!");
 
@@ -58,32 +64,34 @@ namespace AuroraFW {
 			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-			if(_width == 0 || _height == 0) {
-				_width = mode->width;
-				_height = mode->height;
+			if(wp.width == 0 || wp.height == 0) {
+				this->wp.width = mode->width;
+				this->wp.height = mode->height;
 			}
 
-			if(_fullscreen) {
-				if(_vsync) {
-					window = glfwCreateWindow(_width, _height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
-					glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, _width, _height, mode->refreshRate);
+			if(wp.fullscreen) {
+				if(wp.vsync) {
+					window = glfwCreateWindow(wp.width, wp.height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
+					glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, wp.width, wp.height, mode->refreshRate);
 				}
 				else {
-					window = glfwCreateWindow(_width, _height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
+					window = glfwCreateWindow(wp.width, wp.height, _name.c_str(), glfwGetPrimaryMonitor(), NULL);
 				}
 			} else {
-				if(_vsync) {
-					window = glfwCreateWindow(_width, _height, _name.c_str(), NULL, NULL);
-					glfwSetWindowMonitor(window, NULL, 0, 0, _width, _height, mode->refreshRate);
+				if(wp.vsync) {
+					window = glfwCreateWindow(wp.width, wp.height, _name.c_str(), NULL, NULL);
+					glfwSetWindowMonitor(window, NULL, 0, 0, wp.width, wp.height, mode->refreshRate);
 				}
 				else {
-					window = glfwCreateWindow(_width, _height, _name.c_str(), NULL, NULL);
+					window = glfwCreateWindow(wp.width, wp.height, _name.c_str(), NULL, NULL);
 				}
 			}
 
 			if (!window) {
 				glfwTerminate();
 				throw std::runtime_error("failed to create window!");
+			} else {
+				_isCreated = true;
 			}
 
 			/* Make the window's context current */
@@ -101,21 +109,26 @@ namespace AuroraFW {
 
 		void Window::update()
 		{
-			// Poll for and process events
-			glfwPollEvents();
-			glfwGetFramebufferSize(window, (int*)&_width, (int*)&_height);
+			if(!wp.vsync) glfwSwapInterval(0);
+			// Swap front and back buffers
+			if(wp.swapBuffers) glfwSwapBuffers(window);
 		}
 
 		void Window::present()
 		{
-			if(!_vsync) glfwSwapInterval(0);
-			// Swap front and back buffers
-			glfwSwapBuffers(window);
+			// Poll for and process events
+			glfwPollEvents();
+			glfwGetFramebufferSize(window, (int*)&wp.width, (int*)&wp.height);
 		}
 
 		bool Window::isClosed() const
 		{
 			return glfwWindowShouldClose(window) == 1;
+		}
+
+		void Window::_openWindowSettingsDialog()
+		{
+			
 		}
 	}
 }
