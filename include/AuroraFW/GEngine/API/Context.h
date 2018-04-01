@@ -40,15 +40,14 @@ namespace AuroraFW {
 				static void init(GLFWwindow* );
 				static void destroy();
 
-				static RenderAPI getRenderAPI() { return _rapi; }
-				static uint getAPIVersion() { return _version; }
-				static void setRenderAPI(RenderAPI api) { _rapi = api; }
+				AFW_FORCE_INLINE static RenderAPI getRenderAPI() { return _rapi; }
+				AFW_FORCE_INLINE static uint getAPIVersion() { return _version; }
+				AFW_FORCE_INLINE static void setRenderAPI(RenderAPI api) { _rapi = api; }
 
 			protected:
 				virtual void _init(GLFWwindow* ) = 0;
 				virtual void _destroy() = 0;
 
-			protected:
 				static Context* _instance;
 				static RenderAPI _rapi;
 				static uint _version;
