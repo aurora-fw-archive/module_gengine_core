@@ -29,22 +29,24 @@
 namespace AuroraFW::GEngine {
 	class AFW_API Shader {
 		public:
-			enum ShaderType {
-				TYPE_UNKNOWN,
-				TYPE_CACHED,
-				TYPE_FRAGMENT,
-				TYPE_VERTEX,
-				TYPE_GEOMETRY,
-				TYPE_TESSELLATION_CONTROL,
-				TYPE_TESSELLATION_EVALUATION,
-				TYPE_COMPUTE
-			};
-
+		enum Type : unsigned {
+			Unknown,
+			Cached,
+			Fragment,
+			Vertex,
+			Geometry,
+			TessellationControl,
+			TessellationEvaluation,
+			Compute
+		};
 			void importCachedFile(std::string );
 			void compileFromFile(std::string );
 
-			virtual Shader& importCachedSource(const char* ) = 0;
-			virtual Shader& compileFromSource(const char* ) = 0;
+			virtual void importCachedFile(const std::string &) = 0;
+			virtual void compileFromFile(const std::string &) = 0;
+			virtual void importCachedSource(const char* ) = 0;
+			virtual void compileFromSource(const char* ) = 0;
+			virtual bool isCompiled() const = 0;
 	};
 }
 

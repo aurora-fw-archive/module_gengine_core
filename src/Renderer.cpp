@@ -17,21 +17,18 @@
 ****************************************************************************/
 
 #include <AuroraFW/GEngine/API/Renderer.h>
-#include <AuroraFW/CoreLib/Allocator.h>
 #include <AuroraFW/GEngine/API/Context.h>
 #include <AuroraFW/GEngine/GL/Renderer.h>
 #include <AuroraFW/GEngine/Vulkan/Renderer.h>
 
-namespace AuroraFW {
-	namespace GEngine {
-		Renderer* Renderer::Load()
+namespace AuroraFW::GEngine::API {
+	Renderer* Renderer::Load()
+	{
+		switch(API::Context::getRenderAPI())
 		{
-			switch(API::Context::getRenderAPI())
-			{
-				case API::OpenGL: return AFW_NEW GLRenderer(); break;
-				case API::Vulkan: return AFW_NEW VKRenderer(); break;
-				default: return AFW_NULLPTR; break;
-			}
+			case API::OpenGL: return AFW_NEW GLRenderer(); break;
+			case API::Vulkan: return AFW_NEW VKRenderer(); break;
+			default: return AFW_NULLPTR; break;
 		}
 	}
 }

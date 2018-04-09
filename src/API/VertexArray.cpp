@@ -16,20 +16,19 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_RTSHADERPIPELINE_H
-#define AURORAFW_GENGINE_RTSHADERPIPELINE_H
+#include <AuroraFW/GEngine/API/VertexArray.h>
+#include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/GL/VertexArray.h>
 
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
-
-#include <AuroraFW/Internal/Config.h>
-
-namespace AuroraFW::GEngine {
-	class AFW_API RTShaderPipeline {
-		
-	};
+namespace AuroraFW::GEngine::API {
+	VertexArray* VertexArray::Load()
+	{
+		switch(Context::getRenderAPI())
+		{
+			case OpenGL: return AFW_NEW GLVertexArray();
+			case Vulkan:
+				#pragma message("TODO: Need to be implemented")
+				return AFW_NULLPTR;
+		}
+	}
 }
-
-#endif // AURORAFW_GENGINE_RTSHADERPIPELINE_H

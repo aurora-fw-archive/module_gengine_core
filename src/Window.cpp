@@ -26,7 +26,6 @@
 #include <AuroraFW/GUI/Label.h>
 
 #include <AuroraFW/CoreLib/Callback.h>
-#include <AuroraFW/CoreLib/Allocator.h>
 
 namespace AuroraFW {
 	namespace GEngine {

@@ -16,33 +16,19 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_INDEXBUFFER_H
-#define AURORAFW_GENGINE_API_INDEXBUFFER_H
+#include <AuroraFW/GEngine/API/Texture.h>
+#include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/GL/Texture.h>
 
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
+namespace AuroraFW::GEngine::API {
+	Texture* Texture::Load(const std::string& path)
+	{
+		Texture* ret;
 
-#include <AuroraFW/Internal/Config.h>
-
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API IndexBuffer {
-			public:
-				static IndexBuffer* Load(uint* , uint );
-
-				virtual void bind() const = 0;
-				virtual void unbind() const = 0;
-
-				AFW_FORCE_INLINE uint count() const { return _count; }
-
-			protected:
-				uint _count;
-			};
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL: return AFW_NEW GLTexture(path); break;
+			case API::RenderAPI::Vulkan: return AFW_NULLPTR;
 		}
 	}
 }
-
-#endif // AURORAFW_GENGINE_API_INDEXBUFFER_H

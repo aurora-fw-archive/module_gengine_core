@@ -46,23 +46,33 @@ namespace AuroraFW {
 
 			void renderLoop();
 
-			virtual void onRender();
-			void addInputListener(InputListener* );
+			virtual void onRender() {}
+			virtual void onDestroy() {}
+			void addInputListener(InputListener *);
 
 			inline float getFramerate() { return 1000.0f / _tpf; }
-			inline float getTPF() { return _tpf; }
+			AFW_FORCE_INLINE float getTPF() { return _tpf; }
+
+			struct DebugInfo {
+				std::vector<float> framerate;
+			};
+			static void renderDebugGUI(const DebugInfo& );
+			void renderDebugGUI();
 
 		protected:
 			Root* root;
 
 		private:
-			virtual void _internalRender();
+			void _internalRender();
 
 			Window* _window;
 			ImGuiLoader* _guiLoader;
 			std::set<InputListener*> _listeners;
+			std::array<float, 64> _frameratebuf;
 			float _tpf;
 			IO::Timer _frametimer = IO::Timer();
+			IO::Timer _framerateTimer = IO::Timer();
+			bool _isdebuggui;
 		};
 	}
 }

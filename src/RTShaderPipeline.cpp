@@ -16,33 +16,16 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_INDEXBUFFER_H
-#define AURORAFW_GENGINE_API_INDEXBUFFER_H
+#include <AuroraFW/GEngine/API/RTShaderPipeline.h>
+#include <AuroraFW/GEngine/GL/RTShaderPipeline.h>
+#include <AuroraFW/GEngine/API/Context.h>
 
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
-
-#include <AuroraFW/Internal/Config.h>
-
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API IndexBuffer {
-			public:
-				static IndexBuffer* Load(uint* , uint );
-
-				virtual void bind() const = 0;
-				virtual void unbind() const = 0;
-
-				AFW_FORCE_INLINE uint count() const { return _count; }
-
-			protected:
-				uint _count;
-			};
+namespace AuroraFW::GEngine::API {
+	RTShaderPipeline* RTShaderPipeline::Load(std::vector<RTShader*> )
+	{
+		switch(Context::getRenderAPI())
+		{
+			case OpenGL: return AFW_NEW GLRTShaderPipeline();
 		}
 	}
 }
-
-#endif // AURORAFW_GENGINE_API_INDEXBUFFER_H

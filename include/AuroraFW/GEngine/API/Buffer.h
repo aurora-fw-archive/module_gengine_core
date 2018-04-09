@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_INDEXBUFFER_H
-#define AURORAFW_GENGINE_API_INDEXBUFFER_H
+#ifndef AURORAFW_GENGINE_API_BUFFER_H
+#define AURORAFW_GENGINE_API_BUFFER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,23 +26,41 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API IndexBuffer {
-			public:
-				static IndexBuffer* Load(uint* , uint );
+namespace AuroraFW::GEngine::API {
+	class AFW_API Buffer {
+	public:
+		enum class Usage : unsigned
+		{
+			Static,
+			Dynamic
+		};
 
-				virtual void bind() const = 0;
-				virtual void unbind() const = 0;
+		enum class Type : unsigned
+		{
+			Array,
+			VertexBuffer,
+			ElementArray,
+			IndexBuffer,
+			PixelPack,
+			PixelUnpack
+		};
 
-				AFW_FORCE_INLINE uint count() const { return _count; }
+		static Buffer* Load(Type );
+		static Buffer* Load(Type , const void* , size_t , Usage );
 
-			protected:
-				uint _count;
-			};
-		}
-	}
+		virtual ~Buffer() {}
+		AFW_FORCE_INLINE void Unload(Buffer *i) { delete i; }
+
+		virtual void allocate(const void * , size_t , Buffer::Usage  = Buffer::Usage::Static) = 0;
+
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void resize(size_t ) = 0;
+
+		virtual size_t size() const = 0;
+		AFW_FORCE_INLINE size_t length() const { return size(); }
+	};
 }
 
-#endif // AURORAFW_GENGINE_API_INDEXBUFFER_H
+#endif // AURORAFW_GENGINE_API_BUFFER_H
+

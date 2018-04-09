@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_INDEXBUFFER_H
-#define AURORAFW_GENGINE_API_INDEXBUFFER_H
+#ifndef AURORAFW_GENGINE_API_TEXTURE_H
+#define AURORAFW_GENGINE_API_TEXTURE_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,23 +26,30 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API IndexBuffer {
-			public:
-				static IndexBuffer* Load(uint* , uint );
+#include <AuroraFW/STDL/STL/String.h>
 
-				virtual void bind() const = 0;
-				virtual void unbind() const = 0;
+namespace AuroraFW::GEngine::API {
+	class AFW_API Texture {
+	public:
+		virtual ~Texture() {}
 
-				AFW_FORCE_INLINE uint count() const { return _count; }
+		static Texture* Load(const std::string& );
 
-			protected:
-				uint _count;
-			};
-		}
-	}
+		virtual void bind(uint = 0) const = 0;
+		virtual void unbind(uint = 0) const = 0;
+		
+		AFW_FORCE_INLINE int width() const { return _width; }
+		AFW_FORCE_INLINE int height() const { return _height; }
+		AFW_FORCE_INLINE int bpp() const { return _bpp; }
+
+		AFW_FORCE_INLINE byte_t* raw() const { return _rawbuf; }
+		AFW_FORCE_INLINE std::string path() const { return _path; }
+
+	protected:
+		std::string _path;
+		int _width, _height, _bpp;
+		byte_t* _rawbuf;
+	};
 }
 
-#endif // AURORAFW_GENGINE_API_INDEXBUFFER_H
+#endif // AURORAFW_GENGINE_API_TEXTURE_H

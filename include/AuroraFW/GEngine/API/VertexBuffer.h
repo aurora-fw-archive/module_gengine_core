@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_RTSHADER_H
-#define AURORAFW_GENGINE_RTSHADER_H
+#ifndef AURORAFW_GENGINE_API_VERTEXBUFFER_H
+#define AURORAFW_GENGINE_API_VERTEXBUFFER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,80 +26,14 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-#include <AuroraFW/STDL/STL/String.h>
+#include <AuroraFW/GEngine/API/Buffer.h>
 
-#include <AuroraFW/GEngine/Shader.h>
-
-#include <map>
-
-namespace AuroraFW::GEngine {
-	class AFW_API RTShader : public Shader {
+namespace AuroraFW::GEngine::API {
+	class AFW_API VertexBuffer : public Buffer {
 	public:
-		struct Settings {
-			bool cached;
-		};
-
-		enum class Language {
-			Unknown,
-			ARB,
-			GLSL,
-			HLSL,
-			CG,
-			SPIR,
-			SPIR_V,
-			AGAL,
-			PSSL,
-			MSL,
-			TGSI
-		};
-
-		enum class LangVersion {
-			Unknown,
-			GLSL110,
-			GLSL120,
-			GLSL130,
-			GLSL140,
-			GLSL150,
-			GLSL330,
-			GLSL330_CORE,
-			GLSL400,
-			GLSL400_CORE,
-			GLSL410,
-			GLSL410_CORE,
-			GLSL420,
-			GLSL420_CORE,
-			GLSL430,
-			GLSL430_CORE,
-			GLSL440,
-			GLSL440_CORE,
-			GLSL450,
-			GLSL450_CORE,
-			GLSL460,
-			GLSL460_CORE,
-			HLSL11,
-			HLSL20,
-			HLSL20_A,
-			HLSL20_B,
-			HLSL30,
-			HLSL40,
-			HLSL41,
-			HLSL50,
-			SPIR_12,
-			SPIR_20,
-			SPIRV
-		};
-
-		static void Load(Shader::ShaderType , Settings );
-
-		void compileFromFile(std::string , Language );
-		void importCachedFile(std::string , Language );
-		void compileFromFile(std::map<Language, std::string>);
-		void importCachedSource(const char *, Language);
-		void compileFromSource(const char* , Language );
-	
-	protected:
-		Settings _settings;
+		static VertexBuffer* Load(Buffer::Usage = Buffer::Usage::Static);
+		static VertexBuffer* Load(const void* , size_t , Buffer::Usage = Buffer::Usage::Static);
 	};
 }
 
-#endif // AURORAFW_GENGINE_SHADER_H
+#endif // AURORAFW_GENGINE_API_VERTEXBUFFER_H

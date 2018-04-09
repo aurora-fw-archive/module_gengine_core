@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_RTSHADERCONVERTER_H
-#define AURORAFW_GENGINE_RTSHADERCONVERTER_H
+#ifndef AURORAFW_GENGINE_API_RTSHADERCONVERTER_H
+#define AURORAFW_GENGINE_API_RTSHADERCONVERTER_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,16 +26,16 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-#include <AuroraFW/GEngine/RTShader.h>
+#include <AuroraFW/GEngine/API/RTShader.h>
 
 namespace AuroraFW::GEngine {
 	class AFW_API RTShaderConverter {
 	public:
-		static const char* toHLSL(const char* , RTShader::Language , RTShader::LangVersion );
-		static const char* toGLSL(const char* , RTShader::Language , RTShader::LangVersion );
-		static const char* toSPIRV(const char* , RTShader::Language , RTShader::LangVersion );
-		//static const char* toSPIR(const char* , RTShader::Language , RTShader::LangVersion );
+		static const char* toHLSL(const char* , API::RTShader::Language , API::RTShader::LangVersion );
+		static const char* toGLSL(const char* , API::RTShader::Language , API::RTShader::LangVersion );
+		static const char* toSPIRV(const char* , API::RTShader::Language , API::RTShader::LangVersion );
+		//static const char* toSPIR(const char* , API::RTShader::Language , API::RTShader::LangVersion );
 	};
 }
 
-#endif // AURORAFW_GENGINE_RTSHADERCONVERTER_H
+#endif // AURORAFW_GENGINE_API_RTSHADERCONVERTER_H

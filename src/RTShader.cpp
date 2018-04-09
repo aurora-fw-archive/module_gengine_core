@@ -16,11 +16,42 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/RTShader.h>
+#include <AuroraFW/GEngine/API/RTShader.h>
+#include <AuroraFW/GEngine/GL/RTShader.h>
+#include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/RTShaderConverter.h>
+#include <AuroraFW/IO/File.h>
 
-namespace AuroraFW::GEngine {
-	void RTShader::Load(ShaderType type, RTShader::Settings)
+namespace AuroraFW::GEngine::API {
+	RTShader* RTShader::Load(Shader::Type type, Settings)
 	{
-		
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL: return AFW_NEW GLRTShader(type);
+		}
+	}
+
+	RTShader* RTShader::Load(Shader::Type type, std::string path, Language lang, LangVersion langVersion, Settings)
+	{
+		RTShader* ret;
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL: ret = AFW_NEW GLRTShader(type);
+		}
+		ret->compileFromFile(path, lang, langVersion);
+		return ret;
+	}
+
+	void RTShader::compileFromFile(std::string path, RTShader::Language lang, RTShader::LangVersion langVersion)
+	{
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL:
+				return compileFromSource(RTShaderConverter::toGLSL(IO::readFile(path).c_str(), lang, langVersion));
+				break;
+			case API::RenderAPI::Vulkan:
+				#pragma message ("TODO: Need to be implemented")
+				break;
+			}
 	}
 }

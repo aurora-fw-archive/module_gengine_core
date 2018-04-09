@@ -35,14 +35,14 @@
 namespace AuroraFW::GEngine {
 	struct AFW_API Root {
 	public:
-		inline Renderer* getRenderer(uint pos = 0) { return _renderers[pos].get(); }
-		inline void addRenderer(Renderer* ptr) { _renderers.push_back(std::unique_ptr<Renderer>(ptr)); }
+		inline API::Renderer* getRenderer(uint pos = 0) { return _renderers[pos].get(); }
+		inline void addRenderer(API::Renderer* ptr) { _renderers.push_back(std::unique_ptr<API::Renderer>(ptr)); }
 
 		std::unique_ptr<RTShaderManager> shaderManager;
 		std::unique_ptr<InputManager> inputHandler;
 
 	private:
-		std::vector<std::unique_ptr<Renderer>> _renderers;
+		std::vector<std::unique_ptr<API::Renderer>> _renderers;
 	};
 }
 

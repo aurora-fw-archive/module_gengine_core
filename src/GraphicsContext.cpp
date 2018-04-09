@@ -19,7 +19,6 @@
 #include <AuroraFW/GEngine/GraphicsContext.h>
 
 #include <AuroraFW/CoreLib/Callback.h>
-#include <AuroraFW/CoreLib/Allocator.h>
 #include <AuroraFW/GEngine/Input.h>
 
 namespace AuroraFW {
@@ -31,10 +30,11 @@ namespace AuroraFW {
 			_window = AFW_NEW Window(name, wp);
 			root = AFW_NEW Root;
 			root->inputHandler = std::make_unique<InputManager>(_window);
-			root->addRenderer(GEngine::Renderer::Load());
+			root->addRenderer(API::Renderer::Load());
 			ImGui::CreateContext();
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 			_guiLoader = GEngine::ImGuiLoader::Load(_window, root->inputHandler.get());
+			_frameratebuf.fill(0.0f);
 		}
 
 		GraphicsContext::GraphicsContext(std::string name, const char* path)
@@ -45,6 +45,16 @@ namespace AuroraFW {
 		GraphicsContext::~GraphicsContext()
 		{
 			delete root;
+		}
+
+		void GraphicsContext::renderDebugGUI()
+		{
+			_isdebuggui = true;
+			ImGui::Begin("Debug");
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / _frameratebuf.back(), _frameratebuf.back());
+			ImGui::PlotLines("FPS", _frameratebuf.data(), _frameratebuf.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(300,50));
+			ImGui::Text("%d vertices, %d indices (%d triangles)", ImGui::GetIO().MetricsRenderVertices, ImGui::GetIO().MetricsRenderIndices, ImGui::GetIO().MetricsRenderIndices / 3);
+			ImGui::End();
 		}
 
 		void GraphicsContext::renderLoop()
@@ -65,16 +75,18 @@ namespace AuroraFW {
 				_guiLoader->renderDrawLists(ImGui::GetDrawData());
 				_window->present();
 				_tpf = _frametimer.elapsedMillis();
+				if (_framerateTimer.elapsedMillis() > 100.0f && _isdebuggui)
+				{
+					_framerateTimer.reset();
+					std::rotate(_frameratebuf.begin(), _frameratebuf.begin()+1,_frameratebuf.end());
+					_frameratebuf[_frameratebuf.size()-1] = 1000.0f / _tpf;
+				}
+				if(_isdebuggui) _isdebuggui = false;
 			}
 		}
 
-		void GraphicsContext::onRender()
-		{}
-
 		void GraphicsContext::_internalRender()
-		{
-
-		}
+		{}
 
 		void GraphicsContext::addInputListener(InputListener* in)
 		{

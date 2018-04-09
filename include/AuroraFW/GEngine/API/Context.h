@@ -29,31 +29,27 @@
 
 #include <AuroraFW/GEngine/API/RenderAPI.h>
 
-namespace AuroraFW {
-	namespace GEngine {
-		namespace API {
-			class AFW_API Context
-			{
-			public:
-				static void create(WindowProperties , std::string&);
+namespace AuroraFW::GEngine::API {
+	class AFW_API Context
+	{
+	public:
+		static void create(WindowProperties , std::string&);
 
-				static void init(GLFWwindow* );
-				static void destroy();
+		static void init(GLFWwindow* );
+		static void destroy();
 
-				AFW_FORCE_INLINE static RenderAPI getRenderAPI() { return _rapi; }
-				AFW_FORCE_INLINE static uint getAPIVersion() { return _version; }
-				AFW_FORCE_INLINE static void setRenderAPI(RenderAPI api) { _rapi = api; }
+		AFW_FORCE_INLINE static RenderAPI getRenderAPI() { return _rapi; }
+		AFW_FORCE_INLINE static uint getAPIVersion() { return _version; }
+		AFW_FORCE_INLINE static void setRenderAPI(RenderAPI api) { _rapi = api; }
 
-			protected:
-				virtual void _init(GLFWwindow* ) = 0;
-				virtual void _destroy() = 0;
+	protected:
+		virtual void _init(GLFWwindow* ) = 0;
+		virtual void _destroy() = 0;
 
-				static Context* _instance;
-				static RenderAPI _rapi;
-				static uint _version;
-			};
-		}
-	}
+		static Context* _instance;
+		static RenderAPI _rapi;
+		static uint _version;
+	};
 }
 
 #endif // AURORAFW_GENGINE_CONTEXT_H

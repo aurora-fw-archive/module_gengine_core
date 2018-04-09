@@ -19,7 +19,7 @@
 #include <AuroraFW/GEngine/RTShaderConverter.h>
 
 namespace AuroraFW::GEngine {
-	const char* RTShaderConverter::toHLSL(const char* /*src*/, RTShader::Language /*srclang*/, RTShader::LangVersion /*langv*/)
+	const char* RTShaderConverter::toHLSL(const char* /*src*/, API::RTShader::Language /*srclang*/, API::RTShader::LangVersion /*langv*/)
 	{
 		#pragma message ("TODO: Need to be implemented")
 	}
