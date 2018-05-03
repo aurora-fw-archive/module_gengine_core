@@ -23,13 +23,13 @@
 #include <stdexcept>
 
 namespace AuroraFW::GEngine {
-	const char* RTShaderConverter::toGLSL(const char* src, API::RTShader::Language srclang, API::RTShader::LangVersion destlangv)
+	std::string RTShaderConverter::toGLSL(std::string src, API::RTShader::Language srclang, API::RTShader::LangVersion destlangv)
 	{
 		switch(srclang)
 		{
 			case API::RTShader::Language::SPIR_V:
 			{
-				spirv_cross::CompilerGLSL glsl(std::move(std::vector<uint32_t>(src, src + strlen(src)/sizeof(uint32_t))));
+				spirv_cross::CompilerGLSL glsl(std::move(std::vector<uint32_t>(src.c_str(), src.c_str() + strlen(src.c_str())/sizeof(uint32_t))));
 				spirv_cross::ShaderResources resources = glsl.get_shader_resources();
 
 				for (auto &resource : resources.sampled_images)
@@ -53,8 +53,9 @@ namespace AuroraFW::GEngine {
 				}
 				glsl.set_options(options);
 
-				return glsl.compile().c_str();
+				return glsl.compile();
 			}
+			case API::RTShader::Language::GLSL: return src;
 		}
 	}
 }

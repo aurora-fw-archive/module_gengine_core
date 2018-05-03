@@ -16,42 +16,49 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/API/RTShader.h>
-#include <AuroraFW/GEngine/GL/RTShader.h>
-#include <AuroraFW/GEngine/API/Context.h>
-#include <AuroraFW/GEngine/RTShaderConverter.h>
-#include <AuroraFW/IO/File.h>
+#ifndef AURORAFW_GENGINE_ENTITY_H
+#define AURORAFW_GENGINE_ENTITY_H
 
-namespace AuroraFW::GEngine::API {
-	RTShader* RTShader::Load(Shader::Type type, Settings)
-	{
-		switch(API::Context::getRenderAPI())
+#include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
+
+namespace AuroraFW::GEngine {
+	class AFW_API Entity {
+	public:
+		Entity();
+	
+		void addComponent(Component* );
+
+		template <typename T>
+		const T* getComponent() const
 		{
-			case API::RenderAPI::OpenGL: return AFW_NEW GLRTShader(type);
+			return _getComponent<T>();
 		}
-	}
 
-	RTShader* RTShader::Load(Shader::Type type, std::string path, Language lang, LangVersion langVersion, Settings)
-	{
-		RTShader* ret;
-		switch(API::Context::getRenderAPI())
+		template <typename T>
+		T* getComponent()
 		{
-			case API::RenderAPI::OpenGL: ret = AFW_NEW GLRTShader(type);
+			return (T*)_getComponent<T>();
 		}
-		ret->compileFromFile(path, lang, langVersion);
-		return ret;
-	}
 
-	void RTShader::compileFromFile(std::string path, RTShader::Language lang, RTShader::LangVersion langVersion)
-	{
-		switch(API::Context::getRenderAPI())
+	protected:
+		std::unordered_map<ComponentType*, Component*> _components;
+
+	private:
+		template <typename T>
+		const T* _getComponent() const
 		{
-			case API::RenderAPI::OpenGL:
-				return compileFromSource(RTShaderConverter::toGLSL(IO::readFile(path).c_str(), lang, langVersion));
-				break;
-			case API::RenderAPI::Vulkan:
-				#pragma message ("TODO: Need to be implemented")
-				break;
-			}
-	}
+			ComponentType* type = T::getStaticType();
+			auto it = _components.find(type);
+			if (it == _components.end())
+				return AFW_NULLPTR;
+			return (T*)it->second;
+		}
+	};
 }
+
+#endif // AURORAFW_GENGINE_ENTITY_H

@@ -29,6 +29,7 @@
 #include <AuroraFW/GEngine/API/VertexArray.h>
 #include <AuroraFW/GEngine/API/IndexBuffer.h>
 #include <AuroraFW/GEngine/API/RTShaderPipeline.h>
+#include <AuroraFW/Image/BaseColor.h>
 
 namespace AuroraFW::GEngine::API {
 	enum class RendererBufferType : unsigned {
@@ -64,12 +65,14 @@ namespace AuroraFW::GEngine::API {
 		static Renderer* Load();
 		
 		virtual void clear(uint = RendererBufferType::Color | RendererBufferType::Depth) = 0;
+		virtual void setClearColor(ColorF ) = 0;
 		virtual void setViewport(uint , uint , uint , uint ) = 0;
 		virtual void setDepthTesting(bool ) = 0;
 		virtual void setBlend(bool ) = 0;
 		virtual void setBlendFunction(BlendFunction , BlendFunction ) = 0;
 		virtual void setBlendEquation(BlendEquation ) = 0;
 		virtual void draw(const API::VertexArray* , const API::IndexBuffer* , const RTShaderPipeline* ) const = 0;
+		virtual void draw(const API::VertexArray* , const API::IndexBuffer* , uint ) const = 0;
 	};
 }
 

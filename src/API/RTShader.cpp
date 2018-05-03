@@ -16,26 +16,45 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_GENGINE_API_RTSHADERCONVERTER_H
-#define AURORAFW_GENGINE_API_RTSHADERCONVERTER_H
-
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
-
-#include <AuroraFW/Internal/Config.h>
-
 #include <AuroraFW/GEngine/API/RTShader.h>
+#include <AuroraFW/GEngine/GL/RTShader.h>
+#include <AuroraFW/GEngine/API/Context.h>
+#include <AuroraFW/GEngine/RTShaderConverter.h>
+#include <AuroraFW/IO/File.h>
+#include <iostream>
 
-namespace AuroraFW::GEngine {
-	class AFW_API RTShaderConverter {
-	public:
-		static std::string toHLSL(std::string , API::RTShader::Language , API::RTShader::LangVersion );
-		static std::string toGLSL(std::string , API::RTShader::Language , API::RTShader::LangVersion );
-		static std::string toSPIRV(std::string , API::RTShader::Language , API::RTShader::LangVersion );
-		//static std::string toSPIR(std::string , API::RTShader::Language , API::RTShader::LangVersion );
-	};
+namespace AuroraFW::GEngine::API {
+	RTShader* RTShader::Load(Shader::Type type, Settings)
+	{
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL: return AFW_NEW GLRTShader(type);
+		}
+	}
+
+	RTShader* RTShader::Load(Shader::Type type, std::string path, Language lang, LangVersion langVersion, Settings)
+	{
+		RTShader* ret;
+		switch(API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL: ret = AFW_NEW GLRTShader(type);
+		}
+		ret->compileFromFile(path, lang, langVersion);
+		return ret;
+	}
+
+	
+
+	void RTShader::compileFromFile(std::string path, RTShader::Language lang, RTShader::LangVersion langVersion)
+	{
+		switch (API::Context::getRenderAPI())
+		{
+			case API::RenderAPI::OpenGL:
+				compileFromSource(RTShaderConverter::toGLSL(IO::readFile(path), lang, langVersion));
+				break;
+			case API::RenderAPI::Vulkan:
+				#pragma message ("TODO: Need to be implemented")
+				break;
+			}
+	}
 }
-
-#endif // AURORAFW_GENGINE_API_RTSHADERCONVERTER_H

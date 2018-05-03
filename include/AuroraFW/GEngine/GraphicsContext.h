@@ -52,6 +52,7 @@ namespace AuroraFW {
 
 			inline float getFramerate() { return 1000.0f / _tpf; }
 			AFW_FORCE_INLINE float getTPF() { return _tpf; }
+			AFW_FORCE_INLINE const Window* getWindow() const { return _window; }
 
 			struct DebugInfo {
 				std::vector<float> framerate;
@@ -66,7 +67,7 @@ namespace AuroraFW {
 			void _internalRender();
 
 			Window* _window;
-			ImGuiLoader* _guiLoader;
+			std::unique_ptr<ImGuiLoader> _guiLoader;
 			std::set<InputListener*> _listeners;
 			std::array<float, 64> _frameratebuf;
 			float _tpf;

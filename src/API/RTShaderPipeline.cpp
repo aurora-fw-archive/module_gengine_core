@@ -21,11 +21,11 @@
 #include <AuroraFW/GEngine/API/Context.h>
 
 namespace AuroraFW::GEngine::API {
-	RTShaderPipeline* RTShaderPipeline::Load(std::vector<RTShader*> )
+	RTShaderPipeline* RTShaderPipeline::Load(std::vector<RTShader*> shaders)
 	{
 		switch(Context::getRenderAPI())
 		{
-			case OpenGL: return AFW_NEW GLRTShaderPipeline();
+			case OpenGL: return AFW_NEW GLRTShaderPipeline(shaders);
 		}
 	}
 }

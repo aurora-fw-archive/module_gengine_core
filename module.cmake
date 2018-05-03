@@ -220,6 +220,6 @@ if (UNIX AND NOT APPLE)
 	endif()
 endif()
 
-target_link_libraries(aurorafw-gengine-core aurorafw-gengine-opengl aurorafw-gengine-vulkan aurorafw-io aurorafw-gui)
+target_link_libraries(aurorafw-gengine-core aurorafw-gengine-2d aurorafw-gengine-opengl aurorafw-gengine-vulkan aurorafw-io aurorafw-gui)
 
 set_target_properties(aurorafw-gengine-core PROPERTIES OUTPUT_NAME aurorafw-gengine-core)

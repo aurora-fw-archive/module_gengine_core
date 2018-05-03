@@ -27,13 +27,14 @@ namespace AuroraFW {
 		{
 			API::Context::setRenderAPI(api);
 
+			wp.vsync = false;
 			_window = AFW_NEW Window(name, wp);
 			root = AFW_NEW Root;
 			root->inputHandler = std::make_unique<InputManager>(_window);
 			root->addRenderer(API::Renderer::Load());
 			ImGui::CreateContext();
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
-			_guiLoader = GEngine::ImGuiLoader::Load(_window, root->inputHandler.get());
+			_guiLoader = std::unique_ptr<GEngine::ImGuiLoader>(GEngine::ImGuiLoader::Load(_window, root->inputHandler.get()));
 			_frameratebuf.fill(0.0f);
 		}
 
@@ -45,6 +46,7 @@ namespace AuroraFW {
 		GraphicsContext::~GraphicsContext()
 		{
 			delete root;
+			delete _window;
 		}
 
 		void GraphicsContext::renderDebugGUI()
@@ -63,7 +65,7 @@ namespace AuroraFW {
 			{
 				_frametimer.reset();
 				_window->update();
-				root->getRenderer()->setViewport(0, 0, _window->getWidth(), _window->getHeight());
+				root->getRenderer()->setViewport(0, 0, _window->width(), _window->height());
 				root->getRenderer()->clear();
 
 				_guiLoader->newFrame();

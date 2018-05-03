@@ -164,7 +164,7 @@ namespace AuroraFW {
 			 * @see getHeight()
 			 * @since snapshot20170930
 			 */
-			inline uint getWidth() const { return wp.width; }
+			AFW_FORCE_INLINE uint width() const { return wp.width; }
 
 			/**
 			 * Returns the height of the window.
@@ -172,11 +172,11 @@ namespace AuroraFW {
 			 * @see getWidth()
 			 * @since snapshot20170930
 			 */
-			inline uint getHeight() const { return wp.height; }
+			AFW_FORCE_INLINE uint height() const { return wp.height; }
 
-			inline WindowProperties properties() { return wp; }
+			AFW_FORCE_INLINE WindowProperties properties() { return wp; }
 
-			inline bool getFloating() const { return wp.floating; }
+			AFW_FORCE_INLINE bool getFloating() const { return wp.floating; }
 			inline void setFloating(bool val) { _isCreated ? throw std::runtime_error("Can't change window properties after creation!") : wp.floating = val; }
 
 			inline bool getResizable() const { return wp.resizable; }

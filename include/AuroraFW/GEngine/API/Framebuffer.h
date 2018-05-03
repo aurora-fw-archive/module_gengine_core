@@ -16,19 +16,28 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/GEngine/API/Texture.h>
-#include <AuroraFW/GEngine/API/Context.h>
-#include <AuroraFW/GEngine/GL/Texture.h>
+#ifndef AURORAFW_GENGINE_API_FRAMEBUFFER_H
+#define AURORAFW_GENGINE_API_FRAMEBUFFER_H
+
+#include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
 
 namespace AuroraFW::GEngine::API {
-	Texture* Texture::Load(const std::string& path)
-	{
-		Texture* ret;
+	class AFW_API Framebuffer {
+	public:
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void clear() = 0;
 
-		switch(API::Context::getRenderAPI())
-		{
-			case API::RenderAPI::OpenGL: return AFW_NEW GLTexture(path); break;
-			case API::RenderAPI::Vulkan: return AFW_NULLPTR;
-		}
-	}
+		virtual uint width() const = 0;
+		virtual uint height() const = 0;
+
+		virtual API::Texture* getTexture() const = 0;
+	};
 }
+
+#endif // AURORAFW_GENGINE_API_FRAMEBUFFER_H

@@ -101,8 +101,8 @@ namespace AuroraFW::GEngine::API {
 
 		virtual void importCachedFile(const std::string &) = 0;
 		virtual void compileFromFile(const std::string &) = 0;
-		virtual void importCachedSource(const char* ) = 0;
-		virtual void compileFromSource(const char* ) = 0;
+		virtual void importCachedSource(std::string ) = 0;
+		virtual void compileFromSource(std::string ) = 0;
 		virtual bool isCompiled() const = 0;
 	
 	protected:

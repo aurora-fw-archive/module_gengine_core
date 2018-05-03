@@ -19,7 +19,7 @@
 #include <AuroraFW/GEngine/RTShaderConverter.h>
 
 namespace AuroraFW::GEngine {
-	const char* RTShaderConverter::toSPIRV(const char* /*src*/, API::RTShader::Language /*srclang*/, API::RTShader::LangVersion /*langv*/)
+	std::string RTShaderConverter::toSPIRV(std::string /*src*/, API::RTShader::Language /*srclang*/, API::RTShader::LangVersion /*langv*/)
 	{
 		#pragma message ("TODO: Need to be implemented")
 	}

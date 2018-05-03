@@ -29,6 +29,7 @@
 #include <AuroraFW/GEngine/API/Buffer.h>
 #include <AuroraFW/GEngine/API/VertexBuffer.h>
 #include <AuroraFW/GEngine/API/BufferLayout.h>
+#include <vector>
 
 namespace AuroraFW::GEngine::API {
 	class AFW_API VertexArray {
@@ -36,9 +37,11 @@ namespace AuroraFW::GEngine::API {
 		static VertexArray* Load();
 		virtual ~VertexArray() {}
 
-		virtual void addBuffer(const Buffer* , const BufferLayout* ) = 0;
+		virtual void addBuffer(const VertexBuffer* , const BufferLayout* ) = 0;
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
+	protected:
+		std::vector<const VertexBuffer*> _buffers;
 	};
 }
 

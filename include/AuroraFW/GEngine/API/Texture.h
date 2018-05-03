@@ -33,22 +33,88 @@ namespace AuroraFW::GEngine::API {
 	public:
 		virtual ~Texture() {}
 
-		static Texture* Load(const std::string& );
+		struct AFW_API LoadOptions
+		{
+			bool flipX;
+			bool flipY;
+
+			LoadOptions()
+			{
+				flipX = false;
+				flipY = false;
+			}
+
+			LoadOptions(bool flipX, bool flipY)
+				: flipX(flipX), flipY(flipY)
+			{}
+		};
+
+		enum class AFW_API Wrap
+		{
+			None = 0,
+			Repeat,
+			Clamp,
+			MirroredRepeat,
+			ClampToEdge,
+			ClampToBorder
+		};
+
+		enum class AFW_API Filter
+		{
+			None = 0,
+			Linear,
+			Nearest
+		};
+
+		enum class AFW_API Format
+		{
+			None = 0,
+			RGB,
+			RGBA,
+			Luminance,
+			LuminanceAlpha
+		};
+
+		struct AFW_API Parameters
+		{
+			Texture::Format format;
+			Texture::Filter filter;
+			Texture::Wrap wrap;
+
+			Parameters()
+			{
+				format = Texture::Format::RGBA;
+				filter = Texture::Filter::Linear;
+				wrap = Texture::Wrap::Clamp;
+			}
+
+			Parameters(Texture::Format format, Texture::Filter filter, Texture::Wrap wrap)
+				: format(format), filter(filter), wrap(wrap)
+			{}
+
+			Parameters(Texture::Filter filter)
+				: format(Texture::Format::RGBA), filter(filter), wrap(Texture::Wrap::Clamp)
+			{}
+
+			Parameters(Texture::Filter filter, Texture::Wrap wrap)
+				: format(Texture::Format::RGBA), filter(filter), wrap(wrap)
+			{}
+		};
 
 		virtual void bind(uint = 0) const = 0;
 		virtual void unbind(uint = 0) const = 0;
-		
-		AFW_FORCE_INLINE int width() const { return _width; }
-		AFW_FORCE_INLINE int height() const { return _height; }
-		AFW_FORCE_INLINE int bpp() const { return _bpp; }
 
-		AFW_FORCE_INLINE byte_t* raw() const { return _rawbuf; }
-		AFW_FORCE_INLINE std::string path() const { return _path; }
+		AFW_FORCE_INLINE const std::string& path() const { return _path; }
+
+		static byte_t getStrideFromFormat(Texture::Format format);
+		AFW_FORCE_INLINE static void setWrap(Texture::Wrap mode) { _wrapmode = mode; }
+		AFW_FORCE_INLINE static void setFilter(Texture::Filter mode) { _filtermode = mode; }
 
 	protected:
 		std::string _path;
-		int _width, _height, _bpp;
-		byte_t* _rawbuf;
+
+		static Texture::Wrap _wrapmode;
+		static Texture::Filter _filtermode;
 	};
 }
 
